@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+import AdminBody from './admin';
+import './index.css';
 
 class Body extends Component {
   render() {
     return (
-      <div className="Header">
-        <p className="App-intro">
-          To be continued.
-        </p>
+      <div className="Body">
+        <AdminBody></AdminBody>
       </div>
     );
   }
