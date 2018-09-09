@@ -11,31 +11,11 @@ class Vente extends Component {
         <div class="col-4">
 
           {/*Info Achat*/}
-          <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center">
-            <thead>
-              <tr>
-                <th scope="col">Qte</th>
-                <th scope="col">Nom Prod</th>
-                <th scope="col">Prix</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tr>
-              <th scope="row">1</th>
-              <td>PAMPRYL OAC</td>
-              <td>0.65 €</td>
-              <td><button type="button" class="btn btn-outline-danger btn-xs">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
-              </td>
-            </tr>
-            </table>
-
+          <Achats></Achats>
           {/*Annulation des achats en cours*/}
           <div>
           <button class="btn btn-primary ml-2 mb-2 btn-block" >Annuler tout</button>
           </div>
-
           {/*Information sur la carte -> Annuler un paiment / info sur la carte*/}
           <button class="btn btn-primary ml-2 mb-3 btn-block" data-toggle="modal" data-target="#infoUser">Info Carte</button>
           <div class="modal fade" id="infoUser" tabindex="-1" role="dialog" aria-hidden="true">
@@ -67,34 +47,89 @@ class Vente extends Component {
 
         {/*Différents type d'articles*/}
         <div class="col">
-          <div class="list-group shadow-lg p-3 mb-5 rounded" id="list-tab" role="tablist">
-              <a class="list-group-item list-group-item-action active" id="list-soft-list" data-toggle="list" href="#list-soft" role="tab" aria-controls="soft">Soft</a>
-              <a class="list-group-item list-group-item-action" id="list-pampryls-list" data-toggle="list" href="#list-pampryls" role="tab" aria-controls="pampryls">Pampryls</a>
-              <a class="list-group-item list-group-item-action" id="list-glace-list" data-toggle="list" href="#list-glace" role="tab" aria-controls="glace">Glacé</a>
-              <a class="list-group-item list-group-item-action" id="list-scnacksucre-list" data-toggle="list" href="#list-scnacksucre" role="tab" aria-controls="scnacksucre">Snack Sucré</a>
-              <a class="list-group-item list-group-item-action" id="list-scnacksale-list" data-toggle="list" href="#list-scnacksale" role="tab" aria-controls="scnacksale">Snack Salé</a>
-              <a class="list-group-item list-group-item-action" id="list-petitdej-list" data-toggle="list" href="#list-petitdej" role="tab" aria-controls="petitdej">Petit Dej</a>
-              <a class="list-group-item list-group-item-action" id="list-fruit-list" data-toggle="list" href="#list-fruit" role="tab" aria-controls="fruit">Fruits & Jus Frais</a>
-              <a class="list-group-item list-group-item-action" id="list-repas-list" data-toggle="list" href="#list-repas" role="tab" aria-controls="repas">Repas</a>
-          </div>
+          <Categorie></Categorie>
         </div>
 
         {/*Liste des articles selon le type sélectionné*/}
         <div class="col-6">
             <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="list-soft" role="tabpanel" aria-labelledby="list-soft-list">.Les.Softs.</div>
-              <div class="tab-pane fade" id="list-pampryls" role="tabpanel" aria-labelledby="list-pampryls-list">...</div>
-              <div class="tab-pane fade" id="list-glace" role="tabpanel" aria-labelledby="list-glace-list">...</div>
-              <div class="tab-pane fade" id="list-scnacksucre" role="tabpanel" aria-labelledby="list-scnacksucre-list">...</div>
-              <div class="tab-pane fade" id="list-scnacksale" role="tabpanel" aria-labelledby="list-scnacksale-list">...</div>
-              <div class="tab-pane fade" id="list-petitdej" role="tabpanel" aria-labelledby="list-petitdej-list">...</div>
-              <div class="tab-pane fade" id="list-fruit" role="tabpanel" aria-labelledby="list-fruit-list">...</div>
-              <div class="tab-pane fade" id="list-repas" role="tabpanel" aria-labelledby="list-repas-list">...</div>
+              <div class="tab-pane fade show active" id="list-Soft" role="tabpanel" aria-labelledby="list-soft-list"><button type="button" class="btn btn-primary">TEST AJOUT</button></div>
+              <div class="tab-pane fade" id="list-Pampryls" role="tabpanel" aria-labelledby="list-pampryls-list">...</div>
+              <div class="tab-pane fade" id="list-Glacé" role="tabpanel" aria-labelledby="list-glace-list">...</div>
+              <div class="tab-pane fade" id="list-Snack-Sucré" role="tabpanel" aria-labelledby="list-scnacksucre-list">...</div>
+              <div class="tab-pane fade" id="list-Snack-Salé" role="tabpanel" aria-labelledby="list-scnacksale-list">...</div>
+              <div class="tab-pane fade" id="list-Petit-Dej" role="tabpanel" aria-labelledby="list-petitdej-list">...</div>
+              <div class="tab-pane fade" id="list-Fruits-Jus-Frais" role="tabpanel" aria-labelledby="list-fruit-list">ABLAHH</div>
+              <div class="tab-pane fade" id="list-Repas" role="tabpanel" aria-labelledby="list-repas-list">...</div>
             </div>
         </div>
       </div>
 
       </div>
+    );
+  }
+}
+
+class Article extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: null,
+      qte: null,
+      nom: '',
+      prix: null,
+      categorie_id: null,
+      alcool: false,
+      image: null
+    };
+  }
+}
+
+class Achats extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      achat: []
+    };
+  }
+
+  addArticle(id) {
+
+  }
+
+  render() {
+    return (
+      <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center">
+        <thead>
+          <tr>
+            <th scope="col">Qte</th>
+            <th scope="col">Nom Prod</th>
+            <th scope="col">Prix</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tr>
+          <th scope="row">1</th>
+          <td>PAMPRYL OAC</td>
+          <td>0.65 €</td>
+          <td><button type="button" class="btn btn-outline-danger btn-xs">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+          </td>
+        </tr>
+      </table>
+    );
+  }
+}
+
+{/*Classe des différents types d'articless*/}
+class Categorie extends Component {
+  render() {
+    const categ = ['Soft','Pampryls','Glacé','Snack-Sucré','Snack-Salé','Petit-Dej','Fruits-Jus-Frais','Repas']
+    const listeCateg = categ.map((categ)=>
+    <a class='list-group-item list-group-item-action' data-toggle="list" href={['#list-',categ].join('')} role="tab" >{categ}</a>  );
+    return (
+      <div class="list-group shadow-lg p-3 mb-5 rounded" id="list-tab" role="tablist">{listeCateg}</div>
     );
   }
 }
