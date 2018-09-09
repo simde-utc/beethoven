@@ -137,9 +137,6 @@ class Achats extends Component {
     );
   }
 
-  {/*Il faut une fonction qui permet de supprimer une ligne de la liste des articles*/}
-
-
 }
 
 
