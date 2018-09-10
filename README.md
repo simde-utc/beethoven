@@ -11,7 +11,10 @@ Ensuite il faut installer React :
 ```
 npm install --global create-react-app
 ```
-
+Pour finir il faut installer le package reactstrap (**[Documentation](https://reactstrap.github.io/components/alerts/)**):
+```
+npm install --save reactstrap react react-dom
+```
 ## Démarrage de Beethoven
 Il faut ensuite lancer Beethoven :
 ```
@@ -20,6 +23,6 @@ npm start
 
 ## Authors
 * **[PAIGNEAU Hugo](https://github.com/hugofloter)** - *Initial work*
-* **[TERTRAIS Erwan]()** - *Initial work*
+* **[TERTRAIS Erwan](https://github.com/SuperNach0)** - *Initial work*
 * **[RICHARD Quentin](https://github.com/qprichard)** - *Initial work*
 * **[OBLED Aymeric](https://github.com/obledaym)** - *Initial work*
