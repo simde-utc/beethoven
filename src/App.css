@@ -26,16 +26,3 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
-
-a.nav-link{
-  color : white;
-}
-
-a.nav-link:focus{
-  background-color : #B22132;
-}
-
-a.nav-link:active{
-  background-color : #B22132;
-}
