@@ -41,7 +41,7 @@ class MenuNav extends Component {
       this.setState({index : rSelected});
       console.log("rSelected = "+ rSelected + " index = "+ this.state.index)
       updateNavIndex(rSelected);
-      let List = [{"first_name":"Cesar","last_name":"Richard", "quantity":"4", "servi":false},{"first_name":"Aymeric","last_name":"OBLED","quantity":"2", "servi":true}]
+      let List = [{"first_name":"Cesar","last_name":"Richard", "quantity":"4", "servi":false},{"first_name":"Aymeric","last_name":"OBLED","quantity":"2", "servi":true}, {"first_name":"Quentin","last_name":"Richard", "quantity":"1", "servi":false}]
 
       updateMenuList(List)
     }
@@ -127,6 +127,7 @@ class Menu extends Component {
   printAllMenu(){
     let MenuList = []
 
+
     let printMenu = (menu, index)=>{
       return(
           <tr>
@@ -136,9 +137,10 @@ class Menu extends Component {
             <td><Button
               color={this.state.MenuList[index].servi === false ? 'success' : 'danger'}
               onClick = {() =>this.onButtonClick(index)}
-              >{this.state.MenuList[index].servi===false ? 'Valider' : 'Remettre'}</Button></td>
+              >{this.state.MenuList[index].servi===false ? 'Valider' : 'Annuler'}</Button></td>
           </tr>
         )
+
       }
 
     this.state.MenuList.forEach(function(menu, index){
@@ -148,6 +150,25 @@ class Menu extends Component {
     return MenuList;
   }
 
+  returnTab(){
+    return(
+      <Table>
+        <thead>
+          <tr>
+            <th> Nom </th>
+            <th> Prénom </th>
+            <th> Qte </th>
+            <th> Servi </th>
+          </tr>
+        </thead>
+        <tbody>
+    {this.printAllMenu()}
+        </tbody>
+      </Table>
+
+    )
+  }
+
 
   render() {
     return (
@@ -155,20 +176,7 @@ class Menu extends Component {
         <h2>
           {this.state.NavIndex ? 'Informations du Menu n°'+this.state.NavIndex : ''}
         </h2>
-        <Table>
-          <thead>
-            <tr>
-              <th> Nom </th>
-              <th> Prénom </th>
-              <th> Qte </th>
-              <th> Servi </th>
-            </tr>
-          </thead>
-          <tbody>
-      {this.printAllMenu()}
-          </tbody>
-        </Table>
-
+        {this.state.NavIndex ? this.returnTab() : <h3> Veuillez choisir un Menu de la liste</h3>}
       </div>
     );
   }
