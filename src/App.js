@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './header';
 import Body from './body';
-import MenuBody from './menu';
+import MenuBody from './Menu/menu';
 
 class App extends Component {
   render() {

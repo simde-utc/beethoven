@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import { Container, Col, Row } from 'reactstrap';
 import {Table, Button } from 'reactstrap';
+
+
+// Mise à jour de index dans state pour connaitre le bouton selectionné
+function updateNavIndex(NavIndex){
+  this.setState({NavIndex})
+}
+
+function updateMenuList(MenuList){
+  this.setState({MenuList})
+}
 
 
 
@@ -39,11 +49,32 @@ class MenuNav extends Component {
     // TODO: ICI POUR LES ROUTES
     onRadioBtnClick(rSelected){
       this.setState({index : rSelected});
-      console.log("rSelected = "+ rSelected + " index = "+ this.state.index)
       updateNavIndex(rSelected);
-      let List = [{"first_name":"Cesar","last_name":"Richard", "quantity":"4", "servi":false},{"first_name":"Aymeric","last_name":"OBLED","quantity":"2", "servi":true}, {"first_name":"Quentin","last_name":"Richard", "quantity":"1", "servi":false}]
 
-      updateMenuList(List)
+    fetch("http://37.139.25.111/getorders/"+rSelected, {
+      method : 'GET',
+      mode:'cors',
+      headers:{
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+        
+    }
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log('okok')
+            updateMenuList(result.orders)
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+
+        (error) => {
+            console.log(error)
+        }
+      )
+
+
     }
 
     //ajout d'un nouveau bouton pour chaque menu présent
@@ -72,10 +103,10 @@ class MenuNav extends Component {
 
         <Nav vertical>
 
-          <NavItem>{this.addButton("Menu 1", 12345)}</NavItem>
+          <NavItem>{this.addButton("Menu 1", 13453)}</NavItem>
 
           <NavItem>{this.addButton("Menu 2", 3564)}</NavItem>
-         {/*}<p>Selected : {this.state.index}</p>*/}
+         {/*}<p>Selected : {this.state.index}</p>*/ }
         </Nav>
 
 
@@ -84,14 +115,6 @@ class MenuNav extends Component {
   }
 }
 
-// Mise à jour de index dans state pour connaitre le bouton selectionné
-function updateNavIndex(NavIndex){
-  this.setState({NavIndex})
-}
-
-function updateMenuList(MenuList){
-  this.setState({MenuList})
-}
 
 
 //CLASSE Menu qui affiche l'ensemble des menus commandés sur le type de menu selectionné
@@ -110,10 +133,10 @@ class Menu extends Component {
   }
 
 //changement de l'état du bouton
-// TODO: envoyer info au back pour changer la valeur de Servi
+// TODO: envoyer info au back pour changer la valeur de served
   onButtonClick(index){
     console.log(this.state.MenuList[index].first_name)
-    this.state.MenuList[index].servi = !this.state.MenuList[index].servi
+    this.state.MenuList[index].served = !this.state.MenuList[index].served
     this.forceUpdate()
   }
 
@@ -122,7 +145,7 @@ class Menu extends Component {
 // Nom
 // prenom
 // Qte
-// servi?
+// served?
 
   printAllMenu(){
     let MenuList = []
@@ -135,9 +158,9 @@ class Menu extends Component {
             <td>{menu.first_name}</td>
             <td>{menu.quantity}</td>
             <td><Button
-              color={this.state.MenuList[index].servi === false ? 'success' : 'danger'}
+              color={this.state.MenuList[index].served === false ? 'success' : 'danger'}
               onClick = {() =>this.onButtonClick(index)}
-              >{this.state.MenuList[index].servi===false ? 'Valider' : 'Annuler'}</Button></td>
+              >{this.state.MenuList[index].served===false ? 'Valider' : 'Annuler'}</Button></td>
           </tr>
         )
 
@@ -158,7 +181,7 @@ class Menu extends Component {
             <th> Nom </th>
             <th> Prénom </th>
             <th> Qte </th>
-            <th> Servi </th>
+            <th> served </th>
           </tr>
         </thead>
         <tbody>
@@ -181,7 +204,6 @@ class Menu extends Component {
     );
   }
 }
-
 
 
 
