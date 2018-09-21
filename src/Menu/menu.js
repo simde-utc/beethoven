@@ -243,9 +243,19 @@ class Menu extends Component {
             <td>{menu.first_name}</td>
             <td>{menu.quantity}</td>
             <td><Button
-              color={this.state.MenuList[index].served === false ? 'success' : 'danger'}
+              color='success'
               onClick = {() =>this.onButtonClick(index)}
-              >{this.state.MenuList[index].served===false ? 'Valider' : 'Annuler'}</Button></td>
+              disabled = {!this.state.MenuList[index].served===false}
+
+              >Valider</Button>
+              {' '}
+              <Button
+                color='danger'
+                disabled = {this.state.MenuList[index].served===false}
+                >Annuler</Button>
+
+
+        </td>
           </tr>
         )
 
