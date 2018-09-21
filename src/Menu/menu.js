@@ -4,6 +4,7 @@ import {Nav, NavItem, NavLink} from 'reactstrap';
 import { Container, Col, Row } from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 
+
 // TODO:  VOIR AXIOS POUR REQUETES
 
 
@@ -102,6 +103,7 @@ class MenuNav extends Component {
                onClick = {() => this.onRadioBtnClick(bId)}
                >
                {bName}
+
              </NavLink>
            </NavItem>
          );
@@ -171,7 +173,19 @@ class Menu extends Component {
     this.state={
       NavIndex:null,
       MenuList: [],
-      MenuInformation : null
+      MenuInformation : null,
+      //changement de couleur pour un menu selectionné
+     rowValide : {
+       color : 'white',
+       background :  'rgba(171,163,150, 0.5)'
+     },
+
+     //changement de couleur pour un menu selectionné
+     rowUnvalide : {
+       color : 'white',
+       background :  'none'
+     }
+
     }
     //reccupération des informations de la nav
     updateMenuInformation = updateMenuInformation.bind(this)
@@ -181,10 +195,13 @@ class Menu extends Component {
 
   //Boucle Update data toutes les 15 secondes
   componentDidMount(){
+
       this.interval = setInterval(()=>{
         console.log('update data')
         fetchMenuList(this.state.NavIndex)
       }, 15000)
+
+
 
   }
 
@@ -210,11 +227,10 @@ class Menu extends Component {
     })
       .then((result)=>{
         if(result.ok){
-          console.log("ok");
           fetchMenuList(this.state.NavIndex)
 
         } else{
-          console.log("nope")
+          console.log(result)
         }
 
 
@@ -238,7 +254,9 @@ class Menu extends Component {
 
     let printMenu = (menu, index)=>{
       return(
-          <tr>
+          <tr
+            style = {this.state.MenuList[index].served===false ? this.state.rowUnvalide : this.state.rowValide }
+            >
             <td>{menu.last_name}</td>
             <td>{menu.first_name}</td>
             <td>{menu.quantity}</td>
@@ -251,6 +269,7 @@ class Menu extends Component {
               {' '}
               <Button
                 color='danger'
+                onClick = {() =>this.onButtonClick(index)}
                 disabled = {this.state.MenuList[index].served===false}
                 >Annuler</Button>
 
@@ -297,7 +316,7 @@ class Menu extends Component {
           {this.state.NavIndex && this.state.MenuInformation ? ''+
             this.state.MenuInformation.name+' - '+
             this.state.MenuInformation.total_quantity + ' / '+ this.state.MenuInformation.quantity+
-            ' - Servis : ' + this.state.MenuInformation.served_quantity
+            ' - Commandes Servies : ' + this.state.MenuInformation.served_quantity
              : ''}
         </h2>
         {this.state.NavIndex && this.state.MenuInformation ? this.returnTab() : <h3> Veuillez choisir un Menu de la liste</h3>}
