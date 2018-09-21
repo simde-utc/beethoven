@@ -4,31 +4,63 @@ import {Nav, NavItem, NavLink} from 'reactstrap';
 import { Container, Col, Row } from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 
+// TODO:  VOIR AXIOS POUR REQUETES
+
 
 // Mise à jour de index dans state pour connaitre le bouton selectionné
 function updateNavIndex(NavIndex){
   this.setState({NavIndex})
 }
 
+function updateMenuInformation(MenuInformation){
+  this.setState({MenuInformation})
+}
+
 function updateMenuList(MenuList){
   this.setState({MenuList})
 }
+
+let fetchMenuList = (idMenu)=>{
+  fetch("http://37.139.25.111/getorders/"+idMenu+"?random="+Math.random(), {
+    method : 'GET',
+    mode:'cors',
+    headers:{
+      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+
+  }
+  })
+    .then(res => res.json())
+    .then(
+      (result) => {
+        console.log(result)
+          updateMenuInformation(result.menu)
+          updateMenuList(result.orders)
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+
+      (error) => {
+          updateMenuInformation(null)
+          updateMenuList([])
+          console.log(error)
+      }
+    )
+
+}
+
 
 
 
 //Classe de navigation entre les différents menus disponibles à la vente
 //le bouton cliqué  changera la valeur de index dans les state
-// TODO: ICI POUR GERER LES ROUTES ETC ETC ?
-
-// TODO: liaison avec une route pour avoir les menus disponibles
-// TODO: n'afficher que la liste des ventes du menu cliqué
-
 class MenuNav extends Component {
 
   constructor(props){
     super(props);
     this.state = {
       index: null,
+      Menus: [],
        //changement de couleur pour un menu selectionné
       navStyleSelected : {
         color : 'white',
@@ -42,39 +74,20 @@ class MenuNav extends Component {
       }
     };
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
+
+  }
+    // s'effectue au montage du composant
+    //Envoie dans le state l'info des différents menus présents
+    componentDidMount(){
+      this.FetchMenus();
     }
 
     //gestion du clique bouton
     // La liaison est effectuée avec la classe Menu
-    // TODO: ICI POUR LES ROUTES
     onRadioBtnClick(rSelected){
       this.setState({index : rSelected});
       updateNavIndex(rSelected);
-
-    fetch("http://37.139.25.111/getorders/"+rSelected, {
-      method : 'GET',
-      mode:'cors',
-      headers:{
-        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-        
-    }
-    })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log('okok')
-            updateMenuList(result.orders)
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-
-        (error) => {
-            console.log(error)
-        }
-      )
-
-
+      fetchMenuList(rSelected)
     }
 
     //ajout d'un nouveau bouton pour chaque menu présent
@@ -89,24 +102,57 @@ class MenuNav extends Component {
                onClick = {() => this.onRadioBtnClick(bId)}
                >
                {bName}
-
              </NavLink>
            </NavItem>
          );
     }
 
 
-// TODO: boucle for pour gérer l'ensemble des menus présents en vente
+
+
+//fonction de reccupération de la liste des menus à vendre
+    FetchMenus(){
+      fetch("http://37.139.25.111/getMenu/?random="+Math.random(), {
+        method : 'GET',
+        mode:'cors',
+        headers:{
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+
+      }
+      })
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              Menus : result
+            })
+          },
+          (error) => {
+            console.log(error)
+          })
+    }
+
+
+
+
+
+
   render() {
+    let List = []
+    if(this.state.Menus[0] != undefined){
+      console.log(this.state.Menus)
+
+
+      this.state.Menus.forEach((item)=>{
+        List.push(<NavItem>{this.addButton(item.article.nom, item.article.id_payutc)}</NavItem>)
+      })
+
+    }
     return (
       <div className="MenuNav">
 
         <Nav vertical>
-
-          <NavItem>{this.addButton("Menu 1", 13453)}</NavItem>
-
-          <NavItem>{this.addButton("Menu 2", 3564)}</NavItem>
-         {/*}<p>Selected : {this.state.index}</p>*/ }
+          {List}
         </Nav>
 
 
@@ -118,27 +164,66 @@ class MenuNav extends Component {
 
 
 //CLASSE Menu qui affiche l'ensemble des menus commandés sur le type de menu selectionné
-// TODO: Mettre la liste de personnes dans les props ou dans les states?
 class Menu extends Component {
 
   constructor(props){
     super(props)
     this.state={
       NavIndex:null,
-      MenuList: []
+      MenuList: [],
+      MenuInformation : null
     }
     //reccupération des informations de la nav
+    updateMenuInformation = updateMenuInformation.bind(this)
     updateNavIndex = updateNavIndex.bind(this)
     updateMenuList = updateMenuList.bind(this)
   }
 
+  //Boucle Update data toutes les 15 secondes
+  componentDidMount(){
+      this.interval = setInterval(()=>{
+        console.log('update data')
+        fetchMenuList(this.state.NavIndex)
+      }, 15000)
+
+  }
+
+  componentWillUnmount() {
+  clearInterval(this.interval);
+}
+
 //changement de l'état du bouton
 // TODO: envoyer info au back pour changer la valeur de served
   onButtonClick(index){
-    console.log(this.state.MenuList[index].first_name)
     this.state.MenuList[index].served = !this.state.MenuList[index].served
     this.forceUpdate()
+    this.fetchServed(this.state.MenuList[index].id_transaction, index)
   }
+
+  fetchServed(id, index){
+    fetch("http://37.139.25.111/setMenuServed/"+id, {
+      method : 'POST',
+      mode:'cors',
+      headers:{
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+    }
+    })
+      .then((result)=>{
+        if(result.ok){
+          console.log("ok");
+          fetchMenuList(this.state.NavIndex)
+
+        } else{
+          console.log("nope")
+        }
+
+
+
+      })
+
+  }
+
+
 
 
 //Liste des Menus commandés identifiés par
@@ -165,6 +250,7 @@ class Menu extends Component {
         )
 
       }
+// TODO: Mettre la liste de personnes dans les props ou dans les states?
 
     this.state.MenuList.forEach(function(menu, index){
       MenuList.push(printMenu(menu,index))
@@ -181,7 +267,7 @@ class Menu extends Component {
             <th> Nom </th>
             <th> Prénom </th>
             <th> Qte </th>
-            <th> served </th>
+            <th> Servi </th>
           </tr>
         </thead>
         <tbody>
@@ -194,12 +280,17 @@ class Menu extends Component {
 
 
   render() {
+
     return (
       <div className="Menu">
         <h2>
-          {this.state.NavIndex ? 'Informations du Menu n°'+this.state.NavIndex : ''}
+          {this.state.NavIndex && this.state.MenuInformation ? ''+
+            this.state.MenuInformation.name+' - '+
+            this.state.MenuInformation.total_quantity + ' / '+ this.state.MenuInformation.quantity+
+            ' - Servis : ' + this.state.MenuInformation.served_quantity
+             : ''}
         </h2>
-        {this.state.NavIndex ? this.returnTab() : <h3> Veuillez choisir un Menu de la liste</h3>}
+        {this.state.NavIndex && this.state.MenuInformation ? this.returnTab() : <h3> Veuillez choisir un Menu de la liste</h3>}
       </div>
     );
   }
