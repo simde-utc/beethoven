@@ -114,7 +114,7 @@ class MenuNav extends Component {
 
 //fonction de reccupération de la liste des menus à vendre
     FetchMenus(){
-      fetch("http://37.139.25.111/getMenu/?random="+Math.random(), {
+      fetch("http://37.139.25.111/menus/?random="+Math.random(), {
         method : 'GET',
         mode:'cors',
         headers:{
