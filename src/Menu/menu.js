@@ -199,7 +199,7 @@ class Menu extends Component {
       this.interval = setInterval(()=>{
         console.log('update data')
         fetchMenuList(this.state.NavIndex)
-      }, 15000)
+      }, 5000)
 
 
 
