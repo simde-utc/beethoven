@@ -59,6 +59,7 @@ class Vente extends Component {
           <div class="col-6">
               <div class="tab-content" id="nav-tabContent">
                 <ListeArticle></ListeArticle>
+                <Config></Config>
               </div>
           </div>
         </div>
@@ -268,19 +269,49 @@ class ListeArticle extends Component {
 
 
 {/*Template des articles à afficher lors du paiment*/}
-function Article(props){
-  return (
-    <tr>
-    <th scope="row">{props.qte}</th>
-    <td> {props.nom} </td>
-    <td> {props.prix} € </td>
-      <td><button type="button" class="btn btn-outline-danger btn-xs">
-            <i class="fa fa-trash" aria-hidden="true"></i>
-          </button>
-      </td>
-    </tr>
-  );
+class TemplateArticle extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      rows: []
+    };
+    this.deleteRow = this.deleteRow.bind(this);
+  }
+  deleteRow(){
+    this.setState({
+      rows: []
+    });
+    console.log(this.state);
+
+  }
+  templateArt(){
+    const art = this.props.art;
+    var newRow ={nom: art.nom, prix: art.prix, qte: art.qte}
+    this.state.rows.push(newRow)
+      if(this.state.rows.length>1){
+        let retour = (<tr>
+          <th scope="row">{art.qte}</th>
+          <td> {art.nom} </td>
+          <td> {art.prix} € </td>
+            <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={this.deleteRow}>
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </td>
+        </tr>)
+        return (retour);
+      }else{
+        return (<div></div>);
+      }
+  }
+  render() {
+    return (
+      this.templateArt()
+    );
+  }
 }
+
+
+
 
 {/*Liste des achats qu'un user va payer*/}
 class Achats extends Component {
@@ -296,7 +327,12 @@ class Achats extends Component {
     this.state.Article.forEach(function(element) {
       const priceA = (element.artPrice/100)*element.artQte;
       const prixArt = priceA.toFixed(2);
-      listeArticle.push(<Article qte={element.artQte} nom={element.artName} prix={prixArt}/>)
+      const Article = {
+        qte:element.artQte,
+        nom:element.artName,
+        prix:prixArt
+      }
+      listeArticle.push(<TemplateArticle art={Article}/>)
     });
     return (
       listeArticle
