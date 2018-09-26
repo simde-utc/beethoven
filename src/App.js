@@ -3,13 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './header';
 import Body from './body';
+import MenuBody from './Menu/menu';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Header></Header>
-        <Body></Body>
+        <MenuBody></MenuBody>
       </div>
     );
   }
