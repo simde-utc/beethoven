@@ -33,18 +33,13 @@ let fetchMenuList = (idMenu)=>{
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result)
           updateMenuInformation(result.menu)
           updateMenuList(result.orders)
       },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-
       (error) => {
           updateMenuInformation(null)
           updateMenuList([])
-          console.log(error)
+          console.log(error) // TODO: class error
       }
     )
 
@@ -130,34 +125,23 @@ class MenuNav extends Component {
             })
           },
           (error) => {
-            console.log(error)
+            console.log(error) // TODO: classe error
           })
     }
-
-
-
-
 
 
   render() {
     let List = []
     if(this.state.Menus[0] != undefined){
-      console.log(this.state.Menus)
-
-
       this.state.Menus.forEach((item)=>{
         List.push(<NavItem>{this.addButton(item.article.nom, item.article.id_payutc)}</NavItem>)
       })
-
     }
     return (
       <div className="MenuNav">
-
         <Nav vertical>
           {List}
         </Nav>
-
-
       </div>
     );
   }
@@ -200,9 +184,6 @@ class Menu extends Component {
         console.log('update data')
         fetchMenuList(this.state.NavIndex)
       }, 5000)
-
-
-
   }
 
   componentWillUnmount() {
@@ -210,7 +191,6 @@ class Menu extends Component {
 }
 
 //changement de l'état du bouton
-// TODO: envoyer info au back pour changer la valeur de served
   onButtonClick(index){
     this.state.MenuList[index].served = !this.state.MenuList[index].served
     this.forceUpdate()
@@ -228,18 +208,11 @@ class Menu extends Component {
       .then((result)=>{
         if(result.ok){
           fetchMenuList(this.state.NavIndex)
-
         } else{
           console.log(result)
         }
-
-
-
       })
-
   }
-
-
 
 
 //Liste des Menus commandés identifiés par
@@ -272,14 +245,9 @@ class Menu extends Component {
                 onClick = {() =>this.onButtonClick(index)}
                 disabled = {this.state.MenuList[index].served===false}
                 >Annuler</Button>
-
-
-        </td>
+            </td>
           </tr>
-        )
-
-      }
-// TODO: Mettre la liste de personnes dans les props ou dans les states?
+        )}
 
     this.state.MenuList.forEach(function(menu, index){
       MenuList.push(printMenu(menu,index))
@@ -309,7 +277,6 @@ class Menu extends Component {
 
 
   render() {
-
     return (
       <div className="Menu">
         <h2>
@@ -330,9 +297,7 @@ class Menu extends Component {
 class MenuBody extends Component {
   constructor(props){
     super(props);
-
   }
-
 
   render() {
     return (
@@ -341,21 +306,11 @@ class MenuBody extends Component {
           <Row>
           <Col md="3"> <MenuNav></MenuNav> </Col>
           <Col md="9"> <Menu ></Menu> </Col>
-
-
           </Row>
-
         </Container>
       </div>
     );
   }
 }
-
-
-
-
-
-
-
 
 export default MenuBody;
