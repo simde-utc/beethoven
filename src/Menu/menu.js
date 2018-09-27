@@ -3,6 +3,7 @@ import '../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import { Container, Col, Row } from 'reactstrap';
 import {Table, Button } from 'reactstrap';
+import {FaTrash} from 'react-icons/fa';
 
 
 // TODO:  VOIR AXIOS POUR REQUETES
@@ -67,7 +68,7 @@ class MenuNav extends Component {
       navStyle : {
         color : 'white',
         background :  'none'
-      }
+      },
     };
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
 
@@ -86,9 +87,32 @@ class MenuNav extends Component {
       fetchMenuList(rSelected)
     }
 
+    onTrashClick(bId){
+      fetch("http://37.139.25.111/setMenuClosed/"+bId+"?random="+Math.random(), {
+        method : 'POST',
+        mode:'cors',
+        headers:{
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
+      }
+    }).then().then(
+          (result) => {
+            let updatedMenuList = this.state.Menus.filter(item=>item.article.id_payutc!==bId)
+
+            this.setState({Menus:updatedMenuList});
+          },
+          (error) => {
+              console.log(error) // TODO: class error
+          }
+        )
+    }
+
     //ajout d'un nouveau bouton pour chaque menu présent
      addButton = (bName, bId)=>{
+
       return(
+
+          <tr>
+            <td>
            <NavItem>
              <NavLink
                href="#"
@@ -96,11 +120,16 @@ class MenuNav extends Component {
                style = { this.state.index === bId ? this.state.navStyleSelected : this.state.navStyle}
                active = {this.state.index === bId}
                onClick = {() => this.onRadioBtnClick(bId)}
-               >
-               {bName}
-
+               >{bName}
              </NavLink>
            </NavItem>
+           </td>
+           <td><Button
+             size="sm"
+             onClick = {()=> this.onTrashClick(bId)}
+             ><FaTrash size='1em'/></Button>
+           </td>
+         </tr>
          );
     }
 
@@ -134,13 +163,15 @@ class MenuNav extends Component {
     let List = []
     if(this.state.Menus[0] != undefined){
       this.state.Menus.forEach((item)=>{
-        List.push(<NavItem>{this.addButton(item.article.nom, item.article.id_payutc)}</NavItem>)
+        List.push(this.addButton(item.article.nom, item.article.id_payutc))
       })
     }
     return (
       <div className="MenuNav">
         <Nav vertical>
+          <table style={{width:'100%'}}>
           {List}
+        </table>
         </Nav>
       </div>
     );
@@ -308,6 +339,7 @@ class MenuBody extends Component {
           <Col md="9"> <Menu ></Menu> </Col>
           </Row>
         </Container>
+
       </div>
     );
   }
