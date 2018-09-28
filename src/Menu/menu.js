@@ -22,6 +22,7 @@ function updateMenuList(MenuList){
   this.setState({MenuList})
 }
 
+
 let fetchMenuList = (idMenu)=>{
   fetch("http://37.139.25.111/getorders/"+idMenu+"?random="+Math.random(), {
     method : 'GET',
