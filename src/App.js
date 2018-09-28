@@ -4,8 +4,13 @@ import './App.css';
 import Header from './header';
 import Body from './body';
 import MenuBody from './Menu/menu';
-
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      errors : null
+    }
+  }
   render() {
     return (
       <div className="App">
