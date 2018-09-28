@@ -14,13 +14,6 @@ class App extends Component {
         cas_ticket: null
         }
     }
-    check_cas_ticket(){
-        if (this.state.cas_ticket==null){
-            window.location.href = 'https://cas.utc.fr/cas/login?service=http://beethoven.picasso-utc.fr?task=login';
-            let ticket = getTicket(window.location.href);
-            this.setState({cas_ticket: ticket})
-        }
-    }
     getTicket(url){
       let ticketRegex = /(\?|&)ticket=([^&=]+)/;
       if(ticketRegex.test(url)){
@@ -28,6 +21,14 @@ class App extends Component {
         return match[2];
        }
     }
+    check_cas_ticket(){
+        if (this.state.cas_ticket==null){
+            window.location.href = 'https://cas.utc.fr/cas/login?service=http://beethoven.picasso-utc.fr?task=login';
+            let ticket = getTicket(window.location.href);
+            this.setState({cas_ticket: ticket})
+        }
+    }
+
 
     render() {
     this.check_cas_ticket()
