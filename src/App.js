@@ -21,10 +21,11 @@ class App extends Component {
         return match[2];
        }
     }
+
     check_cas_ticket(){
         if (this.state.cas_ticket==null){
             window.location.href = 'https://cas.utc.fr/cas/login?service=http://beethoven.picasso-utc.fr?task=login';
-            let ticket = getTicket(window.location.href);
+            let ticket = this.getTicket(window.location.href);
             this.setState({cas_ticket: ticket})
         }
     }
