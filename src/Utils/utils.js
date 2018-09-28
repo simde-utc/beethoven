@@ -3,9 +3,15 @@ import {ErrorAlert} from './Error'
 
 
 
-export  var printError = (error)=>{
+
+
+const printError = (error)=>{
     return(
       <ErrorAlert err={error}>
       </ErrorAlert>
     )
+}
+
+export const errors = {
+  printError
 }
