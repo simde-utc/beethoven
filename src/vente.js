@@ -5,23 +5,28 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 
 class Vente extends Component {
   render() {
+    const maxSizeTable = {
+      maxHeight: 50
+    }
     return (
       <div className="Header">
         <div class="row">
            {/*Partie de gauche : Information des futurs achats, validation de la transaction */}
           <div class="col-4">
             {/*Info Achat*/}
-            <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center">
-              <thead>
-                <tr>
-                  <th scope="col">Qte</th>
-                  <th scope="col">Nom Prod</th>
-                  <th scope="col">Prix</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <Achats></Achats>
-            </table>
+            <div class={maxSizeTable}>
+              <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
+                <thead>
+                  <tr>
+                    <th scope="col">Qte</th>
+                    <th scope="col">Nom Prod</th>
+                    <th scope="col">Prix</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <Achats></Achats>
+              </table>
+            </div>
             {/*Annulation des achats en cours*/}
             <div>
             <button class="btn btn-primary ml-2 mb-2 btn-block" >Annuler tout</button>
@@ -59,7 +64,6 @@ class Vente extends Component {
           <div class="col-6">
               <div class="tab-content" id="nav-tabContent">
                 <ListeArticle></ListeArticle>
-                <Config></Config>
               </div>
           </div>
         </div>
@@ -288,7 +292,7 @@ class TemplateArticle extends React.Component {
     const art = this.props.art;
     var newRow ={nom: art.nom, prix: art.prix, qte: art.qte}
     this.state.rows.push(newRow)
-      if(this.state.rows.length>1){
+      if(this.state.rows.length>0){
         let retour = (<tr>
           <th scope="row">{art.qte}</th>
           <td> {art.nom} </td>
@@ -358,6 +362,39 @@ function getTicket(url){
 }
 
 {/*Connexion CAS*/}
+
+function getConnect() {
+  fetch("https://api.nemopay.net/services/MYACCOUNT/loginCas2?system_id=payutc&app_key=0a93e8e18e6ed78fa50c4d74e949801b", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Nemopay-Version': '2018-07-03',
+      },
+      body: JSON.stringify({
+        ticket: ""+getTicket(window.location.href)+"",
+        service: 'http://localhost:3000'
+      }),
+    })
+    .then(res => res.json())
+    .then(
+      (result) => {
+        this.setState({
+          isLoaded: true,
+          items: result
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error: 'Error ah'
+        });
+      }
+    )
+}
+
+
+
+
 class Config extends Component {
   constructor(props) {
     super(props);
