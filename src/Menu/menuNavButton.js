@@ -8,7 +8,6 @@ import {FaTrash} from 'react-icons/fa';
 
 import {errors} from '../Utils/utils'
 import {onTrashClick, fetchMenus} from '../Utils/apiCalls'
-import {componentExchange} from '../Utils/componentExchange'
 
 export class MenuNavButton extends Component{
 

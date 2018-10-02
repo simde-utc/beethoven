@@ -8,21 +8,22 @@ import {MenuRow} from './menuRow'
 import {errors} from '../Utils/utils'
 import {fetchMenus, onTrashClick, fetchServed, fetchMenuList} from '../Utils/apiCalls'
 
-
-
-
-
 export class MenuList extends Component{
   constructor(props){
     super(props)
     this.state = {
       NavIndex : null,
       MenuList : [],
-      MenuInformation : null,
+      MenuInformation : [],
     }
   }
 
   componentDidMount(){
+    this.interval = setInterval(()=>{
+      console.log(this.state.MenuList)
+      console.log(this.state.NavIndex)
+    }, 5000)
+
     /*this.interval = setInterval(()=>{
       console.log('update data')
       fetchMenuList(this.state.NavIndex,
@@ -70,9 +71,9 @@ render(){
           quantity={menu.quantity}
           id_transaction= {menu.id_transaction}
           NavIndex={this.state.NavIndex}
-          updateNavIndex = {(NavIndex)=>this.props.updateNavIndex(NavIndex)}
-          updateMenuInformation = {(MenuInformation)=>this.props.updateMenuInformation(MenuInformation)}
-          updateMenuList = {(MenuList)=>this.props.updateMenuList(MenuList)}
+          updateNavIndex = {this.props.updateNavIndex}
+          updateMenuInformation = {this.props.updateMenuInformation}
+          updateMenuList = {this.props.updateMenuList}
           />)
       })
   }

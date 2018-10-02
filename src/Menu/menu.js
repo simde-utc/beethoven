@@ -16,19 +16,37 @@ import {fetchMenus, onTrashClick} from '../Utils/apiCalls'
 class MenuBody extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      NavIndex : null,
+      MenuInformation : [],
+      MenuList : []
+    };
   }
 
-  updateNavIndex(NavIndex){
-    this.setState({NavIndex})
+  updateNavIndex = (myNavIndex)=>{
+    this.setState({NavIndex : myNavIndex})
   }
 
-  updateMenuInformation(MenuInformation){
+  updateMenuInformation = (MenuInformation)=>{
     this.setState({MenuInformation})
   }
 
-  updateMenuList(MenuList){
-    this.setState({MenuList})
+  updateMenuList = (myMenuList)=>{
+    console.log("LA FONCTION MARCHE")
+    this.setState({MenuList :myMenuList})
   }
+
+  componentDidMount(){
+    this.interval = setInterval(()=>{
+      console.log(this.state.NavIndex)
+      console.log(this.state.MenuInformation)
+      console.log(this.state.MenuList)
+    }, 5000)
+}
+
+  componentWillUnmount() {
+clearInterval(this.interval);
+}
 
   render() {
     return (
@@ -36,15 +54,18 @@ class MenuBody extends Component {
         <Container fluid>
           <Row>
           <Col md="3"> <MenuNav
-            updateNavIndex = {(NavIndex)=>{this.updateNavIndex(NavIndex)}}
-            updateMenuInformation = {(MenuInformation)=>{this.updateMenuInformation(MenuInformation)}}
-            updateMenuList = {(MenuList)=>{this.updateMenuList(MenuList)}}
+            updateNavIndex = {this.updateNavIndex}
+            updateMenuInformation = {this.updateMenuInformation}
+            updateMenuList = {this.updateMenuList}
 
             ></MenuNav> </Col>
           <Col md="9"> <MenuList
-            updateNavIndex = {this.updateNavIndex.bind(this)}
-            updateMenuInformation = {this.updateMenuInformation.bind(this)}
-            updateMenuList = {this.updateMenuList.bind(this)}
+            updateNavIndex = {this.updateNavIndex}
+            updateMenuInformation = {this.updateMenuInformation}
+            updateMenuList = {this.updateMenuList}
+            NavIndex = {this.state.NavIndex}
+            MenuList = {this.state.MenuList}
+            MenuInformation = {this.state.MenuInformation}
             /></Col>
           </Row>
         </Container>
