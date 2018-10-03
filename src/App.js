@@ -34,7 +34,7 @@ function getCasUrl(tick){
       .then(
         (result) => {
           console.log(result)
-          let response = fetch(casurl+'v1/tickets?service='+serviceurl+'&username=hpaignea&password=H19PaIgNeAu97',{
+          let response = fetch(casurl+'v1/tickets?service='+serviceurl+'&username=LOGIN HERE&password=PASSWORD HERE',{
                 method: 'POST',
                 headers: {
                   'Content-type': 'application/x-www-form-urlencoded',
