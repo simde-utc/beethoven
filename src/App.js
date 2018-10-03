@@ -22,7 +22,7 @@ function getTicket(url){
 
 function getCasUrl(tick){
   let casurl = 'https://cas.utc.fr/cas/'
-  let serviceurl = 'http://beethoven.picasso-utc.fr/'
+  let serviceurl = 'http%3A%2F%2Flocalhost%3A5000'
   fetch('https://api.nemopay.net/services/ROSETTINGS/getCasUrl?system_id=payutc&app_key=31f5809f43b3161dd8aefb7a79a5fc55',{
         method: 'POST',
         headers: {
@@ -34,6 +34,15 @@ function getCasUrl(tick){
       .then(
         (result) => {
           console.log(result)
+          let response = fetch(casurl+'v1/tickets?service='+serviceurl+'&username=hpaignea&password=H19PaIgNeAu97',{
+                method: 'POST',
+                headers: {
+                  'Content-type': 'application/x-www-form-urlencoded',
+              		'Accept': 'text/plain',
+                },
+              });
+          console.log(response.status)
+
           fetch("https://api.nemopay.net/services/MYACCOUNT/loginCas2?system_id=payutc&app_key=31f5809f43b3161dd8aefb7a79a5fc55", {
           method: 'POST',
           headers: {
