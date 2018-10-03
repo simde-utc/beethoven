@@ -12,7 +12,7 @@ class Header extends Component {
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="#">Beethoven</a>
             <span className="input-group-btn">
-              <a href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000%3Ftask%3Dlogin?task=login">Click to login</a>
+              <a href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Fbeethoven.picasso-utc.fr">Click to login</a>
             </span>
             <span className="input-group-btn">
               <a href="https://cas.utc.fr/cas/logout">LOGOUT</a>
