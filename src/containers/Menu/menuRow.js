@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../../App.css';
 import {Button } from 'reactstrap';
 
-
 import {MenuNav} from './menuNav'
-import {errors} from '../Utils/utils'
-import {fetchMenus, onTrashClick, fetchServed, fetchMenuList} from '../Utils/apiCalls'
+import {fetchMenus, onTrashClick, fetchServed, fetchMenuList} from '../../Utils/apiCalls'
 
 export class MenuRow extends Component {
   constructor(props){

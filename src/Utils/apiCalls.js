@@ -4,7 +4,7 @@ import '../App.css';
 
 
 
-export const onTrashClick = (buttonId, state, success, failure)=>{
+export const onTrashClick = (buttonId, success, failure)=>{
   fetch(
     "http://37.139.25.111/setMenuClosed/" + buttonId +"?random="+Math.random(),
     {
@@ -15,8 +15,7 @@ export const onTrashClick = (buttonId, state, success, failure)=>{
       }
     }).then().then(
       (result)=>{
-        let updatedMenuList = state.Menus.filter(item=>item.article.id_payutc!==buttonId)
-        success(updatedMenuList)
+        success(result)
       },
       (error)=>{
         failure(error)
