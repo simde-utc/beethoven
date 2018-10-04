@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import { SESSIONID, APPKEY } from './config';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { APPKEY } from './config';
+
+
 
 class Vente extends Component {
   render() {
@@ -24,7 +25,7 @@ class Vente extends Component {
                     <th></th>
                   </tr>
                 </thead>
-                <Achats></Achats>
+                <Achats sessionid={this.props.sessionid}></Achats>
               </table>
             </div>
             {/*Annulation des achats en cours*/}
@@ -58,12 +59,12 @@ class Vente extends Component {
           </div>
           {/*Différents type d'articles*/}
           <div class="col">
-              <Categorie></Categorie>
+              <Categorie sessionid={this.props.sessionid}></Categorie>
           </div>
           {/*Liste des articles selon le type sélectionné*/}
           <div class="col-6">
               <div class="tab-content" id="nav-tabContent">
-                <ListeArticle></ListeArticle>
+                <ListeArticle sessionid={this.props.sessionid}></ListeArticle>
               </div>
           </div>
         </div>
@@ -125,7 +126,7 @@ class Categorie extends Component {
   }
   componentDidMount() {
     fetch("https://api.nemopay.net/services/POSS3/getSalesLocations?system_id=payutc&app_key="+APPKEY+
-    "&sessionid="+SESSIONID+"", {
+    "&sessionid="+this.props.sessionid+"", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,7 +144,7 @@ class Categorie extends Component {
             idC: dataLocation[0].categories
           })
           fetch("https://api.nemopay.net/services/POSS3/getCategories?system_id=payutc&app_key="+APPKEY+
-          "&sessionid="+SESSIONID+"", {
+          "&sessionid="+this.props.sessionid+"", {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -213,7 +214,7 @@ class ListeArticle extends Component {
   }
   componentDidMount() {
     fetch("https://api.nemopay.net/services/POSS3/getArticles?system_id=payutc&app_key="+APPKEY+
-    "&sessionid="+SESSIONID+"", {
+    "&sessionid="+this.props.sessionid+"", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -7,6 +7,12 @@ class Header extends Component {
       <div className="Header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="#">Beethoven</a>
+            <span className="input-group-btn">
+                <a href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000">Click to login</a>
+            </span>
+          <span className="input-group-btn">
+            <a href="https://cas.utc.fr/cas/logout">LOGOUT</a>
+          </span>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
