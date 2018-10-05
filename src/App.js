@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './header';
 import Body from './body';
-import MenuBody from './Menu/menu';
+import MenuBody from './containers/Menu/menu';
 import CasConnection from './config';
 
 class App extends Component {
@@ -12,7 +12,6 @@ class App extends Component {
         <div className="App">
           <Header></Header>
           <MenuBody></MenuBody>
-
           <CasConnection></CasConnection>
         </div>
       );
