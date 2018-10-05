@@ -3,24 +3,20 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './header';
 import Body from './body';
-import MenuBody from './containers/Menu/menu';
-
+import MenuBody from './Menu/menu';
+import CasConnection from './config';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      errors : null
+    render() {
+      return (
+        <div className="App">
+          <Header></Header>
+          <MenuBody></MenuBody>
+
+          <CasConnection></CasConnection>
+        </div>
+      );
     }
-  }
-  render() {
-    return (
-      <div className="App">
-        <Header></Header>
-        <MenuBody></MenuBody>
-      </div>
-    );
-  }
 }
 
 export default App;
