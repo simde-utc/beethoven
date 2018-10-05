@@ -8,10 +8,13 @@ import {
   UPDATE_NAVINDEX,
   GET_LIST_ERROR,
   GET_LIST_SUCCESS,
-  GET_LIST_REQUEST
+  GET_LIST_REQUEST,
+  VALIDATE_MENU_ERROR,
+  VALIDATE_MENU_REQUEST,
+  VALIDATE_MENU_SUCCESS
 } from "../constants"
 
-import {fetchMenus, onTrashClick, fetchMenuList} from '../Utils/apiCalls.js'
+import {fetchMenus, onTrashClick, fetchMenuList, fetchServed} from '../Utils/apiCalls.js'
 
 
 
@@ -122,14 +125,56 @@ export function getListError(){
 
 export function getList(idMenu){
   return (dispatch)=>{
+
     dispatch(getListRequest(idMenu));
-    fetchMenuList(
+    if(idMenu!==null){
+      fetchMenuList(
+        idMenu,
+        (data)=>{
+          dispatch(getListSuccess(data))
+        },
+        (err)=>{
+          dispatch(getListError())
+        })
+    } 
+  }
+}
+
+
+//valider menu servi
+export function validateMenuRequest(idMenu, listSales){
+  return{
+    type: VALIDATE_MENU_REQUEST,
+    idMenu : idMenu
+  }
+}
+
+export function validateMenuSuccess(idMenu, listSales){
+  return{
+    type: VALIDATE_MENU_SUCCESS,
+    idMenu : idMenu,
+    listSales : listSales
+  }
+}
+
+export function validateMenuError(){
+  return{
+    type: VALIDATE_MENU_ERROR
+  }
+}
+
+export function validateMenu(idMenu, listSales){
+  return (dispatch) =>{
+    dispatch(validateMenuRequest(idMenu));
+    fetchServed(
       idMenu,
-      (data)=>{
-        dispatch(getListSuccess(data))
+      (data)=> {
+        dispatch(validateMenuSuccess(idMenu, listSales))
       },
       (err)=>{
-        dispatch(getListError())
-      })
+        dispatch(validateMenuError())
+      }
+    )
   }
+
 }

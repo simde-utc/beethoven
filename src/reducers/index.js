@@ -9,7 +9,10 @@ import { 
   DELETE_MENU_SUCCESS,
   GET_LIST_SUCCESS,
   GET_LIST_ERROR,
-  GET_LIST_REQUEST
+  GET_LIST_REQUEST,
+  VALIDATE_MENU_ERROR,
+  VALIDATE_MENU_REQUEST,
+  VALIDATE_MENU_SUCCESS
 } from "../constants";
 
 function menus(state={}, action)
@@ -54,6 +57,27 @@ function menus(state={}, action)
       return state;
 
     case GET_LIST_ERROR:
+      return state;
+
+    case VALIDATE_MENU_REQUEST :
+    return state
+
+
+    case VALIDATE_MENU_SUCCESS :
+    let validated = action.listSales.orders.find(function(elt){
+      return elt.id_transaction === action.idMenu
+    })
+    validated.served = !validated.served;
+    let newListSales = action.listSales.orders.filter(i => i.id_transaction !== action.idMenu)
+    newListSales.push(validated)
+    let newListInformation = action.listSales.menu
+    state = Object.assign({}, state,
+    {
+      listSales : {"menu": newListInformation, "orders": newListSales}
+    })
+
+      return state;
+    case VALIDATE_MENU_ERROR:
       return state;
 
     default:

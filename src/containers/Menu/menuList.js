@@ -4,9 +4,7 @@ import {connect} from 'react-redux'
 import '../../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
-import {FaTrash} from 'react-icons/fa';
-import {MenuNavButton} from './menuNavButton'
-import {MenuRow} from './menuRow'
+import MenuRow from './menuRow'
 
 import {getList} from "../../actions"
 
@@ -30,21 +28,30 @@ returnMenuList(List){
   )
 }
 
+componentDidMount(){
+  this.updateData()
+}
+
+componentWillUnMount(){
+  clearInterval(this.interval)
+}
+
+updateData = ()=>{
+
+    this.interval = setInterval(
+      ()=>{
+
+        this.props.getList(this.props.NavIndex)
+      },
+      10000
+    )
+}
+
 render(){
   const {NavIndex, listSales} = this.props;
   const {getList} = this.props;
   let MenuList = []
 
-// TODO: Faire ca différemment?
-  this.interval = setInterval(()=>{
-    if(NavIndex!==null){
-      console.log("data")
-      getList(NavIndex)
-    }
-    else {
-      console.log(NavIndex)
-    }
-  }, 10000)
 
   if(listSales !==[] && listSales.orders !== undefined )
   {
@@ -54,6 +61,7 @@ render(){
           first_name={menu.first_name}
           quantity={menu.quantity}
           id_transaction= {menu.id_transaction}
+          served = {menu.served}
           />)
       })
   }

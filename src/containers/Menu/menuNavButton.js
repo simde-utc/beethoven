@@ -17,7 +17,7 @@ class MenuNavButton extends Component{
     const {deleteMenus, updateNavIndex, getMenus, getList} = this.props;
     return(
       <tr>
-        <td>
+        <td style = {{height : '5%'}}>
         <NavItem
           href="#"
           focus = {this.props.index === NavIndex}
@@ -29,7 +29,7 @@ class MenuNavButton extends Component{
           active = {this.props.index === NavIndex}
           onClick = {()=> {
             updateNavIndex(this.props.index)
-            getList(this.props.index)
+            getList(NavIndex)
           }}
         >
         {this.props.nom}

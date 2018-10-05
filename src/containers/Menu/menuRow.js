@@ -1,71 +1,70 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
 import '../../App.css';
 import {Button } from 'reactstrap';
 
-import {MenuNav} from './menuNav'
-import {fetchMenus, onTrashClick, fetchServed, fetchMenuList} from '../../Utils/apiCalls'
+import {validateMenu, getMenus, getList} from '../../actions'
 
-export class MenuRow extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      served : false,
-      rowValide : {
-        color : 'white',
-        background : 'rgba(171,163,150,0.5)'
-      },
-
-      rowUnvalide : {
-        color : 'white',
-        background :  'none'
-      }
-    }
-  }
-
-  onButtonClick(){
-    this.setState({served:true})
-
-    fetchServed(this.props.id_transaction,
-      (data)=>{
-        if(data) fetchMenuList(this.props.NavIndex,
-          (data)=>{
-            this.props.updateMenuInformation(data.menu)
-            this.props.updateMenuList(data.orders)
-          },
-          (err)=>{
-            console.error(err)
-          }
-        )
-    },
-    (err)=>{
-      if(err) console.error(err) // TODO: error Classe
-    }
-  )
-  }
-
-
+class MenuRow extends Component {
   render(){
+    const {listSales, NavIndex} = this.props;
+    const {validateMenu, getList} = this.props
     return(
       <tr
-        style = {this.state.served===false ? this.state.rowUnvalide : this.state.rowValide }
+        style = {this.props.served===true ?
+          {
+            color : 'white',
+            background : 'rgba(171,163,150,0.5)'
+          } :
+        {
+          color : 'white',
+          background :  'none'
+        } }
         >
         <td>{this.props.last_name}</td>
         <td>{this.props.first_name}</td>
         <td>{this.props.quantity}</td>
         <td><Button
           color='success'
-          onClick = {() =>this.onButtonClick()}
-          disabled = {!this.state.served===false}
+          onClick = {() =>{
+            validateMenu(this.props.id_transaction, listSales)
+          }
+          }
+          disabled = {!this.props.served===false}
 
           >Valider</Button>
           {' '}
           <Button
             color='danger'
-            onClick = {() =>this.onButtonClick()}
-            disabled = {this.state.served===false}
+            onClick = {() => {
+              validateMenu(this.props.id_transaction, listSales)
+            }
+            }
+            disabled = {this.props.served===false}
             >Annuler</Button>
         </td>
       </tr>
     )
   }
 }
+
+let mapStateToProps = (state)=>{
+  return{
+    //mettre ce qu'on veut faire passer en props du composant
+    listSales : state.menus.listSales || [],
+    NavIndex : state.menus.NavIndex || null
+  };
+}
+
+let mapDispatchToProps = (dispatch)=>{
+  return{
+    getMenus : ()=> dispatch(getMenus()),
+    getList : (index)=>dispatch(getList(index)),
+    validateMenu : (index, listSales)=>dispatch(validateMenu(index, listSales))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (MenuRow)
