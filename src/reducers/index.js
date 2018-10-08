@@ -12,7 +12,9 @@ import { 
   GET_LIST_REQUEST,
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
-  VALIDATE_MENU_SUCCESS
+  VALIDATE_MENU_SUCCESS,
+  ADD_ERROR,
+  DELETE_ERROR
 } from "../constants";
 
 function menus(state={}, action)
@@ -30,6 +32,7 @@ function menus(state={}, action)
         return state;
 
     case GET_MENUS_ERROR:
+      state = Object.assign({}, state, {errorsList:action.error})
       return state;
 
     case DELETE_MENU_REQUEST:
@@ -39,6 +42,7 @@ function menus(state={}, action)
       return state;
 
     case DELETE_MENU_ERROR:
+      state = Object.assign({}, state, {errorsList:action.error})
       return state;
 
     case UPDATE_NAVINDEX:
@@ -57,6 +61,7 @@ function menus(state={}, action)
       return state;
 
     case GET_LIST_ERROR:
+      state = Object.assign({}, state, {errorsList:action.error})
       return state;
 
     case VALIDATE_MENU_REQUEST :
@@ -78,14 +83,19 @@ function menus(state={}, action)
 
       return state;
     case VALIDATE_MENU_ERROR:
+      state = Object.assign({}, state, {errorsList:action.error})
       return state;
+
+
+      case DELETE_ERROR:
+        state = Object.assign({}, state, {errorsList:null})
+        return state;
 
     default:
       return state;
   }
 }
 
-
 export default combineReducers({
-  menus
+  menus,
 });

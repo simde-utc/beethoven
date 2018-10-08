@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {Alert} from 'reactstrap';
 
+import {connect} from "react-redux"
 
+import {deleteError} from '../actions'
 
-
-
-export class ErrorAlert extends React.Component {
+class ErrorAlert extends React.Component {
   constructor(props){
     super(props);
 
@@ -18,15 +18,31 @@ export class ErrorAlert extends React.Component {
 
   onDissmiss(){
     this.setState({visible : false})
+    const {deleteError} = this.props
+    deleteError()
   }
 
   render(){
     return(
       <Alert color="danger" isOpen={this.state.visible} toggle={this.onDissmiss}>
-      Error : {this.props.err}
+      {this.props.err}
       </Alert>
     )
   }
 }
 
-export default ErrorAlert;
+let mapStateToProps = (state)=>{
+  return{
+  };
+}
+
+let mapDispatchToProps = (dispatch)=>{
+  return{
+    deleteError : ()=> dispatch(deleteError()),
+
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(ErrorAlert);

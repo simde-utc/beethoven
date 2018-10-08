@@ -11,7 +11,9 @@ import {
   GET_LIST_REQUEST,
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
-  VALIDATE_MENU_SUCCESS
+  VALIDATE_MENU_SUCCESS,
+  ADD_ERROR,
+  DELETE_ERROR
 } from "../constants"
 
 import {fetchMenus, onTrashClick, fetchMenuList, fetchServed} from '../Utils/apiCalls.js'
@@ -34,10 +36,11 @@ export function getMenusSuccess(listMenus)
   }
 }
 
-export function getMenusError()
+export function getMenusError(error)
 {
   return{
-    type : GET_MENUS_ERROR
+    type : GET_MENUS_ERROR,
+    error : error,
   }
 }
 
@@ -51,7 +54,7 @@ export function getMenus(){
         dispatch(getMenusSuccess(data))
       },
       (err)=>{
-        dispatch(getMenusError())
+        dispatch(getMenusError("Erreur : Liste de Menu"))
       }
     )
   }
@@ -72,9 +75,10 @@ export function deleteMenuSuccess(){
   }
 }
 
-export function deleteMenuError(){
+export function deleteMenuError(error){
   return{
-    type : DELETE_MENU_ERROR
+    type : DELETE_MENU_ERROR,
+    error : error
   }
 }
 
@@ -87,7 +91,7 @@ export function deleteMenus(idMenu){
       dispatch(deleteMenuSuccess())
     },
     (err)=>{
-      dispatch(deleteMenuError())
+      dispatch(deleteMenuError("Erreur : Supression Menu"))
     })
   }
 }
@@ -117,9 +121,10 @@ export function getListSuccess(listSales){
   }
 }
 
-export function getListError(){
+export function getListError(error){
   return{
-    type: GET_LIST_ERROR
+    type: GET_LIST_ERROR,
+    error : error
   }
 }
 
@@ -134,9 +139,9 @@ export function getList(idMenu){
           dispatch(getListSuccess(data))
         },
         (err)=>{
-          dispatch(getListError())
+          dispatch(getListError("Erreur : Liste Servis"))
         })
-    } 
+    }
   }
 }
 
@@ -157,9 +162,10 @@ export function validateMenuSuccess(idMenu, listSales){
   }
 }
 
-export function validateMenuError(){
+export function validateMenuError(error){
   return{
-    type: VALIDATE_MENU_ERROR
+    type: VALIDATE_MENU_ERROR,
+    error : error
   }
 }
 
@@ -172,9 +178,23 @@ export function validateMenu(idMenu, listSales){
         dispatch(validateMenuSuccess(idMenu, listSales))
       },
       (err)=>{
-        dispatch(validateMenuError())
+        dispatch(validateMenuError("Erreur : Validation Menu"))
       }
     )
   }
+}
 
+
+//Gestion des erreurs
+export function addError(information){
+  return{
+    type : ADD_ERROR,
+    information : information
+  }
+}
+
+export function deleteError(){
+  return{
+    type : DELETE_ERROR,
+  }
 }

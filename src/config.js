@@ -38,7 +38,6 @@ class CasTicket extends Component {
       setTicket(tickt)
       this.setState({loaded: true})
     }else{
-      console.log('Cst okokokokookok')
     }
   }
   render() {

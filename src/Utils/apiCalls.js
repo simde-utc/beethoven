@@ -20,7 +20,7 @@ export const onTrashClick = (buttonId, success, failure)=>{
       (error)=>{
         failure(error)
       }
-    )
+    ).catch((err)=>{failure(err)})
 }
 
 export const fetchMenus = (success, failure)=>{
@@ -38,7 +38,7 @@ export const fetchMenus = (success, failure)=>{
       (error)=>{
         failure(error)
       }
-    )
+    ).catch((err)=>{failure(err)})
 }
 
 
@@ -57,7 +57,7 @@ export const fetchServed = (id, success,failure)=>{
       } else{
         failure(result)
       }
-    })
+    }).catch((err)=>{failure(err)})
 }
 
 
@@ -77,6 +77,6 @@ export const fetchMenuList = (idMenu, success, failure)=>{
     (error)=>{
       failure(error)
     }
-  )
+  ).catch((err)=>{failure(err)})
 
 }
