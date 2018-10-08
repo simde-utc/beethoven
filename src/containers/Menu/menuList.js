@@ -43,7 +43,7 @@ updateData = ()=>{
 
         this.props.getList(this.props.NavIndex)
       },
-      10000
+      5000
     )
 }
 
