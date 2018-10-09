@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
-import { APPKEY } from './config';
+import '../../App.css';
+import { APPKEY } from '../../config';
+import {connect} from 'react-redux';
 
+import { getListCateg } from "../../Actions"
 
 
 class Vente extends Component {
+  componentDidMount(){
+    const { getListCateg } = this.props;
+    const { listCateg } = this.props;
+    getListCateg(this.props.sessionid);
+  }
   render() {
+    const { listCateg } = this.props;
     const maxSizeTable = {
       maxHeight: 50
     }
@@ -59,7 +67,7 @@ class Vente extends Component {
           </div>
           {/*Différents type d'articles*/}
           <div class="col">
-              <Categorie sessionid={this.props.sessionid}></Categorie>
+              <Categorie sessionid={this.props.sessionid} listCateg={listCateg}></Categorie>
           </div>
           {/*Liste des articles selon le type sélectionné*/}
           <div class="col-6">
@@ -109,92 +117,7 @@ function getArticleId(newId,newName,newPrice){
   }
 }
 
-{/*Récupération et affichage des Catégorie pour la vente*/}
-class Categorie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: [],
-      idC: []
-    };
-    this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
-  }
-  onRadioBtnClick(rSelected){
-    updateArticles(rSelected)
-  }
-  componentDidMount() {
-    fetch("https://api.nemopay.net/services/POSS3/getSalesLocations?system_id=payutc&app_key="+APPKEY+
-    "&sessionid="+this.props.sessionid+"", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fun_id: 2,
-          event_id: 1,
-        })
-      })
-      .then(res1 => res1.json())
-      .then(
-        (dataLocation) => {
-          let id_Categ = dataLocation[0].categories;
-          this.setState({
-            idC: dataLocation[0].categories
-          })
-          fetch("https://api.nemopay.net/services/POSS3/getCategories?system_id=payutc&app_key="+APPKEY+
-          "&sessionid="+this.props.sessionid+"", {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                fun_id: 2,
-              })
-            })
-            .then(res => res.json())
-            .then(
-              (result) => {
-                let categ = [];
-                for (let i = 0; i < id_Categ.length; i++) {
-                    if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]))
-                }
-                console.log(categ)
-                this.setState({
-                  isLoaded: true,
-                  items: categ
-                });
-              },
-              (error) => {
-                this.setState({
-                  isLoaded: true,
-                  error: 'Error ah'
-                });
-              }
-            )
-        },
-        (error) => {
-            console.log('FailReessourc')
-        });
-  }
-  render() {
-    const { error, isLoaded, items } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      const listeCatego = items.map(item => (
-        <a class='list-group-item list-group-item-action' data-toggle="list" href={['#list-',item.id].join('')} ref={item.id} id={item.id}
-          onClick={() => this.onRadioBtnClick(item.id)} role="tab" >{item.name}</a>
-      ))
-      return (
-        <div class="list-group shadow-lg p-3 mb-5 rounded" id="list-tab" role="tablist">{listeCatego}</div>
-    );
-    }
-  }
-}
+
 
 {/*Affichage des articles dans la colonne de droites par catégorie*/}
 class ListeArticle extends Component {
@@ -210,6 +133,7 @@ class ListeArticle extends Component {
     updateArticles = updateArticles.bind(this);
   }
   handleClick(idArticle,nameArticle,priceArticle){
+    console.log("ICIIII")
     getArticleId(idArticle,nameArticle,priceArticle);
   }
   componentDidMount() {
@@ -239,6 +163,9 @@ class ListeArticle extends Component {
           });
         }
       )
+  }
+  componentWillUnmount(){
+
   }
   render() {
     const { CategId, error, isLoaded, items } = this.state;
@@ -316,6 +243,97 @@ class TemplateArticle extends React.Component {
 }
 
 
+{/*Récupération et affichage des Catégorie pour la vente*/}
+class Categorie extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: [],
+      idC: []
+    };
+    this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
+  }
+  onRadioBtnClick(rSelected){
+    updateArticles(rSelected)
+  }
+  componentDidMount() {
+    fetch("https://api.nemopay.net/services/POSS3/getSalesLocations?system_id=payutc&app_key="+APPKEY+
+    "&sessionid="+this.props.sessionid+"", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fun_id: 2,
+          event_id: 1,
+        })
+      })
+      .then(res1 => res1.json())
+      .then(
+        (dataLocation) => {
+          let id_Categ = dataLocation[0].categories;
+          this.setState({
+            idC: dataLocation[0].categories
+          })
+          fetch("https://api.nemopay.net/services/POSS3/getCategories?system_id=payutc&app_key="+APPKEY+
+          "&sessionid="+this.props.sessionid+"", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                fun_id: 2,
+              })
+            })
+            .then(res => res.json())
+            .then(
+              (result) => {
+                let categ = [];
+                for (let i = 0; i < id_Categ.length; i++) {
+                    if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]))
+                }
+                console.log(categ)
+                this.setState({
+                  isLoaded: true,
+                  items: categ
+                });
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true,
+                  error: 'Error ah'
+                });
+              }
+            )
+        },
+        (error) => {
+            console.log('FailReessourc')
+        });
+  }
+  render() {
+    const { listCateg } = this.props
+
+    console.log(listCateg)
+
+    const { error, isLoaded, items } = this.state;
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      const listeCatego = items.map(item => (
+        <a class='list-group-item list-group-item-action' data-toggle="list" href={['#list-',item.id].join('')} ref={item.id} id={item.id}
+          onClick={() => this.onRadioBtnClick(item.id)} role="tab" >{item.name}</a>
+      ))
+      return (
+        <div class="list-group shadow-lg p-3 mb-5 rounded" id="list-tab" role="tablist">{listeCatego}</div>
+    );
+    }
+  }
+}
+
 
 
 {/*Liste des achats qu'un user va payer*/}
@@ -344,7 +362,6 @@ class Achats extends Component {
     );
   }
   render() {
-    console.log(this.state.Article[0])
     return (
       this.addArticle()
     );
@@ -353,102 +370,20 @@ class Achats extends Component {
 
 
 
-{/*Récupération du ticket*/}
-function getTicket(url){
-  let ticketRegex = /(\?|&)ticket=([^&=]+)/;
-  if(ticketRegex.test(url)){
-    let match = ticketRegex.exec(url);
-    return match[2];
+let mapStateToProps = (state)=>{
+  return{
+    //mettre ce qu'on veut faire passer en props du composant
+    listCateg : state.vente.listCateg || null
+  };
+}
+
+let mapDispatchToProps = (dispatch)=>{
+  return{
+    getListCateg : (sessionid)=> dispatch(getListCateg(sessionid))
   }
 }
 
-{/*Connexion CAS*/}
-
-function getConnect() {
-  fetch("https://api.nemopay.net/services/MYACCOUNT/loginCas2?system_id=payutc&app_key=0a93e8e18e6ed78fa50c4d74e949801b", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Nemopay-Version': '2018-07-03',
-      },
-      body: JSON.stringify({
-        ticket: ""+getTicket(window.location.href)+"",
-        service: 'http://localhost:3000'
-      }),
-    })
-    .then(res => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          isLoaded: true,
-          items: result
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error: 'Error ah'
-        });
-      }
-    )
-}
-
-
-
-
-class Config extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
-    };
-  }
-  componentDidMount() {
-    fetch("https://api.nemopay.net/services/MYACCOUNT/loginCas2?system_id=payutc&app_key=0a93e8e18e6ed78fa50c4d74e949801b", {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Nemopay-Version': '2018-07-03',
-        },
-        body: JSON.stringify({
-          ticket: ""+getTicket(window.location.href)+"",
-          service: 'http://localhost:3000'
-        }),
-      })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error: 'Error ah'
-          });
-        }
-      )
-  }
-  render() {
-    const { error, isLoaded, items } = this.state;
-    let ticket = getTicket(window.location.href);
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <ul>
-          <li>  </li>
-        </ul>
-      );
-    }
-  }
-}
-
-
-export default Vente;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (Vente);
