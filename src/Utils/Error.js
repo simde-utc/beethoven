@@ -21,7 +21,7 @@ class ErrorAlert extends React.Component {
   }
 
   componentDidMount(){
-    setTimeout(()=> this.onDissmiss(),3000)
+    setTimeout(()=> this.onDissmiss(),DELETE_ERROR_TIMOUT)
   }
 
   render(){
