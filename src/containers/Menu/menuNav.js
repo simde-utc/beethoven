@@ -34,7 +34,10 @@ class MenuNav extends Component{
     }
 
     return(
-      <div className = "MenuNav">
+      <div className = "MenuNav"
+
+
+        >
       <Nav vertical>
         <table style={{width:'100%'}}>
         {List}

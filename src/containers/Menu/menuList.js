@@ -6,6 +6,7 @@ import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 import MenuRow from './menuRow'
 
+import {REFRESH_TIMER} from '../../Utils/config'
 import {getList} from "../../actions"
 
 class MenuList extends Component{
@@ -43,7 +44,7 @@ updateData = ()=>{
 
         this.props.getList(this.props.NavIndex)
       },
-      10000
+      REFRESH_TIMER
     )
 }
 

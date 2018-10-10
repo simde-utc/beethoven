@@ -16,15 +16,19 @@ class MenuNavButton extends Component{
     const {NavIndex} = this.props;
     const {deleteMenus, updateNavIndex, getMenus, getList} = this.props;
     return(
-      <tr>
-        <td style = {{height : '5%'}}>
+      <tr style = {
+        this.props.index === NavIndex ?
+        {height : '2.5em', background:'#B22132'} :
+        {height : '2.5em', background:'#f9f9f9'}
+        }>
+        <td>
         <NavItem
           href="#"
           focus = {this.props.index === NavIndex}
           style = {
             this.props.index === NavIndex ?
-            {color:'white', background:'#B22132'} :
-            {color:'white', background:'none'}
+            {color:'white'} :
+            {color:'black'}
           }
           active = {this.props.index === NavIndex}
           onClick = {()=> {
