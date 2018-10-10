@@ -35,7 +35,7 @@ class MenuNav extends Component{
 
     return(
       <div className = "MenuNav"
-        
+
 
         >
       <Nav vertical>
