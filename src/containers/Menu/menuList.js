@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-
+import {REFRESH_TIMER} from '../../Utils/config'
 import '../../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
@@ -43,7 +43,7 @@ updateData = ()=>{
 
         this.props.getList(this.props.NavIndex)
       },
-      5000
+      REFRESH_TIMER
     )
 }
 

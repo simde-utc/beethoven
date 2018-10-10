@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Alert} from 'reactstrap';
+import {DELETE_ERROR_TIMOUT} from './config'
 
 
 import {connect} from "react-redux"
@@ -7,11 +8,9 @@ import {deleteError} from '../actions'
 class ErrorAlert extends React.Component {
   constructor(props){
     super(props);
-
     this.state = {
       visible : true
     }
-
     this.onDissmiss = this.onDissmiss.bind(this)
   }
 
@@ -19,6 +18,10 @@ class ErrorAlert extends React.Component {
     this.setState({visible : false})
     const {deleteError} = this.props
     deleteError()
+  }
+
+  componentDidMount(){
+    setTimeout(()=> this.onDissmiss(),3000)
   }
 
   render(){

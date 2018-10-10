@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-
 import {connect} from 'react-redux'
 
 
@@ -23,6 +22,7 @@ toggle() {
       visible: !this.state.visible
     });
   }
+
 render(){
   const {deleteMenus, getMenus} = this.props;
 
