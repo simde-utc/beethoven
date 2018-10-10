@@ -1,38 +1,50 @@
 import React, { Component } from 'react';
-import '../App.css';
-import { APPKEY } from '../config';
-import {connect} from 'react-redux'
+import '../../App.css';
+import { APPKEY } from '../../config';
+import {connect} from 'react-redux';
+import TemplateArticle from './venteTemplateAchats'
 
-
+import { getChosenArticle } from "../../Actions"
 
 {/*Liste des achats qu'un user va payer*/}
 class Achats extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Article: [],
-    };
-    getArticleId = getArticleId.bind(this);
-  }
-  addArticle() {
-    var listeArticle = [];
-    this.state.Article.forEach(function(element) {
-      const priceA = (element.artPrice/100)*element.artQte;
-      const prixArt = priceA.toFixed(2);
-      const Article = {
-        qte:element.artQte,
-        nom:element.artName,
-        prix:prixArt
-      }
-      listeArticle.push(<TemplateArticle art={Article}/>)
-    });
-    return (
-      listeArticle
-    );
-  }
   render() {
+    const { selectedArticles } = this.props
+    var chosenArticles = [];
+    if(selectedArticles!==[]){
+      selectedArticles.forEach(function(element) {
+        const idArt = element.newID;
+        const priceA = (element.newPRICE/100)*element.newQTE;
+        const prixArt = priceA.toFixed(2);
+        const Article = {
+          qte:element.newQTE,
+          nom:element.newNAME,
+          prix:prixArt,
+          idart: element.newID
+        }
+        chosenArticles.push(<TemplateArticle art={Article}/>)
+      });
+    }
     return (
-      this.addArticle()
+      chosenArticles
     );
   }
 }
+
+let mapStateToProps = (state)=>{
+  return{
+    //mettre ce qu'on veut faire passer en props du composant
+    selectedArticles : state.vente.selectedArticles || []
+  };
+}
+
+let mapDispatchToProps = (dispatch)=>{
+  return{
+    getChosenArticle : (id,name,price,list)=> dispatch(getChosenArticle(id,name,price,list))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (Achats);

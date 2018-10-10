@@ -4,11 +4,15 @@ import './App.css';
 import CasConnection from './config'
 import Header from './header.js'
 import {connect} from 'react-redux';
+import {printError} from './Utils/utils'
+
+
 
 import { login } from "./Actions";
 
 class App extends Component {
   render() {
+
     return (
       <div className="App">
         <Header></Header>

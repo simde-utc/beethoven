@@ -5,12 +5,13 @@ import MenuBody from './Containers//Menu/menu';
 import Vente from './Containers/Vente/vente';
 import {connect} from 'react-redux';
 
-import { login } from "./Actions";
+import { login, redirectLogin } from "./Actions";
 
 
 class Header extends Component {
   componentDidMount(){
-      const {login} = this.props;
+      const {login,redirectLogin, redirected} = this.props;
+      if(!redirected) redirectLogin();
       login();
       const {sessionid, authent} = this.props
   }
@@ -39,7 +40,7 @@ class Header extends Component {
     let affichage;
     switch(this.state.load){
       case 'Vente' :
-        affichage = <Vente sessionid={sessionid}></Vente>
+        affichage = <Vente></Vente>
         break;
       case 'Menu' : affichage = <MenuBody></MenuBody>
       break;
@@ -79,12 +80,14 @@ let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
     authent : state.cas.authent || false,
-    sessionid : state.cas.sessionid || null
+    sessionid : state.cas.sessionid || null,
+    redirected : state.cas.redirected || false
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
+    redirectLogin : ()=>dispatch(redirectLogin()),
     login : ()=>dispatch(login())
   }
 }

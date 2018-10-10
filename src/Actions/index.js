@@ -9,19 +9,33 @@ import {
   GET_LIST_ERROR,
   GET_LIST_SUCCESS,
   GET_LIST_REQUEST,
+  GOTO_LOGIN,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
-  GET_CATEGORIES_ERROR
+  GET_CATEGORIES_ERROR,
+  UPDATE_CATEGORIE,
+  GET_CHOSEN_ARTICLE,
+  GET_ARTICLES_REQUEST,
+  GET_ARTICLES_SUCCESS,
+  GET_ARTICLES_ERROR,
+  DELETE_ARTICLE,
+  DELETE_ALL_ARTICLES
 } from "../Constants"
 
-import {fetchMenus, onTrashClick, fetchMenuList, loginCas, getCategories} from '../Utils/apiCalls.js'
+import {fetchMenus, onTrashClick, fetchMenuList, loginCas, getCategories, getArticles} from '../Utils/apiCalls.js'
 
 
 
 //COnnection au CAS
+export function redirectLogin(redirected){
+  return{
+    type : GOTO_LOGIN,
+    redirected : redirected
+  }
+}
 export function loginRequest()
 {
     return {
@@ -213,5 +227,74 @@ export function getListCateg(sessionid){
       (err)=>{
         dispatch(getCategoriesError())
       })
+  }
+}
+
+//Mise a jour de la catégorie selectionnée
+export function updateCategorie(id_Categ){
+  return{
+    type : UPDATE_CATEGORIE,
+    id_Categ : id_Categ
+  }
+}
+
+//Récupérer l'article selectionné
+export function getChosenArticle(newID,newNAME,newPRICE,selectedArticles){
+  return{
+    type : GET_CHOSEN_ARTICLE,
+    newID : newID,
+    newNAME : newNAME,
+    newPRICE : newPRICE,
+    selectedArticles : selectedArticles
+  }
+}
+
+//Récupérer l'ensemble des Articles
+export function getArticlesRequest(sessionid){
+  return{
+    type: GET_ARTICLES_REQUEST,
+    sessionid: sessionid
+  }
+}
+
+export function getArticlesSuccess(listArticles){
+  return{
+    type: GET_ARTICLES_SUCCESS,
+    listArticles: listArticles
+  }
+}
+
+export function getArticlesError(){
+  return{
+    type: GET_ARTICLES_ERROR
+  }
+}
+
+export function getListArticles(sessionid){
+  return (dispatch)=>{
+    dispatch(getArticlesRequest(sessionid));
+    getArticles(
+      sessionid,
+      (data)=>{
+        dispatch(getArticlesSuccess(data))
+      },
+      (err)=>{
+        dispatch(getArticlesError())
+      })
+  }
+}
+
+//Delete un article du panier
+export function deleteArticle(newID,selectedArticles){
+  return{
+    type : DELETE_ARTICLE,
+    newID : newID,
+    selectedArticles : selectedArticles
+  }
+}
+export function deleteAllArticles(selectedArticles){
+  return{
+    type : DELETE_ALL_ARTICLES,
+    selectedArticles : selectedArticles
   }
 }

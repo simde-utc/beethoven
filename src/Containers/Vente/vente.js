@@ -3,20 +3,25 @@ import '../../App.css';
 import { APPKEY } from '../../config';
 import {connect} from 'react-redux';
 
-import { getListCateg } from "../../Actions"
+import Achats from "./venteAchats.js"
+import ListeArticle from "./venteListeArticle.js"
+import Categorie from "./venteCategories.js"
+
+import { getListCateg, deleteAllArticles } from "../../Actions"
 
 
 class Vente extends Component {
-  componentDidMount(){
-    const { getListCateg } = this.props;
-    const { listCateg } = this.props;
-    getListCateg(this.props.sessionid);
-  }
   render() {
-    const { listCateg } = this.props;
     const maxSizeTable = {
       maxHeight: 50
     }
+    const { deleteAllArticles } = this.props;
+    const { selectedArticles } = this.props;
+    const annuler =             (<div>
+                                    <button class="btn btn-primary ml-2 mb-2 btn-block" onClick={() => deleteAllArticles(selectedArticles)}>
+                                      Annuler tout
+                                    </button>
+                                  </div>)
     return (
       <div className="Header">
         <div class="row">
@@ -37,9 +42,7 @@ class Vente extends Component {
               </table>
             </div>
             {/*Annulation des achats en cours*/}
-            <div>
-            <button class="btn btn-primary ml-2 mb-2 btn-block" >Annuler tout</button>
-            </div>
+              {annuler}
             {/*Information sur la carte -> Annuler un paiment / info sur la carte*/}
             <button class="btn btn-primary ml-2 mb-3 btn-block" data-toggle="modal" data-target="#infoUser">Info Carte</button>
             <div class="modal fade" id="infoUser" tabindex="-1" role="dialog" aria-hidden="true">
@@ -67,7 +70,7 @@ class Vente extends Component {
           </div>
           {/*Différents type d'articles*/}
           <div class="col">
-              <Categorie sessionid={this.props.sessionid} listCateg={listCateg}></Categorie>
+              <Categorie sessionid={this.props.sessionid}></Categorie>
           </div>
           {/*Liste des articles selon le type sélectionné*/}
           <div class="col-6">
@@ -81,305 +84,20 @@ class Vente extends Component {
   }
 }
 
-{/*Récupération de l'ID de la catégorie selectionnée*/}
-function updateArticles(CategId){
-  this.setState({CategId})
-}
-
-{/*Récupération de l'ID, du nom, et du prix de l'article choisi*/}
-function getArticleId(newId,newName,newPrice){
-  var actualArticleList = this.state.Article;
-  if(typeof actualArticleList !== 'undefined' && actualArticleList.length > 0){
-    var found = false;
-    for(var i = 0; i < actualArticleList.length; i++) {
-        if (actualArticleList[i].artId === newId) {
-            found = true;
-            actualArticleList[i].artQte++;
-            this.setState({
-              Article: actualArticleList
-            })
-            break;
-        }
-    }
-    if(!found){
-      var articl = {artId: newId, artName: newName, artPrice: newPrice, artQte: 1}
-      actualArticleList.push(articl);
-      this.setState({
-        Article: actualArticleList
-      })
-    }
-  }else{
-    var articl = {artId: newId, artName: newName, artPrice: newPrice, artQte: 1}
-    actualArticleList.push(articl);
-    this.setState({
-      Article: actualArticleList
-    })
-  }
-}
-
-
-
-{/*Affichage des articles dans la colonne de droites par catégorie*/}
-class ListeArticle extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      CategId: 3,
-      error: null,
-      isLoaded: false,
-      items: []
-    };
-    this.handleClick = this.handleClick.bind(this);
-    updateArticles = updateArticles.bind(this);
-  }
-  handleClick(idArticle,nameArticle,priceArticle){
-    console.log("ICIIII")
-    getArticleId(idArticle,nameArticle,priceArticle);
-  }
-  componentDidMount() {
-    fetch("https://api.nemopay.net/services/POSS3/getArticles?system_id=payutc&app_key="+APPKEY+
-    "&sessionid="+this.props.sessionid+"", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fun_id: 2,
-        })
-      })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          console.log(result)
-          this.setState({
-            isLoaded: true,
-            items: result
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error: 'Error ah'
-          });
-        }
-      )
-  }
-  componentWillUnmount(){
-
-  }
-  render() {
-    const { CategId, error, isLoaded, items } = this.state;
-    var styleButton = {background: 'none'}
-    var styleText = {color: 'white'}
-    var styleImg = { borderRadius: '10px'}
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-        var displayArticle = [];
-        items.forEach(function(element) {
-          if(element.categorie_id==CategId){
-            displayArticle.push(
-              <div class="col-sm-2 mb-3" onClick={this.handleClick.bind(this,element.id,element.name,element.price)}>
-                <button type="button" class="btn btn-lg btn-block" style={styleButton}>
-                  <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="180" height="100"></img>
-                  <p style={styleText}>{element.name}</p>
-                </button>
-              </div>
-              )
-          }
-        },this);
-        return (
-          <div class="row mt-3 mr-2">
-            {displayArticle}
-          </div>
-      );
-    }
-  }
-}
-
-
-{/*Template des articles à afficher lors du paiment*/}
-class TemplateArticle extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      rows: []
-    };
-    this.deleteRow = this.deleteRow.bind(this);
-  }
-  deleteRow(){
-    this.setState({
-      rows: []
-    });
-    console.log(this.state);
-
-  }
-  templateArt(){
-    const art = this.props.art;
-    var newRow ={nom: art.nom, prix: art.prix, qte: art.qte}
-    this.state.rows.push(newRow)
-      if(this.state.rows.length>0){
-        let retour = (<tr>
-          <th scope="row">{art.qte}</th>
-          <td> {art.nom} </td>
-          <td> {art.prix} € </td>
-            <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={this.deleteRow}>
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-            </td>
-        </tr>)
-        return (retour);
-      }else{
-        return (<div></div>);
-      }
-  }
-  render() {
-    return (
-      this.templateArt()
-    );
-  }
-}
-
-
-{/*Récupération et affichage des Catégorie pour la vente*/}
-class Categorie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: [],
-      idC: []
-    };
-    this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
-  }
-  onRadioBtnClick(rSelected){
-    updateArticles(rSelected)
-  }
-  componentDidMount() {
-    fetch("https://api.nemopay.net/services/POSS3/getSalesLocations?system_id=payutc&app_key="+APPKEY+
-    "&sessionid="+this.props.sessionid+"", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fun_id: 2,
-          event_id: 1,
-        })
-      })
-      .then(res1 => res1.json())
-      .then(
-        (dataLocation) => {
-          let id_Categ = dataLocation[0].categories;
-          this.setState({
-            idC: dataLocation[0].categories
-          })
-          fetch("https://api.nemopay.net/services/POSS3/getCategories?system_id=payutc&app_key="+APPKEY+
-          "&sessionid="+this.props.sessionid+"", {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                fun_id: 2,
-              })
-            })
-            .then(res => res.json())
-            .then(
-              (result) => {
-                let categ = [];
-                for (let i = 0; i < id_Categ.length; i++) {
-                    if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]))
-                }
-                console.log(categ)
-                this.setState({
-                  isLoaded: true,
-                  items: categ
-                });
-              },
-              (error) => {
-                this.setState({
-                  isLoaded: true,
-                  error: 'Error ah'
-                });
-              }
-            )
-        },
-        (error) => {
-            console.log('FailReessourc')
-        });
-  }
-  render() {
-    const { listCateg } = this.props
-
-    console.log(listCateg)
-
-    const { error, isLoaded, items } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      const listeCatego = items.map(item => (
-        <a class='list-group-item list-group-item-action' data-toggle="list" href={['#list-',item.id].join('')} ref={item.id} id={item.id}
-          onClick={() => this.onRadioBtnClick(item.id)} role="tab" >{item.name}</a>
-      ))
-      return (
-        <div class="list-group shadow-lg p-3 mb-5 rounded" id="list-tab" role="tablist">{listeCatego}</div>
-    );
-    }
-  }
-}
-
-
-
-{/*Liste des achats qu'un user va payer*/}
-class Achats extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Article: [],
-    };
-    getArticleId = getArticleId.bind(this);
-  }
-  addArticle() {
-    var listeArticle = [];
-    this.state.Article.forEach(function(element) {
-      const priceA = (element.artPrice/100)*element.artQte;
-      const prixArt = priceA.toFixed(2);
-      const Article = {
-        qte:element.artQte,
-        nom:element.artName,
-        prix:prixArt
-      }
-      listeArticle.push(<TemplateArticle art={Article}/>)
-    });
-    return (
-      listeArticle
-    );
-  }
-  render() {
-    return (
-      this.addArticle()
-    );
-  }
-}
-
 
 
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-    listCateg : state.vente.listCateg || null
+    listCateg : state.vente.listCateg || null,
+    selectedArticles : state.vente.selectedArticles || null
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
-    getListCateg : (sessionid)=> dispatch(getListCateg(sessionid))
+    getListCateg : (sessionid)=> dispatch(getListCateg(sessionid)),
+    deleteAllArticles : (list)=> dispatch(deleteAllArticles(list))
   }
 }
 

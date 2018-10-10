@@ -28,7 +28,7 @@ export const loginCas = (success, failure)=>{
     (error)=>{
       failure(error)
     }
-  )
+  ).catch((err)=>{failure(err)})
 }
 
 export const onTrashClick = (buttonId, success, failure)=>{
@@ -47,7 +47,7 @@ export const onTrashClick = (buttonId, success, failure)=>{
       (error)=>{
         failure(error)
       }
-    )
+    ).catch((err)=>{failure(err)})
 }
 
 export const fetchMenus = (success, failure)=>{
@@ -65,7 +65,7 @@ export const fetchMenus = (success, failure)=>{
       (error)=>{
         failure(error)
       }
-    )
+    ).catch((err)=>{failure(err)})
 }
 
 
@@ -84,7 +84,7 @@ export const fetchServed = (id, success,failure)=>{
       } else{
         failure(result)
       }
-    })
+    }).catch((err)=>{failure(err)})
 }
 
 
@@ -104,7 +104,7 @@ export const fetchMenuList = (idMenu, success, failure)=>{
     (error)=>{
       failure(error)
     }
-  )
+  ).catch((err)=>{failure(err)})
 
 }
 
@@ -146,9 +146,32 @@ export const getCategories = (sessionid,success,failure)=>{
             (erro) => {
               failure(erro);
             }
-          )
+          ).catch((err)=>{failure(err)})
       },
       (error) => {
           console.log('FailReessourc')
-      });
+      }).catch((err)=>{failure(err)})
+}
+
+export const getArticles = (sessionid, success, failure)=>{
+  fetch("https://api.nemopay.net/services/POSS3/getArticles?system_id=payutc&app_key="+APPKEY+
+  "&sessionid="+sessionid+"", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fun_id: 2,
+      })
+    })
+    .then(res => res.json())
+    .then(
+      (result) => {
+        console.log(result)
+        success(result);
+      },
+      (error) => {
+        failure(error);
+      }
+    ).catch((err)=>{failure(err)})
 }
