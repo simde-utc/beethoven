@@ -7,11 +7,16 @@ import {Nav, NavItem, NavLink} from 'reactstrap';
 import { Container, Col, Row } from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 import {FaTrash} from 'react-icons/fa';
-
 import {deleteMenus, getMenus, getList, updateNavIndex} from '../../actions'
-
+import ModalDelete from './modalDelete'
 
 class MenuNavButton extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal : false
+    }
+  }
   render(){
     const {NavIndex} = this.props;
     const {deleteMenus, updateNavIndex, getMenus, getList} = this.props;
@@ -42,11 +47,19 @@ class MenuNavButton extends Component{
         </td>
         <td><Button
           size="sm"
-          onClick = {()=> {
-            deleteMenus(this.props.index)
-            getMenus()
+          onClick = {()=>{
+            console.log(this.state.modal)
+            if(this.state.modal === true) this.setState({modal : !this.state.modal})
+            this.setState({modal : !this.state.modal})
+
           }}
           ><FaTrash size='1em'/></Button>
+        { this.state.modal === true ? <ModalDelete
+            index = {this.props.index}
+            menu = {this.props.nom}
+            visible = {true}
+            setFalse = {()=>this.setState({modal : false})}
+            ></ModalDelete> : ""}
         </td>
       </tr>
     );
@@ -56,7 +69,7 @@ class MenuNavButton extends Component{
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-    NavIndex : state.menus.NavIndex || null
+    NavIndex : state.menus.NavIndex || null,
   };
 }
 
@@ -65,7 +78,7 @@ let mapDispatchToProps = (dispatch)=>{
     getMenus : ()=> dispatch(getMenus()),
     getList : (index)=> dispatch(getList(index)),
     updateNavIndex : (index)=>dispatch(updateNavIndex(index)),
-    deleteMenus : (index)=>dispatch(deleteMenus(index))
+    deleteMenus : (index)=>dispatch(deleteMenus(index)),
   }
 }
 
