@@ -68,13 +68,13 @@ render(){
     <div className="Menu">
       <h2>
         {loading===true ? '':
-          listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+
+          NavIndex!==null && NavIndex.toString()===listSales.menu.id_payutc && listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+
           listSales.menu.quantity+' - Commandes Servies : '+listSales.menu.served_quantity
         }
       </h2>
-      {NavIndex === null ? <h3> Veuillez choisir un Menu de la liste</h3>
-      :   loading === true ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
-      this.returnMenuList(MenuList)
+      {NavIndex === null ?  <h3> Veuillez choisir un Menu de la liste</h3>
+      :   loading === true || NavIndex.toString()!==listSales.menu.id_payutc  ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
+      NavIndex.toString()===listSales.menu.id_payutc && this.returnMenuList(MenuList)
   }
 
     </div>
