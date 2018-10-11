@@ -11,9 +11,6 @@ import CasConnection from './config';
 import {printError} from './Utils/utils'
 import {deleteError} from './actions'
 
-
-import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
-
 class App extends Component {
 
     render() {

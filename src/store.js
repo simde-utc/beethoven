@@ -5,7 +5,8 @@ import thunk from "redux-thunk";
 const initialStore = {
   menus:{
     NavIndex : null,
-    MenuList : []
+    MenuList : [],
+    loading : null
   },
   errors:{
     errorsList : []

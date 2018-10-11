@@ -46,12 +46,17 @@ function menus(state={}, action)
         NavIndex : action.index
       })
     case GET_LIST_REQUEST:
+      state = Object.assign({}, state,
+      {
+        loading : true
+      })
       return state;
 
     case GET_LIST_SUCCESS:
       state = Object.assign({}, state,
       {
-        listSales: action.listSales
+        listSales: action.listSales,
+        loading : false
       })
       return state;
 

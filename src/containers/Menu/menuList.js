@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-
+import {REFRESH_TIMER} from '../../Utils/config'
 import '../../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 import MenuRow from './menuRow'
-
-import {REFRESH_TIMER} from '../../Utils/config'
 import {getList} from "../../actions"
 
 class MenuList extends Component{
@@ -49,7 +47,7 @@ updateData = ()=>{
 }
 
 render(){
-  const {NavIndex, listSales} = this.props;
+  const {NavIndex, listSales, loading} = this.props;
   const {getList} = this.props;
   let MenuList = []
 
@@ -74,7 +72,14 @@ render(){
           listSales.menu.total_quantity + ' / '+ listSales.menu.quantity+
           ' - Commandes Servies : ' + listSales.menu.served_quantity
            : ''}
-      </h2> {NavIndex !== null && listSales.menu !== undefined ? this.returnMenuList(MenuList) : <h3> Veuillez choisir un Menu de la liste</h3>}
+      </h2>
+      {NavIndex === null ? <h3> Veuillez choisir un Menu de la liste</h3>
+      :  listSales.menu === undefined && loading === true ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
+      this.returnMenuList(MenuList)
+
+
+  }
+
     </div>
 
   )
@@ -85,7 +90,8 @@ let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
     listSales : state.menus.listSales || [],
-    NavIndex : state.menus.NavIndex || null
+    NavIndex : state.menus.NavIndex || null,
+    loading : state.menus.loading || null
   };
 }
 
