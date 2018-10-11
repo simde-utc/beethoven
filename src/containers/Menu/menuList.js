@@ -5,8 +5,6 @@ import '../../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 import MenuRow from './menuRow'
-
-import {REFRESH_TIMER} from '../../Utils/config'
 import {getList} from "../../actions"
 
 class MenuList extends Component{
@@ -76,7 +74,7 @@ render(){
            : ''}
       </h2>
       {NavIndex === null ? <h3> Veuillez choisir un Menu de la liste</h3>
-      :  listSales.menu === undefined && loading === true ? "loading" :
+      :  listSales.menu === undefined && loading === true ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
       this.returnMenuList(MenuList)
 
 
