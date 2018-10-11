@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-
+import {WEEZEVENT_APP_KEY} from './config'
 
 
 
@@ -82,7 +82,19 @@ export const fetchMenuList = (idMenu, success, failure)=>{
 }
 
 export const loginBadge = (userUid, userPin) => {
-  fetch("https://api.nemopay.net/Services/POS3/loginBadge2",{
+  fetch("https://api.nemopay.net/Services/POS3/loginBadge2?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+"",{
     method:'POST',
+    Body: JSON.stringify({badge_id:userUid, pin:userPin})
   })
+  .then(res => res.json())
+  .then(
+    (result)=>
+    {
+      console.log(result)
+    },
+    (error)=>
+    {
+      console.log(error)
+    }
+  )
 }
