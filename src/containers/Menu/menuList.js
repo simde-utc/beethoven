@@ -67,17 +67,14 @@ render(){
   return(
     <div className="Menu">
       <h2>
-        {NavIndex !==null && listSales.menu !== undefined ? ''+
-          listSales.menu.name+' - '+
-          listSales.menu.total_quantity + ' / '+ listSales.menu.quantity+
-          ' - Commandes Servies : ' + listSales.menu.served_quantity
-           : ''}
+        {loading===true ? '':
+          listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+
+          listSales.menu.quantity+' - Commandes Servies : '+listSales.menu.served_quantity
+        }
       </h2>
       {NavIndex === null ? <h3> Veuillez choisir un Menu de la liste</h3>
-      :  listSales.menu === undefined && loading === true ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
+      :   loading === true ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
       this.returnMenuList(MenuList)
-
-
   }
 
     </div>
@@ -89,9 +86,10 @@ render(){
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
+
+    loading : state.menus.loading || null,
     listSales : state.menus.listSales || [],
-    NavIndex : state.menus.NavIndex || null,
-    loading : state.menus.loading || null
+    NavIndex : state.menus.NavIndex || null
   };
 }
 
