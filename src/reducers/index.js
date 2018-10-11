@@ -14,7 +14,11 @@ import { 
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
   ADD_ERROR,
-  DELETE_ERROR
+  DELETE_ERROR,
+  BADGEUSE_IS_PRESENT,
+  SET_USER_CONNECTED,
+  GET_USER_PIN,
+  GET_USER_UID
 } from "../constants";
 
 function menus(state={}, action)
@@ -137,7 +141,43 @@ function errors(state = {}, action)
   }
 }
 
+
+function utils(state={}, action)
+{
+  switch(action.type)
+  {
+    case BADGEUSE_IS_PRESENT:
+    state = Object.assign({}, state, {
+      badgeuse : action.badgeuse
+    })
+    return state;
+
+    case SET_USER_CONNECTED:
+    state = Object.assign({}, state, {
+      connected : true
+    })
+    return state;
+
+    case GET_USER_UID:
+    state = Object.assign({}, state,{
+      userUid : action.userUid
+    })
+    return state;
+
+    case GET_USER_PIN:
+    state = Object.assign({}, state,{
+      userPin : action.userPin
+    })
+    return state
+
+
+    default:
+    return state
+  }
+}
+
 export default combineReducers({
   menus,
-  errors
+  errors,
+  utils
 });

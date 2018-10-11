@@ -1,4 +1,6 @@
-
+// **************************************************************************
+// Gestion des menus
+// **************************************************************************
 //Liste des Menus disponibles
 export const GET_MENUS_REQUEST = "GET_MENUS_REQUEST";
 export const GET_MENUS_SUCCESS = "GET_MENUS_SUCCESS";
@@ -27,6 +29,17 @@ export const VALIDATE_MENU_SUCCESS = "VALIDATE_MENU_SUCCESS"
 export const VALIDATE_MENU_ERROR = "VALIDATE_MENU_ERROR"
 
 
+
+// **************************************************************************
+// Gestion utils
+// **************************************************************************
+
 //Gestion des erreur
 export const ADD_ERROR = "ADD_ERROR"
 export const DELETE_ERROR = "DELETE_ERROR"
+
+//gestion du websocket de la badgeuse
+export const BADGEUSE_IS_PRESENT = "WEBSOCKET_IS_PRESENT"
+export const GET_USER_UID = "GET_USER_UID"
+export const GET_USER_PIN = "GET_USER_PIN"
+export const SET_USER_CONNECTED = "SET_USER_CONNECTED" 

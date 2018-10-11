@@ -11,6 +11,13 @@ const initialStore = {
   },
   errors:{
     errorsList : []
+  },
+
+  utils : {
+    badgeuse : false,
+    connected : false,
+    userUid : null,
+    userPin : null
   }
 }
 

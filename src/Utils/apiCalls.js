@@ -80,3 +80,9 @@ export const fetchMenuList = (idMenu, success, failure)=>{
   ).catch((err)=>{failure(err)})
 
 }
+
+export const loginBadge = (userUid, userPin) => {
+  fetch("https://api.nemopay.net/Services/POS3/loginBadge2",{
+    method:'POST',
+  })
+}

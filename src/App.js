@@ -11,23 +11,30 @@ import CasConnection from './config';
 import {printError} from './Utils/utils'
 import {deleteError} from './actions'
 
+import BadgeConnexion from './Utils/badgeConnexion'
+import WebSocketConnexion from './Utils/websocket'
+
 class App extends Component {
 
+
     render() {
-      const {errorsList} = this.props;
+      const {errorsList, connected, badgeuse} = this.props;
       const {deleteError} = this.props;
 
       //affichage de l'ensemble des erreurs du programme
-      let List = []
+      let ListErrors = []
       if(errorsList.length > 0)
       {
         errorsList.forEach((element)=>{
-          List.push(printError(element))
+          ListErrors.push(printError(element))
         })
       }
 
       return (
         <div className="App">
+
+            <WebSocketConnexion></WebSocketConnexion>
+            {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
           <Header></Header>
           <div
             style={
@@ -40,7 +47,7 @@ class App extends Component {
                 borderRadius:'0px'
               }
             }
-            >{List}</div>
+            >{ListErrors}</div>
           <MenuBody></MenuBody>
           <CasConnection></CasConnection>
         </div>
@@ -52,7 +59,9 @@ class App extends Component {
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-    errorsList : state.errors.errorsList || []
+    errorsList : state.errors.errorsList || [],
+    connected : state.utils.connected || false,
+    badgeuse : state.utils.badgeuse || false
   };
 }
 

@@ -13,7 +13,11 @@ import {
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
   ADD_ERROR,
-  DELETE_ERROR
+  DELETE_ERROR,
+  BADGEUSE_IS_PRESENT,
+  SET_USER_CONNECTED,
+  GET_USER_PIN,
+  GET_USER_UID
 } from "../constants"
 
 import {fetchMenus, onTrashClick, fetchMenuList, fetchServed} from '../Utils/apiCalls.js'
@@ -196,5 +200,38 @@ export function addError(information){
 export function deleteError(){
   return{
     type : DELETE_ERROR,
+  }
+}
+
+
+
+//gestion du websocket de badgeuse
+export function badgeuseIsPresent(badgeuse){
+  return{
+    type: BADGEUSE_IS_PRESENT,
+    badgeuse : badgeuse
+  }
+}
+
+//rendre l'utilisateur actuel connecté
+//faire passer son login en parametre
+// TODO: autre choses à mettre?
+export function setUserConnected(){
+  return{
+    type: SET_USER_CONNECTED
+  }
+}
+
+export function getUserUid(userUid){
+  return{
+    type: GET_USER_UID,
+    userUid : userUid
+  }
+}
+
+export function getUserPin(userPin){
+  return{
+    type: GET_USER_PIN,
+    userPin : userPin
   }
 }
