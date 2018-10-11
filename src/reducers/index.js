@@ -43,20 +43,18 @@ function menus(state={}, action)
     case UPDATE_NAVINDEX:
       state = Object.assign({}, state,
       {
-        NavIndex : action.index
-      })
-    case GET_LIST_REQUEST:
-      state = Object.assign({}, state,
-      {
+        NavIndex : action.index,
         loading : true
       })
+    case GET_LIST_REQUEST:
       return state;
 
     case GET_LIST_SUCCESS:
       state = Object.assign({}, state,
       {
-        listSales: action.listSales,
-        loading : false
+        loading : false,
+        listSales: action.listSales
+
       })
       return state;
 

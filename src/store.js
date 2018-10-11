@@ -6,6 +6,7 @@ const initialStore = {
   menus:{
     NavIndex : null,
     MenuList : [],
+    ListSales : [],
     loading : null
   },
   errors:{
