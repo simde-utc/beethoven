@@ -11,6 +11,8 @@ import CasConnection from './config';
 import {printError} from './Utils/utils'
 import {deleteError} from './actions'
 
+import MenusToServe from './webTVs/menusdisplayer'
+
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 class App extends Component {
@@ -52,6 +54,7 @@ class App extends Component {
             )}/>
             <Route exact={true} path="/webTV1" render= {() => (
               <div className="App">
+                <MenusToServe></MenusToServe>
               </div>
             )}/>
           </div>
