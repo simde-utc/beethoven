@@ -81,20 +81,30 @@ export const fetchMenuList = (idMenu, success, failure)=>{
 
 }
 
-export const loginBadge = (userUid, userPin) => {
-  fetch("https://api.nemopay.net/Services/POS3/loginBadge2?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+"",{
+export const loginBadge2 = (userUid, userPin, success, error) => {
+  console.log(WEEZEVENT_APP_KEY, userUid, userPin)
+  fetch("https://api.nemopay.net/services/POSS3/loginBadge2?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+"",{
     method:'POST',
-    Body: JSON.stringify({badge_id:userUid, pin:userPin})
+    body: JSON.stringify({badge_id:userUid.toString(), pin:userPin.toString()}),
+    headers: {
+      'Content-Type': 'application/json',
+      'Nemopay-Version': '2018-07-03',
+},
   })
   .then(res => res.json())
   .then(
     (result)=>
     {
-      console.log(result)
+      success(result)
     },
-    (error)=>
+    (err)=>
     {
-      console.log(error)
+      error(err)
+    }
+  )
+  .catch(
+    (err)=>{
+      error(err)
     }
   )
 }

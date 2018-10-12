@@ -17,10 +17,14 @@ import {
   BADGEUSE_IS_PRESENT,
   SET_USER_CONNECTED,
   GET_USER_PIN,
-  GET_USER_UID
+  GET_USER_UID,
+  LOGIN_BADGE_REQUEST,
+  LOGIN_BADGE_SUCCESS,
+  LOGIN_BADGE_ERROR,
+  DISCONNECT
 } from "../constants"
 
-import {fetchMenus, onTrashClick, fetchMenuList, fetchServed} from '../Utils/apiCalls.js'
+import {fetchMenus, onTrashClick, fetchMenuList, fetchServed, loginBadge2} from '../Utils/apiCalls.js'
 
 
 
@@ -221,7 +225,7 @@ export function setUserConnected(){
     type: SET_USER_CONNECTED
   }
 }
-
+// reccupération de l'uid du user
 export function getUserUid(userUid){
   return{
     type: GET_USER_UID,
@@ -229,9 +233,62 @@ export function getUserUid(userUid){
   }
 }
 
+//reccupération du pin du user
 export function getUserPin(userPin){
   return{
     type: GET_USER_PIN,
     userPin : userPin
+  }
+}
+
+
+//requete de connexion par badge
+export function loginBadgeRequest(userUid, userPin){
+  return{
+    type: LOGIN_BADGE_REQUEST,
+    userUid : userUid,
+    userPin : userPin
+  }
+}
+
+export function loginBadgeSuccess(sessionId)
+{
+  return{
+    type: LOGIN_BADGE_SUCCESS,
+    sessionId : sessionId
+  }
+}
+
+export function loginBadgeError(error)
+{
+  return{
+    type : LOGIN_BADGE_ERROR,
+    error : error
+  }
+}
+
+export function loginBadge(userUid, userPin)
+{
+  return (dispatch) =>{
+    dispatch(loginBadgeRequest(userUid, userPin));
+    loginBadge2(
+      userUid,
+      userPin,
+      (data)=> {
+        dispatch(loginBadgeSuccess(data))
+      },
+      (err)=>{
+
+        console.log(err)
+        dispatch(loginBadgeError('Erreur : Connexion échouée'))
+      }
+    )
+  }
+}
+
+export function disconnect()
+{
+  return{
+    type : DISCONNECT
   }
 }

@@ -18,7 +18,11 @@ import { 
   BADGEUSE_IS_PRESENT,
   SET_USER_CONNECTED,
   GET_USER_PIN,
-  GET_USER_UID
+  GET_USER_UID,
+  LOGIN_BADGE_REQUEST,
+  LOGIN_BADGE_SUCCESS,
+  LOGIN_BADGE_ERROR,
+  DISCONNECT
 } from "../constants";
 
 function menus(state={}, action)
@@ -128,6 +132,14 @@ function errors(state = {}, action)
       })
       return state;
 
+    case LOGIN_BADGE_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList: errorsList
+      })
+      return state;
+
     case DELETE_ERROR:
       errorsList = state.errorsList.slice()
       errorsList.shift();
@@ -135,6 +147,8 @@ function errors(state = {}, action)
         errorsList : errorsList
       })
       return state;
+
+
 
     default:
       return state
@@ -168,8 +182,35 @@ function utils(state={}, action)
     state = Object.assign({}, state,{
       userPin : action.userPin
     })
-    return state
+    return state;
 
+    case LOGIN_BADGE_REQUEST:
+    return state;
+
+    case LOGIN_BADGE_SUCCESS:
+    state = Object.assign({}, state, {
+      sessionId : action.sessionId.sessionid,
+      username : action.sessionId.username,
+      connected : true
+    })
+    return state;
+
+    case LOGIN_BADGE_ERROR:
+      state = Object.assign({}, state, {
+        userUid : null,
+        userPin : null,
+        connected : false
+      })
+      return state;
+
+    case DISCONNECT :
+    state = Object.assign({}, state, {
+      userUid : null,
+      userPin : null,
+      connected : false,
+      sessionId : null,
+      username : null
+    })
 
     default:
     return state

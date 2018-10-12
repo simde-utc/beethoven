@@ -17,7 +17,9 @@ const initialStore = {
     badgeuse : false,
     connected : false,
     userUid : null,
-    userPin : null
+    userPin : null,
+    sessionId : null,
+    username : null
   }
 }
 

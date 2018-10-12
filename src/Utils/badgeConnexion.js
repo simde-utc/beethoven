@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {Button, ButtonGroup, ButtonToolbar} from 'reactstrap'
-import {getUserPin, getUserUid, setUserConnected} from '../actions'
+import {getUserPin, getUserUid, setUserConnected, loginBadge} from '../actions'
 
 class BadgeConnexion extends Component{
   constructor(props)
@@ -26,9 +26,14 @@ class BadgeConnexion extends Component{
 
   updatePin(pin, number)
   {
-    const {setUserConnected} = this.props
+    const {getUserPin} = this.props
+    const {userUid, userPin} = this.props
+
     let newPin = pin!==null ? pin+number : number
-    if(newPin.length=== 4) setUserConnected()
+    if(newPin.length=== 4)
+    {
+      getUserPin(newPin)
+    }
 
     this.setState({ActualPin : newPin})
 
@@ -79,7 +84,15 @@ class BadgeConnexion extends Component{
     )
   }
   render(){
+
+
     const {userUid, userPin} = this.props;
+    const {loginBadge} = this.props;
+
+    if(userUid!==null && userPin!==null)
+    {
+      loginBadge(userUid, userPin)
+    }
     return(
       <Modal
         isOpen = {this.state.modal}
@@ -131,7 +144,7 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     getUserUid : (uid)=>dispatch(getUserUid(uid)),
     getUserPin : (pin)=>dispatch(getUserPin(pin)),
-    setUserConnected : ()=>dispatch(setUserConnected())
+    loginBadge : (userUid, userPin)=>dispatch(loginBadge(userUid, userPin))
   }
 }
 export default connect(
