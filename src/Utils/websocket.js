@@ -37,8 +37,8 @@ class WebSocketConnexion extends Component{
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-    badgeuse : state.utils.badgeuse || null,
-    connected : state.utils.connected || false
+    badgeuse : state.cas.badgeuse || null,
+    connected : state.cas.connected || false
   };
 }
 

@@ -3,7 +3,7 @@ import '../App.css';
 import {WEEZEVENT_APP_KEY} from './config'
 
 
-
+//supprimer un menu
 export const onTrashClick = (buttonId, success, failure)=>{
   fetch(
     "http://37.139.25.111/setMenuClosed/" + buttonId +"?random="+Math.random(),
@@ -23,6 +23,8 @@ export const onTrashClick = (buttonId, success, failure)=>{
     ).catch((err)=>{failure(err)})
 }
 
+
+//reccupérer tous les menus dispos
 export const fetchMenus = (success, failure)=>{
   fetch(
     "http://37.139.25.111/menus/?random="+Math.random(), {
@@ -61,6 +63,7 @@ export const fetchServed = (id, success,failure)=>{
 }
 
 
+//reccupérer liste du menu selectionné
 export const fetchMenuList = (idMenu, success, failure)=>{
   fetch("http://37.139.25.111/getorders/"+idMenu+"?random="+Math.random(), {
     method: 'GET',
@@ -81,6 +84,7 @@ export const fetchMenuList = (idMenu, success, failure)=>{
 
 }
 
+//connexion via badge
 export const loginBadge2 = (userUid, userPin, success, error) => {
   console.log(WEEZEVENT_APP_KEY, userUid, userPin)
   fetch("https://api.nemopay.net/services/POSS3/loginBadge2?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+"",{
@@ -107,4 +111,108 @@ export const loginBadge2 = (userUid, userPin, success, error) => {
       error(err)
     }
   )
+}
+
+
+
+//login par Cas
+export const loginCas = (success, failure)=>{
+  let ticketCas;
+  let serviceurl = 'http://localhost:5000'
+  let ticketRegex = /(\?|&)ticket=([^&=]+)/;
+  if(ticketRegex.test(window.location.href)){
+    let match = ticketRegex.exec(window.location.href);
+    ticketCas = match[2];
+   }
+  fetch("https://api.nemopay.net/services/MYACCOUNT/loginCas2?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+"&random="+Math.random(), {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+      'Nemopay-Version': '2018-07-03',
+  },
+  body:  '{"ticket":"'+ticketCas+'","service":"'+serviceurl+'"}',
+  })
+  .then(res1 => res1.json())
+  .then(
+    (result)=>{
+      success(result) //j'ai changé ici je renvoie tout le result et pas que le sessionid
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+
+
+
+
+export const getCategories = (sessionid,success,failure)=>{
+  fetch("https://api.nemopay.net/services/POSS3/getSalesLocations?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
+  "&sessionid="+sessionid+"", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fun_id: 2,
+        event_id: 1,
+      })
+    })
+    .then(res1 => res1.json())
+    .then(
+      (dataLocation) => {
+        let id_Categ = dataLocation[0].categories;
+        fetch("https://api.nemopay.net/services/POSS3/getCategories?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
+        "&sessionid="+sessionid+"", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fun_id: 2,
+            })
+          })
+          .then(res => res.json())
+          .then(
+            (result) => {
+              let categ = [];
+              for (let i = 0; i < id_Categ.length; i++) {
+                  if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]))
+              }
+              success(categ);
+            },
+            (erro) => {
+              failure(erro);
+            }
+          ).catch((err)=>{failure(err)})
+      },
+      (error) => {
+          failure(error)
+      }).catch((err)=>{failure(err)})
+}
+
+
+
+export const getArticles = (sessionid, success, failure)=>{
+  fetch("https://api.nemopay.net/services/POSS3/getArticles?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
+  "&sessionid="+sessionid+"", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fun_id: 2,
+      })
+    })
+    .then(res => res.json())
+    .then(
+      (result) => {
+        console.log(result)
+        success(result);
+      },
+      (error) => {
+        failure(error);
+      }
+    ).catch((err)=>{failure(err)})
 }

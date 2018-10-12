@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import {CAS_LINK} from './config'
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {Button, ButtonGroup, ButtonToolbar} from 'reactstrap'
-import {getUserPin, getUserUid, setUserConnected, loginBadge} from '../actions'
+import {getUserPin, getUserUid, setUserConnected, loginBadge, redirectLogin, login} from '../actions'
 
 class BadgeConnexion extends Component{
   constructor(props)
@@ -38,6 +38,12 @@ class BadgeConnexion extends Component{
     this.setState({ActualPin : newPin})
 
 
+  }
+
+  redirectCas(){
+    const {redirectLogin, login} = this.props;
+    redirectLogin()
+    window.location=CAS_LINK
   }
 
   pinForm()
@@ -87,7 +93,7 @@ class BadgeConnexion extends Component{
 
 
     const {userUid, userPin} = this.props;
-    const {loginBadge} = this.props;
+    const {loginBadge, redirectLogin} = this.props;
 
     if(userUid!==null && userPin!==null)
     {
@@ -96,6 +102,7 @@ class BadgeConnexion extends Component{
     return(
       <Modal
         isOpen = {this.state.modal}
+        toggle = {this.toggle}
         >
 
         <ModalBody centered = {true}
@@ -123,28 +130,37 @@ class BadgeConnexion extends Component{
 
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={this.toggle}>Je n'ai pas de Badge</Button>
-
+                    <a
+                      href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000"
+                      onClick = {()=>{
+                        login()
+                        redirectLogin()
+                      }}
+                      >Click to login</a>
         </ModalFooter>
 
       </Modal>
     )
   }
 }
+//<Button color="danger" onClick={()=>this.redirectCas()}>Je n'ai pas de Badge</Button>
+
 
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-    userUid : state.utils.userUid || null,
-    userPin : state.utils.userPin || null
+    userUid : state.cas.userUid || null,
+    userPin : state.cas.userPin || null
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
+    redirectLogin : ()=>dispatch(redirectLogin()),
     getUserUid : (uid)=>dispatch(getUserUid(uid)),
     getUserPin : (pin)=>dispatch(getUserPin(pin)),
-    loginBadge : (userUid, userPin)=>dispatch(loginBadge(userUid, userPin))
+    loginBadge : (userUid, userPin)=>dispatch(loginBadge(userUid, userPin)),
+    login : ()=>dispatch(login())
   }
 }
 export default connect(

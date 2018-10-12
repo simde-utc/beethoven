@@ -14,6 +14,20 @@ import {
   VALIDATE_MENU_SUCCESS,
   ADD_ERROR,
   DELETE_ERROR,
+  REDIRECT_LOGIN,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_SUCCESS,
+  GET_CATEGORIES_ERROR,
+  UPDATE_CATEGORIE,
+  GET_CHOSEN_ARTICLE,
+  GET_ARTICLES_REQUEST,
+  GET_ARTICLES_SUCCESS,
+  GET_ARTICLES_ERROR,
+  DELETE_ARTICLE,
+  DELETE_ALL_ARTICLES,
   BADGEUSE_IS_PRESENT,
   SET_USER_CONNECTED,
   GET_USER_PIN,
@@ -21,12 +35,24 @@ import {
   LOGIN_BADGE_REQUEST,
   LOGIN_BADGE_SUCCESS,
   LOGIN_BADGE_ERROR,
-  DISCONNECT
+  DISCONNECT,
 } from "../constants"
 
-import {fetchMenus, onTrashClick, fetchMenuList, fetchServed, loginBadge2} from '../Utils/apiCalls.js'
+import {
+  fetchMenus,
+  onTrashClick,
+  fetchMenuList,
+  fetchServed,
+  loginBadge2,
+  loginCas,
+  getCategories,
+  getArticles
+} from '../Utils/apiCalls.js'
 
 
+// **************************************************************************
+// Gestion Menus
+// **************************************************************************
 
 //Reccupération de la liste de Menus
 export function getMenusRequest()
@@ -208,6 +234,121 @@ export function deleteError(){
 }
 
 
+// **************************************************************************
+// Gestion Vente
+// **************************************************************************
+
+
+//Récupérer les catégories
+export function getCategoriesRequest(sessionid){
+  return{
+    type: GET_CATEGORIES_REQUEST,
+    sessionid: sessionid
+  }
+}
+
+export function getCategoriesSuccess(listCateg){
+  return{
+    type: GET_CATEGORIES_SUCCESS,
+    listCateg: listCateg
+  }
+}
+
+export function getCategoriesError(){
+  return{
+    type: GET_CATEGORIES_ERROR,
+  }
+}
+
+export function getListCateg(sessionid){
+  return (dispatch)=>{
+    dispatch(getCategoriesRequest(sessionid));
+    getCategories(
+      sessionid,
+      (data)=>{
+        dispatch(getCategoriesSuccess(data))
+      },
+      (err)=>{
+        dispatch(getCategoriesError())
+      })
+  }
+}
+
+//Mise a jour de la catégorie selectionnée
+export function updateCategorie(id_Categ){
+  return{
+    type : UPDATE_CATEGORIE,
+    id_Categ : id_Categ
+  }
+}
+
+//Récupérer l'article selectionné
+export function getChosenArticle(newID,newNAME,newPRICE,selectedArticles){
+  return{
+    type : GET_CHOSEN_ARTICLE,
+    newID : newID,
+    newNAME : newNAME,
+    newPRICE : newPRICE,
+    selectedArticles : selectedArticles
+  }
+}
+
+//Récupérer l'ensemble des Articles
+export function getArticlesRequest(sessionid){
+  return{
+    type: GET_ARTICLES_REQUEST,
+    sessionid: sessionid
+  }
+}
+
+export function getArticlesSuccess(listArticles){
+  return{
+    type: GET_ARTICLES_SUCCESS,
+    listArticles: listArticles
+  }
+}
+
+export function getArticlesError(){
+  return{
+    type: GET_ARTICLES_ERROR
+  }
+}
+
+export function getListArticles(sessionid){
+  return (dispatch)=>{
+    dispatch(getArticlesRequest(sessionid));
+    getArticles(
+      sessionid,
+      (data)=>{
+        dispatch(getArticlesSuccess(data))
+      },
+      (err)=>{
+        dispatch(getArticlesError())
+      })
+  }
+}
+
+//Delete un article du panier
+export function deleteArticle(newID,selectedArticles){
+  return{
+    type : DELETE_ARTICLE,
+    newID : newID,
+    selectedArticles : selectedArticles
+  }
+}
+export function deleteAllArticles(selectedArticles){
+  return{
+    type : DELETE_ALL_ARTICLES,
+    selectedArticles : selectedArticles
+  }
+}
+
+// **************************************************************************
+// Gestion Connexion
+// **************************************************************************
+
+
+
 
 //gestion du websocket de badgeuse
 export function badgeuseIsPresent(badgeuse){
@@ -284,6 +425,53 @@ export function loginBadge(userUid, userPin)
       }
     )
   }
+}
+
+//COnnection au CAS
+export function redirectLogin(){
+  return{
+    type : REDIRECT_LOGIN,
+  }
+}
+export function loginRequest()
+{
+    return {
+        type : LOGIN_REQUEST
+    }
+}
+
+export function loginSuccess(data)
+{
+    return {
+        type : LOGIN_SUCCESS,
+        sessionId: data.sessionid,
+        username : data.username
+    }
+}
+
+export function loginError(error)
+{
+    return {
+        type : LOGIN_ERROR,
+        error : error
+
+    }
+}
+
+export function login()
+{
+    return (dispatch) =>
+    {
+        dispatch(loginRequest());
+        loginCas(
+          (data)=>{
+            dispatch(loginSuccess(data))
+          },
+          (err)=>{
+            dispatch(loginError('Erreur :Connexion CAS'))
+          }
+        )
+    }
 }
 
 export function disconnect()
