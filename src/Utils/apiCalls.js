@@ -6,13 +6,14 @@ import '../App.css';
 
 export const onTrashClick = (buttonId, success, failure)=>{
   fetch(
-    "http://37.139.25.111/setMenuClosed/" + buttonId +"?random="+Math.random(),
+    "http://37.139.25.111/setMenuClosed/" + buttonId,
     {
       method:'POST',
       mode:'cors',
       headers:{
         'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
-      }
+      },
+      cache:'no-store',
     }).then().then(
       (result)=>{
         success(result)
@@ -25,12 +26,13 @@ export const onTrashClick = (buttonId, success, failure)=>{
 
 export const fetchMenus = (success, failure)=>{
   fetch(
-    "http://37.139.25.111/menus/?random="+Math.random(), {
+    "http://37.139.25.111/menus", {
       method : 'GET',
       mode : 'cors',
       headers:{
         'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
       }
+      cache:'no-store',
     }).then(res=>res.json()).then(
       (result)=>{
         success(result)
@@ -62,12 +64,13 @@ export const fetchServed = (id, success,failure)=>{
 
 
 export const fetchMenuList = (idMenu, success, failure)=>{
-  fetch("http://37.139.25.111/getorders/"+idMenu+"?random="+Math.random(), {
+  fetch("http://37.139.25.111/getorders/"+idMenu, {
     method: 'GET',
     mode: 'cors',
     headers:{
       'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
     }
+    cache:'no-store',
   })
   .then(res => res.json())
   .then(
