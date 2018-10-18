@@ -40,7 +40,7 @@ class Header extends Component {
   render() {
     const {errorsList, badgeuse, redirected} = this.props;
     const {deleteError, redirectLogin, login} = this.props;
-    const{sessionId, connected} = this.props;
+    const{sessionId, connected, username} = this.props;
 
     //affichage de l'ensemble des erreurs du programme
     let ListErrors = []
@@ -56,10 +56,16 @@ class Header extends Component {
     let affichage;
     switch(this.state.load){
       case 'Vente':
-        affichage = <Vente></Vente>
+        if(sessionId!==null)
+        {
+          affichage = <Vente></Vente>
+        }
         break;
       case 'Menu':
-        affichage = <MenuBody></MenuBody>
+        if(sessionId!==null)
+        {
+          affichage = <MenuBody></MenuBody>
+        }
         break;
       default:
         break;
@@ -84,7 +90,9 @@ class Header extends Component {
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Beethoven</a>
               <span className="input-group-btn">
-                <a href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000">Click to login</a>
+                {username===null ?<a href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000">Click to login</a> :
+
+                  <span style={{color:'black'}}> {username + " connected"}</span>}
               </span>
               <span className="input-group-btn">
                 <a href="https://cas.utc.fr/cas/logout">LOGOUT</a>
@@ -130,7 +138,8 @@ let mapStateToProps = (state)=>{
     sessionId : state.cas.sessionId || null,
     redirected : state.cas.redirected || false,
     errorsList : state.errors.errorsList || [],
-    badgeuse : state.cas.badgeuse || false
+    badgeuse : state.cas.badgeuse || false,
+    username : state.cas.username || null
   };
 }
 
