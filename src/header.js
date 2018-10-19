@@ -92,8 +92,8 @@ class Header extends Component {
               <span className="input-group-btn">
                 {username===null ?<a href={CAS_LINK}>Click to login</a> :
 
-                  <span style={{color:'black'}}> {username + " connected"}</span>}
-              </span>
+                  <span style={{color:'black'}}> {username}</span>}
+              </span>" "
               <span className="input-group-btn">
                 <a href="https://cas.utc.fr/cas/logout">LOGOUT</a>
               </span>
@@ -103,8 +103,8 @@ class Header extends Component {
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               </ul>
-              <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setMenuPage}>Menu</button>
-              <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setVentePage}>Vente</button>
+              <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setMenuPage}>Menu</button>" "
+              <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setVentePage}>Vente</button>" "
               <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Admin</button>
             </div>
           </nav>
