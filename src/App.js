@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 
 import {connect} from 'react-redux'
-import logo from './logo.svg';
 import './App.css';
 import Header from './header';
-import Body from './body';
 import MenuBody from './containers/Menu/menu';
 
 

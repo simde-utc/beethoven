@@ -11,7 +11,8 @@ class BadgeConnexion extends Component{
     super(props)
     this.state = {
       modal : true,
-      ActualPin : null
+      ActualPin : null,
+      MaskedPin : null
     }
     this.toggle = this.toggle.bind(this)
   }
@@ -30,12 +31,22 @@ class BadgeConnexion extends Component{
     const {userUid, userPin} = this.props
 
     let newPin = pin!==null ? pin+number : number
+    let Masked = null;
+    for(let i=0; i<newPin.length-1; i++)
+    {
+      Masked = Masked!==null ? Masked+"*" : "*"
+    }
+    Masked = Masked!==null ? Masked+number : number
+
     if(newPin.length=== 4)
     {
       getUserPin(newPin)
     }
 
-    this.setState({ActualPin : newPin})
+    this.setState({
+      ActualPin : newPin,
+      MaskedPin : Masked
+    })
 
 
   }
@@ -117,7 +128,7 @@ class BadgeConnexion extends Component{
           Veuillez passer votre Badge pour vous connecter.
           <br/>
           {userUid!==null &&  'Pin :'}
-          {this.state.ActualPin!== null ?  this.state.ActualPin : ''}
+          {this.state.ActualPin!== null ?  this.state.MaskedPin : ''}
 
 
           {userUid!==null ? this.pinForm() : ''}
@@ -131,7 +142,7 @@ class BadgeConnexion extends Component{
         </ModalBody>
         <ModalFooter>
                     <a
-                      href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000"
+                      href={CAS_LINK}
                       onClick = {()=>{
                         login()
                         redirectLogin()
