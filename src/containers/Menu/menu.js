@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
+import {connect} from 'react-redux'
 import { Container, Col, Row } from 'reactstrap';
 
 
@@ -10,22 +11,40 @@ import MenuList from './menuList'
 
 class MenuBody extends Component {
   render() {
+    const {sessionId, username} = this.props
     return (
       <div
         className="MenuBody"
         style = {{paddingTop : '20px'}}
         >
+        {sessionId !== null && username!==null ?
+          <Container fluid>
+            <Row>
+            <Col md="3"> <MenuNav/></Col>
+            <Col md="9"> <MenuList/></Col>
+            </Row>
+          </Container> :
+          ""
+        }
 
-        <Container fluid>
-          <Row>
-          <Col md="3"> <MenuNav/></Col>
-          <Col md="9"> <MenuList/></Col>
-          </Row>
-        </Container>
+
 
       </div>
     );
   }
 }
 
-export default MenuBody;
+let mapStateToProps = (state)=>{
+  return{
+    //mettre ce qu'on veut faire passer en props du composant
+
+    sessionId : state.cas.sessionId || null,
+    username : state.cas.username || null,
+  };
+}
+
+
+export default connect(
+  mapStateToProps
+)
+(MenuBody);
