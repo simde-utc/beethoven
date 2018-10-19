@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {WEEZEVENT_APP_KEY} from './config'
+import {WEEZEVENT_APP_KEY, SERVICE_URL} from './config'
+
 
 
 //supprimer un menu
@@ -118,7 +119,7 @@ export const loginBadge2 = (userUid, userPin, success, error) => {
 //login par Cas
 export const loginCas = (success, failure)=>{
   let ticketCas;
-  let serviceurl = 'http://localhost:5000'
+  let serviceurl = SERVICE_URL
   let ticketRegex = /(\?|&)ticket=([^&=]+)/;
   if(ticketRegex.test(window.location.href)){
     let match = ticketRegex.exec(window.location.href);
