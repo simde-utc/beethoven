@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 
 import {login, redirectLogin, deleteError} from './actions'
 import {printError} from './Utils/utils'
-
+import {CAS_LINK} from './Utils/config'
 import BadgeConnexion from './Utils/badgeConnexion'
 import WebSocketConnexion from './Utils/websocket'
 
@@ -90,7 +90,7 @@ class Header extends Component {
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Beethoven</a>
               <span className="input-group-btn">
-                {username===null ?<a href="https://cas.utc.fr/cas/login?service=http%3A%2F%2Flocalhost%3A5000">Click to login</a> :
+                {username===null ?<a href={CAS_LINK}>Click to login</a> :
 
                   <span style={{color:'black'}}> {username + " connected"}</span>}
               </span>
