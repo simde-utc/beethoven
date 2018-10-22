@@ -9,6 +9,9 @@ import {
   GET_LIST_ERROR,
   GET_LIST_SUCCESS,
   GET_LIST_REQUEST,
+  GET_TOSERVE_ERROR,
+  GET_TOSERVE_SUCCESS,
+  GET_TOSERVE_REQUEST,
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
@@ -16,7 +19,7 @@ import {
   DELETE_ERROR
 } from "../constants"
 
-import {fetchMenus, onTrashClick, fetchMenuList, fetchServed} from '../Utils/apiCalls.js'
+import {fetchMenus, onTrashClick, fetchMenuList, fetchServed, fetchToServe} from '../Utils/apiCalls.js'
 
 
 
@@ -144,6 +147,46 @@ export function getList(idMenu){
     }
   }
 }
+
+
+
+//reccupérer l'ensemble des commandes d'un menu donné
+export function getToServeRequest(){
+  return{
+    type: GET_TOSERVE_REQUEST,
+  }
+}
+
+export function getToServeSuccess(listToServe){
+  return{
+    type: GET_TOSERVE_SUCCESS,
+    listToServe: listToServe
+  }
+}
+
+export function getToServeError(error){
+  return{
+    type: GET_TOSERVE_ERROR,
+    error : error
+  }
+}
+
+
+export function getToServe(){
+  return (dispatch)=>
+  {
+    dispatch(getToServeRequest());
+    fetchToServe(
+      (data)=>{
+        dispatch(getToServeSuccess(data))
+      },
+      (err)=>{
+        dispatch(getToServeError("Erreur : menus web TV"))
+      }
+    )
+  }
+}
+
 
 
 //valider menu servi

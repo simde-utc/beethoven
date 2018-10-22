@@ -21,6 +21,11 @@ export const GET_LIST_SUCCESS = "GET_LIST_SUCCESS"
 export const GET_LIST_ERROR = "GET_LIST_ERROR"
 
 
+//reccupérer lles 10 prochains menus pour la TV
+export const GET_TOSERVE_REQUEST = "GET_TOSERVE_REQUEST"
+export const GET_TOSERVE_SUCCESS = "GET_TOSERVE_SUCCESS"
+export const GET_TOSERVE_ERROR = "GET_TOSERVE_ERROR"
+
 //Valider un menu servi
 export const VALIDATE_MENU_REQUEST = "VALIDATE_MENU_REQUEST"
 export const VALIDATE_MENU_SUCCESS = "VALIDATE_MENU_SUCCESS"
