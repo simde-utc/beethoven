@@ -38,7 +38,17 @@ import {
   DISCONNECT,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_SUCCESS,
-  SET_TRANSACTION_ERROR
+  SET_TRANSACTION_ERROR,
+  GET_CLIENT_UID,
+  SET_TRANSACTION_STATE,
+  GET_CLIENT_INFO_REQUEST,
+  GET_CLIENT_INFO_SUCCESS,
+  GET_CLIENT_INFO_ERROR,
+  SET_CLIENT_STATE,
+  CANCEL_ARTICLE_REQUEST,
+  CANCEL_ARTICLE_SUCCESS,
+  CANCEL_ARTICLE_ERROR,
+  DELETE_ARTICLE_CANCELED
 } from "../constants"
 
 import {
@@ -50,7 +60,9 @@ import {
   loginCas,
   getCategories,
   getArticles,
-  setUserTransaction
+  setUserTransaction,
+  getUserInformation,
+  cancelUserTransaction
 } from '../Utils/apiCalls.js'
 
 
@@ -498,7 +510,8 @@ export function setTransactionSuccess(data)
 {
   return{
     type: SET_TRANSACTION_SUCCESS,
-    transaction : data
+    transaction : data,
+    state_transaction : 'success'
   }
 }
 
@@ -510,12 +523,13 @@ export function setTransactionError(error)
   }
 }
 
-export function setTransaction(sessionId,selectedArticles)
+export function setTransaction(sessionId,selectedArticles,badge_id)
 {
   return (dispatch) =>{
     dispatch(setTransactionRequest(sessionId,selectedArticles));
     setUserTransaction(
       sessionId,
+      badge_id,
       selectedArticles,
       (data)=> {
         dispatch(setTransactionSuccess(data))
@@ -525,5 +539,121 @@ export function setTransaction(sessionId,selectedArticles)
         dispatch(setTransactionError('Erreur : Transaction avortée'))
       }
     )
+  }
+}
+
+export function setTransactionState(state_transaction){
+  return{
+    type: SET_TRANSACTION_STATE,
+    state_transaction : state_transaction
+  }
+}
+
+//Récupérer l'id du client
+export function getClientUid(clientUid){
+  return{
+    type: GET_CLIENT_UID,
+    clientUid : clientUid
+  }
+}
+
+//Récuperation des infos d'un user
+export function getInformationRequest(sessionId){
+  return{
+    type: GET_CLIENT_INFO_REQUEST,
+    sessionId : sessionId,
+  }
+}
+
+export function getInformationSuccess(info_client)
+{
+  return{
+    type: GET_CLIENT_INFO_SUCCESS,
+    info_client : info_client
+  }
+}
+
+export function getInformationError(error)
+{
+  return{
+    type : GET_CLIENT_INFO_ERROR,
+    error : error
+  }
+}
+
+export function getInformation(sessionId,badge_id)
+{
+  return (dispatch) =>{
+    dispatch(getInformationRequest(sessionId));
+    getUserInformation(
+      sessionId,
+      badge_id,
+      (data)=> {
+        dispatch(getInformationSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(getInformationError('Erreur : Probleme dans la récupération des infos'))
+      }
+    )
+  }
+}
+
+export function setClientState(){
+  return{
+    type : SET_CLIENT_STATE,
+    info_client : null
+  }
+}
+
+
+//cancel la transaction d'un achat
+export function cancelTransactionRequest(sessionId){
+  return{
+    type: CANCEL_ARTICLE_REQUEST,
+    sessionId : sessionId,
+  }
+}
+
+export function cancelTransactionSuccess(cancel)
+{
+  return{
+    type: CANCEL_ARTICLE_SUCCESS,
+    cancel : cancel
+  }
+}
+
+export function cancelTransactionError(error)
+{
+  return{
+    type : CANCEL_ARTICLE_ERROR,
+    error : error
+  }
+}
+
+export function cancelTransaction(sessionId,pur_id)
+{
+  return (dispatch) =>{
+    dispatch(cancelTransactionRequest(sessionId,pur_id));
+    cancelUserTransaction(
+      sessionId,
+      pur_id,
+      (data)=> {
+        dispatch(cancelTransactionSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(cancelTransactionError('Erreur : Impossible de cancel la transaction'))
+      }
+    )
+    dispatch(deleteArticleCanceled(pur_id));
+  }
+}
+
+//supprimer affichage d'un article canceled en attendant pOSS4
+export function deleteArticleCanceled(pur_id){
+  return{
+    type : DELETE_ARTICLE_CANCELED,
+    pur_id : pur_id,
   }
 }

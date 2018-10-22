@@ -39,7 +39,17 @@ import { 
   DELETE_ALL_ARTICLES,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_REQUEST,
-  SET_TRANSACTION_ERROR
+  SET_TRANSACTION_ERROR,
+  SET_TRANSACTION_STATE,
+  GET_CLIENT_UID,
+  GET_CLIENT_INFO_REQUEST,
+  GET_CLIENT_INFO_SUCCESS,
+  GET_CLIENT_INFO_ERROR,
+  SET_CLIENT_STATE,
+  CANCEL_ARTICLE_REQUEST,
+  CANCEL_ARTICLE_SUCCESS,
+  CANCEL_ARTICLE_ERROR,
+  DELETE_ARTICLE_CANCELED
 } from "../constants";
 
 function menus(state={}, action)
@@ -170,6 +180,20 @@ function errors(state = {}, action)
       })
       return state;
     case SET_TRANSACTION_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.shift();
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+    case GET_CLIENT_INFO_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.shift();
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+    case CANCEL_ARTICLE_ERROR:
       errorsList = state.errorsList.slice()
       errorsList.shift();
       state = Object.assign({}, state, {
@@ -360,6 +384,11 @@ function vente(state={}, action){
         listArticles: action.listArticles
       });
       return state;
+    case SET_TRANSACTION_SUCCESS:
+      state = Object.assign({}, state,{
+        selectedArticles: []
+      });
+    return state;
     default:
       return state;
   }
@@ -369,13 +398,44 @@ function vente(state={}, action){
 function achats(state={}, action)
 {
   switch(action.type){
+    case GET_CLIENT_UID:
+      state = Object.assign({}, state,{
+        clientUid : action.clientUid
+      })
+      return state;
+    case SET_TRANSACTION_STATE:
+      state = Object.assign({}, state,{
+        state_transaction : action.state_transaction
+      })
+      return state;
     case SET_TRANSACTION_REQUEST:
       return state;
     case SET_TRANSACTION_SUCCESS:
       state = Object.assign({}, state,{
-        transac: true,
-        selectedArticles: []
+        state_transaction : 'success'
       });
+      return state;
+    case GET_CLIENT_INFO_REQUEST:
+     return state;
+    case GET_CLIENT_INFO_SUCCESS:
+      state = Object.assign({}, state,{
+        info_client : action.info_client
+      });
+      return state;
+    case SET_CLIENT_STATE:
+      state = Object.assign({}, state,{
+        info_client : null
+      });
+      return state;
+    case CANCEL_ARTICLE_REQUEST:
+      return state;
+    case CANCEL_ARTICLE_SUCCESS:
+      state = Object.assign({}, state,{
+        cancel : action.cancel
+      });
+      return state;
+    case DELETE_ARTICLE_CANCELED:
+      return state;
     default:
       return state;
   }
@@ -385,5 +445,6 @@ export default combineReducers({
   menus,
   errors,
   cas,
-  vente
+  vente,
+  achats
 });

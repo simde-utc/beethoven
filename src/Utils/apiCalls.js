@@ -151,18 +151,14 @@ export const getArticles = (sessionid, success, failure)=>{
 
 
 //transaction des items dans la cardlist
-export const setUserTransaction = (sessionid, list_achats, success, failure)=>{
-  fetch("https://api.nemopay.net/services/POSS3/transaction?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
-  "&sessionid="+sessionid+"", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fun_id: 2,
-        obj_ids: list_achats // format poss ? d.push([item.id, item.quantity]);
-      })
-    })
+export const setUserTransaction = (sessionid, badge, list_achats, success, failure)=>{
+  var d = [];
+  for (var i = 0; i < list_achats.length; i++) {
+      var item = list_achats[i];
+      d.push([item.newID, item.newQTE]);
+  }
+  var achats = JSON.stringify(d);
+  brequest('apiRequest', 'POST', 'POSS3', 'transaction', {fun_id:FUND_ID,badge_id:badge, obj_ids: achats},sessionid)
     .then(res => res.json())
     .then(
       (result) => {
@@ -173,4 +169,34 @@ export const setUserTransaction = (sessionid, list_achats, success, failure)=>{
         failure(error);
       }
     ).catch((err)=>{failure(err)})
+}
+
+//récupérer les infos du client
+export const getUserInformation = (sessionId, badge, success, failure)=>{
+  brequest('apiRequest', 'POST', 'POSS3', 'getBuyerInfo', {badge_id:badge},sessionId)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      console.log(result)
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+//cancel une transaction
+export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
+  brequest('apiRequest', 'POST', 'POSS3', 'cancel', {fun_id: FUND_ID, pur_id:pur_id},sessionId)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      console.log(result)
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
 }
