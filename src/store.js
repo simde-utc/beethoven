@@ -33,7 +33,8 @@ const initialStore = {
   },
 
   webTV: {
-    tvLink : "http://localhost:5000/",
+    tvLink : null,
+    enableMessages : false,
     messages : []
   }
 }

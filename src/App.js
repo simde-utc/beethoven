@@ -8,6 +8,7 @@ import MenuBody from './containers/Menu/menu';
 
 import MenusToServe from './webTVs/menusdisplayer'
 import PicBar from './containers/PicBar/picBar'
+import PicSalle from './containers/PicSalle/picSalle'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
 
           <Route exact={true} path="/picSalle" render= {() => (
               <div className="App">
+                <PicSalle></PicSalle>
 
               </div>
             )}/>

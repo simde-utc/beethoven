@@ -151,7 +151,7 @@ export const getArticles = (sessionid, success, failure)=>{
 
 //Gestion des WebTV
 export const getTvUrl = (idTv, success, failure)=>{
-  brequest('picsousRequest', 'GET', 'TV', 'getUrl', idTv)
+  brequest('picsousRequest', 'GET', null, 'webTv', idTv, null)
   .then(res => res.json())
   .then(
     (result) => {
@@ -165,7 +165,7 @@ export const getTvUrl = (idTv, success, failure)=>{
 
 
 export const setTvUrl = (idTv, success, failure)=>{
-  brequest('picsousRequest', 'GET', 'TV', 'setUrl', idTv)
+  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
   .then(res => res.json())
   .then(
     (result) => {

@@ -505,11 +505,11 @@ export function getTvLinkRequest()
   }
 }
 
-export function getTvLinkSuccess(tvLink)
+export function getTvLinkSuccess(data)
 {
   return{
     type : GET_TVLINK_SUCCESS,
-    tvLink : tvLink
+    data : data
   }
 }
 

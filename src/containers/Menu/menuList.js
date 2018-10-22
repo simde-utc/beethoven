@@ -44,9 +44,6 @@ updateData = ()=>{
       },
       REFRESH_TIMER
     )
-
-
-
 }
 
 render(){

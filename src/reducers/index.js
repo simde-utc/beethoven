@@ -398,7 +398,8 @@ function webTV(state={}, action)
 
     case GET_TVLINK_SUCCESS:
     state = Object.assign({}, state, {
-      tvLink : action.tvLink
+      tvLink : action.data.url,
+      enableMessages : action.data.enable_messages
     })
     return state;
 
@@ -419,5 +420,6 @@ export default combineReducers({
   menus,
   errors,
   cas,
-  vente
+  vente,
+   webTV
 });
