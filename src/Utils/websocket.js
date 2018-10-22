@@ -5,7 +5,7 @@ import {badgeuseIsPresent, setUserConnected, getUserUid, setTransaction, getClie
 
 class WebSocketConnexion extends Component{
   render(){
-    const {badgeuseIsPresent, getUserUid} = this.props;
+    const {badgeuseIsPresent, getUserUid, getClientUid} = this.props;
     const {setTransaction, getInformation} = this.props;
     const {badgeuse, connected} = this.props;
     const {selectedArticles,sessionId, clientUid} = this.props
@@ -21,11 +21,11 @@ class WebSocketConnexion extends Component{
             }
             else {
               if(selectedArticles.length>0){
-                let client = getClientUid(data.substr(13,data.length));
-                setTransaction(sessionId,selectedArticles,client);
+                getClientUid(data.substr(13,data.length));
+                setTransaction(sessionId,selectedArticles,data.substr(13,data.length));
               }else{
-                let client = getClientUid(data.substr(13,data.length));
-                getInformation(sessionId,client);
+                getClientUid(data.substr(13,data.length));
+                getInformation(sessionId,data.substr(13,data.length));
               }
             }
           }
@@ -46,7 +46,7 @@ let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
     badgeuse : state.cas.badgeuse || null,
-    connected : state.cas.connected || false,
+    connected : state.cas.connected || false,
     sessionId : state.cas.sessionId || null,
     selectedArticles : state.vente.selectedArticles || [],
     clientUid : state.achats.clientUid || null
