@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 
 import {connect} from 'react-redux'
-import logo from './logo.svg';
 import './App.css';
 import Header from './header';
-import Body from './body';
 import MenuBody from './containers/Menu/menu';
-import CasConnection from './config';
 
-import {printError} from './Utils/utils'
-import {deleteError} from './actions'
 
 import MenusToServe from './webTVs/menusdisplayer'
 
@@ -17,19 +12,8 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 class App extends Component {
 
+
     render() {
-      const {errorsList} = this.props;
-      const {deleteError} = this.props;
-
-      //affichage de l'ensemble des erreurs du programme
-      let List = []
-      if(errorsList.length > 0)
-      {
-        errorsList.forEach((element)=>{
-          List.push(printError(element))
-        })
-      }
-
       return (
       <Router>
         <div>
@@ -63,21 +47,4 @@ class App extends Component {
     }
 }
 
-
-let mapStateToProps = (state)=>{
-  return{
-    //mettre ce qu'on veut faire passer en props du composant
-    errorsList : state.errors.errorsList || []
-  };
-}
-
-let mapDispatchToProps = (dispatch)=>{
-  return{
-    deleteError : ()=> dispatch(deleteError())
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)
-  (App);
+export default App;

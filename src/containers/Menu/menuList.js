@@ -36,14 +36,17 @@ componentWillUnMount(){
 }
 
 updateData = ()=>{
+  const {NavIndex} = this.props;
 
     this.interval = setInterval(
       ()=>{
-
-        this.props.getList(this.props.NavIndex)
+          this.props.getList(this.props.NavIndex)
       },
       REFRESH_TIMER
     )
+
+
+
 }
 
 render(){

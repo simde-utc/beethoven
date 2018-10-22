@@ -11,6 +11,25 @@ const initialStore = {
   },
   errors:{
     errorsList : []
+  },
+
+  cas : {
+    badgeuse : false,
+    connected : false,
+    userUid : null,
+    userPin : null,
+    sessionId : null,
+    username : null,
+    redirected : false
+  },
+
+  vente: {
+    loaded : false,
+    listCateg : [],
+    id_Cated : 3,
+    selectedArticles : [],
+    loadedArt : false,
+    listArticles : []
   }
 }
 
