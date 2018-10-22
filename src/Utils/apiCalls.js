@@ -82,7 +82,7 @@ export const fetchMenuList = (idMenu, success, failure)=>{
 }
 
 export const fetchToServe = (success, failure)=>{
-  fetch("http://37.139.25.111/getOrdersForTV/?random="+Math.random(), {
+  fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
     method: 'GET',
     mode: 'cors',
     headers:{
