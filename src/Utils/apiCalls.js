@@ -143,10 +143,7 @@ export const loginCas = (success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
-
-
-
-
+// Récupérer les catégorie en fonction de l'event ( pic journee, pic soir..)
 export const getCategories = (sessionid,success,failure)=>{
   fetch("https://api.nemopay.net/services/POSS3/getSalesLocations?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
   "&sessionid="+sessionid+"", {
@@ -192,8 +189,7 @@ export const getCategories = (sessionid,success,failure)=>{
       }).catch((err)=>{failure(err)})
 }
 
-
-
+// Chopper les articles par categ
 export const getArticles = (sessionid, success, failure)=>{
   fetch("https://api.nemopay.net/services/POSS3/getArticles?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
   "&sessionid="+sessionid+"", {
@@ -203,6 +199,32 @@ export const getArticles = (sessionid, success, failure)=>{
       },
       body: JSON.stringify({
         fun_id: 2,
+      })
+    })
+    .then(res => res.json())
+    .then(
+      (result) => {
+        console.log(result)
+        success(result);
+      },
+      (error) => {
+        failure(error);
+      }
+    ).catch((err)=>{failure(err)})
+}
+
+
+//transaction des items dans la cardlist
+export const setUserTransaction = (sessionid, list_achats, success, failure)=>{
+  fetch("https://api.nemopay.net/services/POSS3/transaction?system_id=payutc&app_key="+WEEZEVENT_APP_KEY+
+  "&sessionid="+sessionid+"", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fun_id: 2,
+        obj_ids: list_achats // format poss ? d.push([item.id, item.quantity]);
       })
     })
     .then(res => res.json())

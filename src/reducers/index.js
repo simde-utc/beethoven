@@ -36,7 +36,10 @@ import { 
   GET_ARTICLES_SUCCESS,
   GET_ARTICLES_ERROR,
   DELETE_ARTICLE,
-  DELETE_ALL_ARTICLES
+  DELETE_ALL_ARTICLES,
+  SET_TRANSACTION_SUCCESS,
+  SET_TRANSACTION_REQUEST,
+  SET_TRANSACTION_ERROR
 } from "../constants";
 
 function menus(state={}, action)
@@ -97,9 +100,7 @@ function menus(state={}, action)
     {
       listSales : {"menu": newListInformation, "orders": newListSales}
     })
-
       return state;
-
     default:
       return state;
   }
@@ -161,10 +162,6 @@ function errors(state = {}, action)
           errorsList: errorsList
         })
         return state;
-
-
-
-
     case DELETE_ERROR:
       errorsList = state.errorsList.slice()
       errorsList.shift();
@@ -172,9 +169,13 @@ function errors(state = {}, action)
         errorsList : errorsList
       })
       return state;
-
-
-
+    case SET_TRANSACTION_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.shift();
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
     default:
       return state
   }
@@ -363,6 +364,21 @@ function vente(state={}, action){
       return state;
   }
   return state;
+}
+
+function achats(state={}, action)
+{
+  switch(action.type){
+    case SET_TRANSACTION_REQUEST:
+      return state;
+    case SET_TRANSACTION_SUCCESS:
+      state = Object.assign({}, state,{
+        transac: true,
+        selectedArticles: []
+      });
+    default:
+      return state;
+  }
 }
 
 export default combineReducers({

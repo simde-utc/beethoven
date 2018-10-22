@@ -36,6 +36,9 @@ import {
   LOGIN_BADGE_SUCCESS,
   LOGIN_BADGE_ERROR,
   DISCONNECT,
+  SET_TRANSACTION_REQUEST,
+  SET_TRANSACTION_SUCCESS,
+  SET_TRANSACTION_ERROR
 } from "../constants"
 
 import {
@@ -46,7 +49,8 @@ import {
   loginBadge2,
   loginCas,
   getCategories,
-  getArticles
+  getArticles,
+  setUserTransaction
 } from '../Utils/apiCalls.js'
 
 
@@ -347,9 +351,6 @@ export function deleteAllArticles(selectedArticles){
 // Gestion Connexion
 // **************************************************************************
 
-
-
-
 //gestion du websocket de badgeuse
 export function badgeuseIsPresent(badgeuse){
   return{
@@ -478,5 +479,51 @@ export function disconnect()
 {
   return{
     type : DISCONNECT
+  }
+}
+
+// **************************************************************************
+// Gestion User
+// **************************************************************************
+//Achat du panier
+export function setTransactionRequest(sessionId,selectedArticles){
+  return{
+    type: SET_TRANSACTION_REQUEST,
+    sessionId : sessionId,
+    selectedArticles
+  }
+}
+
+export function setTransactionSuccess(data)
+{
+  return{
+    type: SET_TRANSACTION_SUCCESS,
+    transaction : data
+  }
+}
+
+export function setTransactionError(error)
+{
+  return{
+    type : SET_TRANSACTION_ERROR,
+    error : error
+  }
+}
+
+export function setTransaction(sessionId,selectedArticles)
+{
+  return (dispatch) =>{
+    dispatch(setTransactionRequest(sessionId,selectedArticles));
+    setUserTransaction(
+      sessionId,
+      selectedArticles,
+      (data)=> {
+        dispatch(setTransactionSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(setTransactionError('Erreur : Transaction avortée'))
+      }
+    )
   }
 }

@@ -84,3 +84,11 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 
 //deconnexion
 export const DISCONNECT = "DISCONNECT"
+
+// **************************************************************************
+// Gestion User
+// **************************************************************************
+//achat du panier
+export const SET_TRANSACTION_SUCCESS = "SET_TRANSACTION_SUCCESS"
+export const SET_TRANSACTION_REQUEST = "SET_TRANSACTION_REQUEST"
+export const SET_TRANSACTION_ERROR = "SET_TRANSACTION_ERROR"

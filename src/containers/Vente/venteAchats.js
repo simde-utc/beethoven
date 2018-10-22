@@ -4,7 +4,7 @@ import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 import TemplateArticle from './venteTemplateAchats'
 
-import { getChosenArticle } from "../../actions"
+import { getChosenArticle, setTransaction } from "../../actions"
 
 {/*Liste des achats qu'un user va payer*/}
 class Achats extends Component {
@@ -34,12 +34,14 @@ class Achats extends Component {
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
+    sessionId : state.cas.sessionId || null,
     selectedArticles : state.vente.selectedArticles || []
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
+    setTransaction : (id,list)=> dispatch(setTransaction(id,list)),
     getChosenArticle : (id,name,price,list)=> dispatch(getChosenArticle(id,name,price,list))
   }
 }

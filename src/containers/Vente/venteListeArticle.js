@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 
 import { updateCategorie, getChosenArticle, getListArticles } from "../../actions"
 
-
 {/*Affichage des articles dans la colonne de droites par catégorie*/}
 class ListeArticle extends Component {
   componentWillMount() {
@@ -25,14 +24,25 @@ class ListeArticle extends Component {
     var displayArticle = [];
     listArticles.forEach(function(element) {
       if(element.categorie_id==id_Categ){
-        displayArticle.push(
-          <div class="col-sm-2 mb-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-            <button type="button" class="btn btn-lg btn-block" style={styleButton}>
-              <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="180" height="100"></img>
-              <p style={styleText}>{element.name}</p>
-            </button>
-          </div>
-          )
+
+        if(element.image_url){
+          displayArticle.push(
+            <div class="col-sm-2 mb-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+              <button type="button" class="btn btn-lg btn-block" style={styleButton}>
+                <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="180" height="100"></img>
+              </button>
+            </div>
+            )
+          }
+          else{
+            displayArticle.push(
+              <div class="col-sm-2 mb-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                <button type="button" class="btn btn-lg btn-block" style={styleButton}>
+                    <p class="card-img-top" style={styleText}>{element.name}</p>
+                </button>
+              </div>
+              )
+          }
       }
     });
     return (
