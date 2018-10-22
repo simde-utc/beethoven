@@ -7,7 +7,7 @@ import MenuBody from './containers/Menu/menu';
 
 
 import MenusToServe from './webTVs/menusdisplayer'
-
+import PicBar from './containers/PicBar/picBar'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 class App extends Component {
@@ -17,30 +17,31 @@ class App extends Component {
       return (
       <Router>
         <div>
-          <Route exact={true} path="/menus" render= {() => (
+          <Route exact={true} path="/" render= {() => (
             <div className="App">
               <Header></Header>
-              <div
-                style={
-                  {
-                    position:'fixed',
-                    top :'20px',
-                    right:'10px',
-                    width:'auto',
-                    zIndex:'999',
-                    borderRadius:'0px'
-                  }
-                }
-                >{List}</div>
-                <MenuBody></MenuBody>
-                <CasConnection></CasConnection>
+
               </div>
             )}/>
-            <Route exact={true} path="/webTV1" render= {() => (
+
+          <Route exact={true} path="/picBar" render= {() => (
               <div className="App">
-                <MenusToServe></MenusToServe>
+                <PicBar></PicBar>
+
               </div>
             )}/>
+
+          <Route exact={true} path="/picSalle" render= {() => (
+              <div className="App">
+
+              </div>
+            )}/>
+
+          <Route exact={true} path="/NextMenus" render= {() => (
+                <div className="App">
+                  <MenusToServe></MenusToServe>
+                </div>
+              )}/>
           </div>
         </Router>
       );

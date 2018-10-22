@@ -30,6 +30,11 @@ const initialStore = {
     selectedArticles : [],
     loadedArt : false,
     listArticles : []
+  },
+
+  webTV: {
+    tvLink : "http://localhost:5000/",
+    messages : []
   }
 }
 

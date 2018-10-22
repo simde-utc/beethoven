@@ -84,3 +84,22 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 
 //deconnexion
 export const DISCONNECT = "DISCONNECT"
+
+// **************************************************************************
+// Gestion WebTV
+// **************************************************************************
+
+//getUrl
+export const GET_TVLINK_REQUEST = "GET_TVLINK_REQUEST"
+export const GET_TVLINK_SUCCESS = "GET_TVLINK_SUCCESS"
+export const GET_TVLINK_ERROR = "GET_TVLINK_ERROR"
+
+//setUrl
+export const SET_TVLINK_REQUEST = "SET_TVLINK_REQUEST"
+export const SET_TVLINK_SUCCESS = "SET_TVLINK_SUCCESS"
+export const SET_TVLINK_ERROR = "SET_TVLINK_ERROR"
+
+//get Messages List for webTV
+export const GET_MESSAGES_LIST_REQUEST = "GET_MESSAGES_LIST_REQUEST"
+export const GET_MESSAGES_LIST_SUCCESS = "GET_MESSAGES_LIST_SUCCESS"
+export const GET_MESSAGES_LIST_ERROR = "GET_MESSAGES_LIST_ERROR"

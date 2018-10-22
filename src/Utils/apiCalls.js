@@ -139,7 +139,36 @@ export const getArticles = (sessionid, success, failure)=>{
   .then(res => res.json())
   .then(
     (result) => {
-      console.log(result)
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+
+
+//Gestion des WebTV
+export const getTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', 'TV', 'getUrl', idTv)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+
+export const setTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', 'TV', 'setUrl', idTv)
+  .then(res => res.json())
+  .then(
+    (result) => {
       success(result);
     },
     (error) => {
