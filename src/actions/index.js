@@ -36,6 +36,15 @@ import {
   LOGIN_BADGE_SUCCESS,
   LOGIN_BADGE_ERROR,
   DISCONNECT,
+  GET_TVLINK_ERROR,
+  GET_TVLINK_REQUEST,
+  GET_TVLINK_SUCCESS,
+  SET_TVLINK_ERROR,
+  SET_TVLINK_REQUEST,
+  SET_TVLINK_SUCCESS,
+  GET_MESSAGES_LIST_ERROR,
+  GET_MESSAGES_LIST_REQUEST,
+  GET_MESSAGES_LIST_SUCCESS
 } from "../constants"
 
 import {
@@ -46,7 +55,9 @@ import {
   loginBadge2,
   loginCas,
   getCategories,
-  getArticles
+  getArticles,
+  getTvUrl,
+  setTvUrl
 } from '../Utils/apiCalls.js'
 
 
@@ -478,5 +489,92 @@ export function disconnect()
 {
   return{
     type : DISCONNECT
+  }
+}
+
+
+// **************************************************************************
+// Gestion WebTV
+// **************************************************************************
+
+
+export function getTvLinkRequest()
+{
+  return{
+    type : GET_TVLINK_REQUEST
+  }
+}
+
+export function getTvLinkSuccess(data)
+{
+  return{
+    type : GET_TVLINK_SUCCESS,
+    data : data
+  }
+}
+
+export function getTvLinkError(error)
+{
+  return{
+    type : GET_TVLINK_ERROR,
+    error : error
+  }
+}
+
+export function getTvLink(idTv)
+{
+  return (dispatch)=>{
+    dispatch(getTvLinkRequest());
+    getTvUrl(idTv,
+      (data)=>{
+        dispatch(getTvLinkSuccess(data))
+      },
+      (err)=>{
+        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
+      }
+    )
+  }
+}
+
+
+
+
+
+
+export function setTvLinkRequest()
+{
+  return{
+    type : SET_TVLINK_REQUEST
+  }
+}
+
+export function setTvLinkSuccess(tvLink)
+{
+  return{
+    type : SET_TVLINK_SUCCESS,
+    tvLink : tvLink
+  }
+}
+
+export function setTvLinkError(error)
+{
+  return{
+    type : SET_TVLINK_ERROR,
+    error : error
+  }
+}
+
+export function setTvLink(idTv)
+{
+  return (dispatch)=>{
+    dispatch(setTvLinkRequest());
+    setTvUrl(idTv,
+      (data)=>{
+        dispatch(getTvLinkSuccess(idTv))
+      },
+      (err)=>{
+        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
+      }
+    )
   }
 }

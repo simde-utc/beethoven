@@ -30,6 +30,12 @@ const initialStore = {
     selectedArticles : [],
     loadedArt : false,
     listArticles : []
+  },
+
+  webTV: {
+    tvLink : null,
+    enableMessages : false,
+    messages : []
   }
 }
 

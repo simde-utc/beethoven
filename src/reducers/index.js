@@ -36,7 +36,16 @@ import { 
   GET_ARTICLES_SUCCESS,
   GET_ARTICLES_ERROR,
   DELETE_ARTICLE,
-  DELETE_ALL_ARTICLES
+  DELETE_ALL_ARTICLES,
+  GET_TVLINK_ERROR,
+  GET_TVLINK_REQUEST,
+  GET_TVLINK_SUCCESS,
+  SET_TVLINK_ERROR,
+  SET_TVLINK_REQUEST,
+  SET_TVLINK_SUCCESS,
+  GET_MESSAGES_LIST_ERROR,
+  GET_MESSAGES_LIST_REQUEST,
+  GET_MESSAGES_LIST_SUCCESS
 } from "../constants";
 
 function menus(state={}, action)
@@ -173,6 +182,21 @@ function errors(state = {}, action)
       })
       return state;
 
+    case GET_TVLINK_ERROR :
+    errorsList = state.errorsList.slice()
+    errorsList.push(action.error);
+    state = Object.assign({}, state, {
+      errorsList: errorsList
+    })
+    return state;
+
+    case SET_TVLINK_ERROR :
+    errorsList = state.errorsList.slice()
+    errorsList.push(action.error);
+    state = Object.assign({}, state, {
+      errorsList: errorsList
+    })
+    return state;
 
 
     default:
@@ -365,9 +389,37 @@ function vente(state={}, action){
   return state;
 }
 
+function webTV(state={}, action)
+{
+  switch(action.type)
+  {
+    case GET_TVLINK_REQUEST:
+    return state;
+
+    case GET_TVLINK_SUCCESS:
+    state = Object.assign({}, state, {
+      tvLink : action.data.url,
+      enableMessages : action.data.enable_messages
+    })
+    return state;
+
+    case SET_TVLINK_REQUEST:
+    return state;
+
+    case SET_TVLINK_SUCCESS:
+    state = Object.assign({}, state, {
+      tvLink : action.tvLink
+    })
+
+    default:
+    return state;
+  }
+}
+
 export default combineReducers({
   menus,
   errors,
   cas,
-  vente
+  vente,
+   webTV
 });

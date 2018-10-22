@@ -16,14 +16,13 @@ const brequest = (server, method, service = null , request, data = null, session
             'Content-Type': 'application/json',
             'Nemopay-Version': '2018-07-03',
           },
-          body : JSON.stringify(data),
-          cache : 'no-store'
+          body : JSON.stringify(data)
         }
       )
 
     case 'picsousRequest':
     url  = data!== null ?
-    PICSOUS_URL +  request + '/' + data +'?random='+Math.random() :
+    PICSOUS_URL +  request + '/' + data + '?random='+Math.random()  :
     PICSOUS_URL +  request + '?random='+Math.random()
 
     return fetch(
@@ -32,8 +31,7 @@ const brequest = (server, method, service = null , request, data = null, session
         method : method,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        cache : 'no-store'
+        }
       }
     )
 
