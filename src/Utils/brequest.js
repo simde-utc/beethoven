@@ -23,8 +23,8 @@ const brequest = (server, method, service = null , request, data = null, session
 
     case 'picsousRequest':
     url  = data!== null ?
-    PICSOUS_URL +  request + '/' + data  :
-    PICSOUS_URL +  request 
+    PICSOUS_URL +  request + '/' + data +'?random='+Math.random() :
+    PICSOUS_URL +  request + '?random='+Math.random()
 
     return fetch(
       url,

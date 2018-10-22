@@ -3,6 +3,9 @@ import '../../App.css';
 import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 
+import {Button} from 'reactstrap'
+import {FaTrash} from 'react-icons/fa';
+
 import { deleteArticle } from "../../actions"
 
 {/*Template des articles à afficher lors du paiment*/}
@@ -18,7 +21,7 @@ class TemplateArticle extends React.Component {
           <td> {art.nom} </td>
           <td> {art.prix} € </td>
             <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() => deleteArticle(art.idart,selectedArticles)}>
-                  <i class="fa fa-trash" aria-hidden="true"></i>
+                  <FaTrash></FaTrash>
                 </button>
             </td>
         </tr>)
