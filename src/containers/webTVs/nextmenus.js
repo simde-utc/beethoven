@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {REFRESH_TIMER} from '../Utils/config'
-import '../App.css';
+import {REFRESH_TIMER} from '../../Utils/config'
+import '../../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
-import {getList} from "../actions"
-import {getToServe} from "../actions"
+import {getList} from "../../actions"
+import {getToServe} from "../../actions"
 
 import NextMenuRow from './nextMenusRows'
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import '../App.css';
+import '../../App.css';
 import {Button } from 'reactstrap';
 
 
