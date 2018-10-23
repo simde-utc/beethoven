@@ -29,7 +29,7 @@ class PicBar extends Component {
 
       this.interval = setInterval(
         ()=>{
-          getTvLink(1)
+          getTvLink(2)
         },
         REFRESH_WEBTV
       )
