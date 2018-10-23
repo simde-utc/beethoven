@@ -12,7 +12,7 @@ class PicBar extends Component {
   componentWillMount()
   {
     const {getTvLink} = this.props;
-    getTvLink(1)
+    getTvLink(2)
   }
 
 
