@@ -176,3 +176,23 @@ export const setTvUrl = (idTv, success, failure)=>{
     }
   ).catch((err)=>{failure(err)})
 }
+
+export const fetchToServe = (success, failure)=>{
+  fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
+    method: 'GET',
+    mode: 'cors',
+    headers:{
+      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  })
+  .then(res => res.json())
+  .then(
+    (result)=>{
+      success(result)
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+
+}

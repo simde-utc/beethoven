@@ -6,7 +6,7 @@ import Header from './header';
 import MenuBody from './containers/Menu/menu';
 
 
-import MenusToServe from './webTVs/menusdisplayer'
+import MenusToServe from './containers/webTVs/menusdisplayer'
 import PicBar from './containers/PicBar/picBar'
 import PicSalle from './containers/PicSalle/picSalle'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
@@ -24,6 +24,7 @@ class App extends Component {
 
               </div>
             )}/>
+
 
           <Route exact={true} path="/picBar" render= {() => (
               <div className="App">

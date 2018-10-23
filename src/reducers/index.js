@@ -7,9 +7,12 @@ import { 
   DELETE_MENU_ERROR,
   DELETE_MENU_REQUEST,
   DELETE_MENU_SUCCESS,
+  GET_LIST_REQUEST,
   GET_LIST_SUCCESS,
   GET_LIST_ERROR,
-  GET_LIST_REQUEST,
+  GET_TOSERVE_REQUEST,
+  GET_TOSERVE_SUCCESS,
+  GET_TOSERVE_ERROR,
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
@@ -109,6 +112,17 @@ function menus(state={}, action)
 
       return state;
 
+    case GET_TOSERVE_SUCCESS:
+    state = Object.assign({}, state,
+    {
+      listToServe : action.listToServe
+    })
+    return state;
+
+    case GET_TOSERVE_REQUEST:
+      return state;
+
+
     default:
       return state;
   }
@@ -197,6 +211,14 @@ function errors(state = {}, action)
       errorsList: errorsList
     })
     return state;
+
+    case GET_TOSERVE_ERROR:
+      errorsList = state.errorsList.slice();
+      errorsList.push(action.error);
+          state = Object.assign({}, state, {
+      errorsList : errorsList
+      })
+      return state;
 
 
     default:
