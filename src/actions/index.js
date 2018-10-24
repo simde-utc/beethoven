@@ -72,15 +72,12 @@ import {
   loginCas,
   getCategories,
   getArticles,
-<<<<<<< HEAD
   setUserTransaction,
   getUserInformation,
-  cancelUserTransaction
-=======
+  cancelUserTransaction,
   getTvUrl,
   setTvUrl,
   fetchToServe
->>>>>>> master
 } from '../Utils/apiCalls.js'
 
 
@@ -552,7 +549,6 @@ export function disconnect()
   }
 }
 
-<<<<<<< HEAD
 // **************************************************************************
 // Gestion User
 // **************************************************************************
@@ -578,7 +574,10 @@ export function setTransactionError(error)
 {
   return{
     type : SET_TRANSACTION_ERROR,
-=======
+    error : error
+  }
+}
+
 
 // **************************************************************************
 // Gestion WebTV
@@ -604,12 +603,10 @@ export function getTvLinkError(error)
 {
   return{
     type : GET_TVLINK_ERROR,
->>>>>>> master
     error : error
   }
 }
 
-<<<<<<< HEAD
 export function setTransaction(sessionId,selectedArticles,badge_id)
 {
   return (dispatch) =>{
@@ -624,7 +621,11 @@ export function setTransaction(sessionId,selectedArticles,badge_id)
       (err)=>{
         console.log(err)
         dispatch(setTransactionError('Erreur : Transaction avortée'))
-=======
+      }
+    )
+  }
+}
+
 export function getTvLink(idTv)
 {
   return (dispatch)=>{
@@ -635,13 +636,11 @@ export function getTvLink(idTv)
       },
       (err)=>{
         dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
->>>>>>> master
       }
     )
   }
 }
 
-<<<<<<< HEAD
 export function setTransactionState(state_transaction){
   return{
     type: SET_TRANSACTION_STATE,
@@ -727,7 +726,10 @@ export function cancelTransactionError(error)
 {
   return{
     type : CANCEL_ARTICLE_ERROR,
-=======
+    error : error
+  }
+}
+
 
 
 
@@ -752,12 +754,10 @@ export function setTvLinkError(error)
 {
   return{
     type : SET_TVLINK_ERROR,
->>>>>>> master
     error : error
   }
 }
 
-<<<<<<< HEAD
 export function cancelTransaction(sessionId,pur_id)
 {
   return (dispatch) =>{
@@ -782,7 +782,9 @@ export function deleteArticleCanceled(pur_id){
   return{
     type : DELETE_ARTICLE_CANCELED,
     pur_id : pur_id,
-=======
+  }
+}
+
 export function setTvLink(idTv)
 {
   return (dispatch)=>{
@@ -795,6 +797,5 @@ export function setTvLink(idTv)
         dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
       }
     )
->>>>>>> master
   }
 }

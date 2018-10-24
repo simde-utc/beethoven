@@ -149,7 +149,7 @@ export const getArticles = (sessionid, success, failure)=>{
 }
 
 
-<<<<<<< HEAD
+
 //transaction des items dans la cardlist
 export const setUserTransaction = (sessionid, badge, list_achats, success, failure)=>{
   var d = [];
@@ -178,7 +178,14 @@ export const getUserInformation = (sessionId, badge, success, failure)=>{
   .then(
     (result) => {
       console.log(result)
-=======
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
+
 
 //Gestion des WebTV
 export const getTvUrl = (idTv, success, failure)=>{
@@ -186,7 +193,6 @@ export const getTvUrl = (idTv, success, failure)=>{
   .then(res => res.json())
   .then(
     (result) => {
->>>>>>> master
       success(result);
     },
     (error) => {
@@ -195,7 +201,6 @@ export const getTvUrl = (idTv, success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
-<<<<<<< HEAD
 //cancel une transaction
 export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
   brequest('apiRequest', 'POST', 'POSS3', 'cancel', {fun_id: FUND_ID, pur_id:pur_id},sessionId)
@@ -203,14 +208,6 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
   .then(
     (result) => {
       console.log(result)
-=======
-
-export const setTvUrl = (idTv, success, failure)=>{
-  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
-  .then(res => res.json())
-  .then(
-    (result) => {
->>>>>>> master
       success(result);
     },
     (error) => {
@@ -218,8 +215,20 @@ export const setTvUrl = (idTv, success, failure)=>{
     }
   ).catch((err)=>{failure(err)})
 }
-<<<<<<< HEAD
-=======
+
+
+export const setTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
 
 export const fetchToServe = (success, failure)=>{
   fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
@@ -240,4 +249,3 @@ export const fetchToServe = (success, failure)=>{
   ).catch((err)=>{failure(err)})
 
 }
->>>>>>> master
