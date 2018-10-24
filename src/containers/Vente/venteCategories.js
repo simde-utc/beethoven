@@ -9,10 +9,10 @@ import { getListCateg, updateCategorie } from "../../actions"
 {/*Liste des catégories*/}
 class Categorie extends Component {
   componentWillMount() {
-    const {listCateg, sessionId, loaded} = this.props
+    const {listCateg, sessionId, loaded, event_id} = this.props
     const { getListCateg } = this.props;
     let xx = sessionId;
-    getListCateg(sessionId);
+    getListCateg(sessionId,event_id);
   }
   render() {
     const { listCateg } = this.props;
@@ -32,14 +32,15 @@ let mapStateToProps = (state)=>{
     //mettre ce qu'on veut faire passer en props du composant
     sessionId : state.cas.sessionId || null,
     listCateg : state.vente.loaded || false,
-    listCateg : state.vente.listCateg || []
+    listCateg : state.vente.listCateg || [],
+    event_id : state.vente.event_id || null
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
     updateCategorie : (index)=> dispatch(updateCategorie(index)),
-    getListCateg : (sessionId)=> dispatch(getListCateg(sessionId))
+    getListCateg : (sessionId,index)=> dispatch(getListCateg(sessionId,index))
   }
 }
 

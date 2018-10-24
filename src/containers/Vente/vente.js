@@ -74,38 +74,44 @@ class Vente extends Component {
       <div className="Header">
         <div class="row">
            {/*Partie de gauche : Information des futurs achats, validation de la transaction */}
-          <div class="col-4">
-            {/*Info Achat*/}
-            <div class={maxSizeTable}>
-              <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
-                <thead>
-                  <tr>
-                    <th scope="col">Qte</th>
-                    <th scope="col">Nom Prod</th>
-                    <th scope="col">Prix</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <Achats sessionId={this.props.sessionId}></Achats>
-              </table>
+           <div class="col-7">
+            <div class="row">
+              <div class="col-7">
+                {/*Info Achat*/}
+                <div class={maxSizeTable}>
+                  <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Qte</th>
+                        <th scope="col">Nom Prod</th>
+                        <th scope="col">Prix</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <Achats sessionId={this.props.sessionId}></Achats>
+                  </table>
+                </div>
+                {/*Annulation des achats en cours*/}
+                  {annuler}
+                {/*Information sur la carte -> Annuler un paiment / info sur la carte*/}
+                  {info}
+                {/*Etat de la transaction*/}
+                  {stateTrans}
+              </div>
+              {/*Différents type d'articles*/}
+              <div class="col-5">
+                  <Categorie sessionId={this.props.sessionId}></Categorie>
+              </div>
             </div>
-            {/*Annulation des achats en cours*/}
-              {annuler}
-            {/*Information sur la carte -> Annuler un paiment / info sur la carte*/}
-              {info}
-            {/*Etat de la transaction*/}
-              {stateTrans}
-          </div>
-          {/*Différents type d'articles*/}
-          <div class="col">
-              <Categorie sessionId={this.props.sessionId}></Categorie>
           </div>
           {/*Liste des articles selon le type sélectionné*/}
-          <div class="col-6">
+
+          <div class="col-5">
               <div class="tab-content" id="nav-tabContent">
                 <ListeArticle sessionId={this.props.sessionId}></ListeArticle>
               </div>
           </div>
+
         </div>
       </div>
     );

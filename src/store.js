@@ -29,7 +29,9 @@ const initialStore = {
     id_Cated : 3,
     selectedArticles : [],
     loadedArt : false,
-    listArticles : []
+    listArticles : [],
+    event_id : null,
+    picked : false
   },
 
   achats: {

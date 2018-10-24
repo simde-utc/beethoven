@@ -5,11 +5,12 @@ import MenuBody from './containers/Menu/menu'
 import Vente from './containers/Vente/vente'
 import {connect} from 'react-redux'
 
-import {login, redirectLogin, deleteError} from './actions'
+import {login, redirectLogin, deleteError, restart} from './actions'
 import {printError} from './Utils/utils'
 import {CAS_LINK} from './Utils/config'
 import BadgeConnexion from './Utils/badgeConnexion'
 import WebSocketConnexion from './Utils/websocket'
+import TypeEvents from './Utils/typeEvents.js'
 
 
 
@@ -39,8 +40,9 @@ class Header extends Component {
 
   render() {
     const {errorsList, badgeuse, redirected} = this.props;
-    const {deleteError, redirectLogin, login} = this.props;
+    const {deleteError, redirectLogin, login, restart} = this.props;
     const{sessionId, connected, username} = this.props;
+    const {event_id, picked} = this.props
 
     //affichage de l'ensemble des erreurs du programme
     let ListErrors = []
@@ -85,10 +87,11 @@ class Header extends Component {
         <WebSocketConnexion></WebSocketConnexion>
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
 
+        {connected===true && picked===false &&<TypeEvents></TypeEvents>}
 
         <div className="Header">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Beethoven</a>
+            <a class="navbar-brand" href="" onClick={()=> restart()}>Beethoven</a>
               <span className="input-group-btn">
                 {username===null ?<a href={CAS_LINK}>Click to login</a> :
 
@@ -139,7 +142,9 @@ let mapStateToProps = (state)=>{
     redirected : state.cas.redirected || false,
     errorsList : state.errors.errorsList || [],
     badgeuse : state.cas.badgeuse || false,
-    username : state.cas.username || null
+    username : state.cas.username || null,
+    event_id : state.vente.event_id || null,
+    picked : state.vente.picked || false
   };
 }
 
@@ -147,7 +152,8 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     redirectLogin : ()=>dispatch(redirectLogin()),
     login : ()=>dispatch(login()),
-    deleteError : ()=> dispatch(deleteError())
+    deleteError : ()=> dispatch(deleteError()),
+    restart : ()=> dispatch(restart())
   }
 }
 

@@ -48,7 +48,12 @@ import {
   CANCEL_ARTICLE_REQUEST,
   CANCEL_ARTICLE_SUCCESS,
   CANCEL_ARTICLE_ERROR,
-  DELETE_ARTICLE_CANCELED
+  DELETE_ARTICLE_CANCELED,
+  GET_EVENT_ARTICLES,
+  GET_SALES_LOCATION_REQUEST,
+  GET_SALES_LOCATION_SUCCESS,
+  GET_SALES_LOCATION_ERROR,
+  RESTART
 } from "../constants"
 
 import {
@@ -62,7 +67,8 @@ import {
   getArticles,
   setUserTransaction,
   getUserInformation,
-  cancelUserTransaction
+  cancelUserTransaction,
+  getLocations
 } from '../Utils/apiCalls.js'
 
 
@@ -253,13 +259,54 @@ export function deleteError(){
 // **************************************************************************
 // Gestion Vente
 // **************************************************************************
+export function getEventArticles(event_id){
+  return{
+    type: GET_EVENT_ARTICLES,
+    event_id: event_id
+  }
+}
+
+//Récupérer les points de vente d'une fondation
+export function getSalesLocationRequest(sessionid){
+  return{
+    type: GET_SALES_LOCATION_REQUEST,
+    sessionid: sessionid
+  }
+}
+export function getSalesLocationSuccess(listLocation){
+  return{
+    type: GET_SALES_LOCATION_SUCCESS,
+    listLocation: listLocation
+  }
+}
+export function getSalesLocationError(sessionid){
+  return{
+    type: GET_SALES_LOCATION_ERROR
+    }
+}
+
+export function getSalesLocations(sessionid){
+  return (dispatch)=>{
+    dispatch(getSalesLocationRequest(sessionid));
+    getLocations(
+      sessionid,
+      (data)=>{
+        dispatch(getSalesLocationSuccess(data))
+      },
+      (err)=>{
+        dispatch(getSalesLocationError())
+      })
+  }
+}
+
 
 
 //Récupérer les catégories
-export function getCategoriesRequest(sessionid){
+export function getCategoriesRequest(sessionid,location){
   return{
     type: GET_CATEGORIES_REQUEST,
-    sessionid: sessionid
+    sessionid: sessionid,
+    location: location
   }
 }
 
@@ -276,11 +323,12 @@ export function getCategoriesError(){
   }
 }
 
-export function getListCateg(sessionid){
+export function getListCateg(sessionid,location){
   return (dispatch)=>{
-    dispatch(getCategoriesRequest(sessionid));
+    dispatch(getCategoriesRequest(sessionid,location));
     getCategories(
       sessionid,
+      location,
       (data)=>{
         dispatch(getCategoriesSuccess(data))
       },
@@ -356,6 +404,15 @@ export function deleteAllArticles(selectedArticles){
   return{
     type : DELETE_ALL_ARTICLES,
     selectedArticles : selectedArticles
+  }
+}
+
+export function restart()
+{
+  return{
+    type : RESTART,
+    picked : false,
+    event_id : null
   }
 }
 
@@ -649,6 +706,7 @@ export function cancelTransaction(sessionId,pur_id)
     dispatch(deleteArticleCanceled(pur_id));
   }
 }
+
 
 //supprimer affichage d'un article canceled en attendant pOSS4
 export function deleteArticleCanceled(pur_id){
