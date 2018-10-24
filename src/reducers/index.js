@@ -7,9 +7,12 @@ import { 
   DELETE_MENU_ERROR,
   DELETE_MENU_REQUEST,
   DELETE_MENU_SUCCESS,
+  GET_LIST_REQUEST,
   GET_LIST_SUCCESS,
   GET_LIST_ERROR,
-  GET_LIST_REQUEST,
+  GET_TOSERVE_REQUEST,
+  GET_TOSERVE_SUCCESS,
+  GET_TOSERVE_ERROR,
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
@@ -37,6 +40,15 @@ import { 
   GET_ARTICLES_ERROR,
   DELETE_ARTICLE,
   DELETE_ALL_ARTICLES,
+  GET_TVLINK_ERROR,
+  GET_TVLINK_REQUEST,
+  GET_TVLINK_SUCCESS,
+  SET_TVLINK_ERROR,
+  SET_TVLINK_REQUEST,
+  SET_TVLINK_SUCCESS,
+  GET_MESSAGES_LIST_ERROR,
+  GET_MESSAGES_LIST_REQUEST,
+  GET_MESSAGES_LIST_SUCCESS,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_ERROR,
@@ -116,6 +128,18 @@ function menus(state={}, action)
       listSales : {"menu": newListInformation, "orders": newListSales}
     })
       return state;
+
+    case GET_TOSERVE_SUCCESS:
+    state = Object.assign({}, state,
+    {
+      listToServe : action.listToServe
+    })
+    return state;
+
+    case GET_TOSERVE_REQUEST:
+      return state;
+
+
     default:
       return state;
   }
@@ -184,25 +208,28 @@ function errors(state = {}, action)
         errorsList : errorsList
       })
       return state;
-    case SET_TRANSACTION_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.shift();
-      state = Object.assign({}, state, {
-        errorsList : errorsList
-      })
-      return state;
-    case GET_CLIENT_INFO_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.shift();
-      state = Object.assign({}, state, {
-        errorsList : errorsList
-      })
-      return state;
-    case CANCEL_ARTICLE_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.shift();
-      state = Object.assign({}, state, {
-        errorsList : errorsList
+
+    case GET_TVLINK_ERROR :
+    errorsList = state.errorsList.slice()
+    errorsList.push(action.error);
+    state = Object.assign({}, state, {
+      errorsList: errorsList
+    })
+    return state;
+
+    case SET_TVLINK_ERROR :
+    errorsList = state.errorsList.slice()
+    errorsList.push(action.error);
+    state = Object.assign({}, state, {
+      errorsList: errorsList
+    })
+    return state;
+
+    case GET_TOSERVE_ERROR:
+      errorsList = state.errorsList.slice();
+      errorsList.push(action.error);
+          state = Object.assign({}, state, {
+      errorsList : errorsList
       })
       return state;
     case GET_SALES_LOCATION_ERROR:
@@ -212,6 +239,27 @@ function errors(state = {}, action)
         errorsList : errorsList
       })
       return state;
+      case SET_TRANSACTION_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.shift();
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
+      case GET_CLIENT_INFO_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.shift();
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
+      case CANCEL_ARTICLE_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.shift();
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
     default:
       return state
   }
@@ -426,6 +474,33 @@ function vente(state={}, action){
   return state;
 }
 
+function webTV(state={}, action)
+{
+  switch(action.type)
+  {
+    case GET_TVLINK_REQUEST:
+    return state;
+
+    case GET_TVLINK_SUCCESS:
+    state = Object.assign({}, state, {
+      tvLink : action.data.url,
+      enableMessages : action.data.enable_messages
+    })
+    return state;
+
+    case SET_TVLINK_REQUEST:
+    return state;
+
+    case SET_TVLINK_SUCCESS:
+    state = Object.assign({}, state, {
+      tvLink : action.tvLink
+    })
+
+    default:
+    return state;
+  }
+}
+
 function achats(state={}, action)
 {
   switch(action.type){
@@ -469,13 +544,14 @@ function achats(state={}, action)
       return state;
     default:
       return state;
+    }
   }
-}
 
 export default combineReducers({
   menus,
   errors,
   cas,
   vente,
-  achats
+  achats,
+  webTV
 });

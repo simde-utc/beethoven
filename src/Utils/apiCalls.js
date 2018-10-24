@@ -151,7 +151,6 @@ export const getArticles = (sessionid, success, failure)=>{
   .then(res => res.json())
   .then(
     (result) => {
-      console.log(result)
       success(result);
     },
     (error) => {
@@ -159,6 +158,7 @@ export const getArticles = (sessionid, success, failure)=>{
     }
   ).catch((err)=>{failure(err)})
 }
+
 
 
 //transaction des items dans la cardlist
@@ -197,6 +197,21 @@ export const getUserInformation = (sessionId, badge, success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
+
+//Gestion des WebTV
+export const getTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', null, 'webTv', idTv, null)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
+
 //cancel une transaction
 export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
   brequest('apiRequest', 'POST', 'POSS3', 'cancel', {fun_id: FUND_ID, pur_id:pur_id},sessionId)
@@ -210,4 +225,38 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
       failure(error);
     }
   ).catch((err)=>{failure(err)})
+}
+
+
+export const setTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+export const fetchToServe = (success, failure)=>{
+  fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
+    method: 'GET',
+    mode: 'cors',
+    headers:{
+      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  })
+  .then(res => res.json())
+  .then(
+    (result)=>{
+      success(result)
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+
 }

@@ -33,11 +33,16 @@ const initialStore = {
     event_id : null,
     picked : false
   },
-
   achats: {
     clientUid : null,
     state_transaction : 'listen',
     info_client : null
+  },
+
+  webTV: {
+    tvLink : null,
+    enableMessages : false,
+    messages : []
   }
 }
 

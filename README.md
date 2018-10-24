@@ -21,7 +21,7 @@ Installez l'ensembles des paquets nécessaires :
 npm install 
 ```
 
-N'oubliez pas de créer le fihchier *config.js* qui se situe dans le dossier **Utils**, à partir de *config_exemple.js*
+N'oubliez pas de créer le fichier *config.js* qui se situe dans le dossier **Utils**, à partir de *config_exemple.js*
 ## Démarrage de Beethoven
 Il faut ensuite lancer Beethoven :
 ```
@@ -33,4 +33,3 @@ npm start
 * **[TERTRAIS Erwan](https://github.com/SuperNach0)** - *Initial work*
 * **[RICHARD Quentin](https://github.com/qprichard)** - *Initial work*
 * **[OBLED Aymeric](https://github.com/obledaym)** - *Initial work*
-test
