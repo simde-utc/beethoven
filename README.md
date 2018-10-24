@@ -33,4 +33,3 @@ npm start
 * **[TERTRAIS Erwan](https://github.com/SuperNach0)** - *Initial work*
 * **[RICHARD Quentin](https://github.com/qprichard)** - *Initial work*
 * **[OBLED Aymeric](https://github.com/obledaym)** - *Initial work*
-test
