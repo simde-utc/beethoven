@@ -72,11 +72,11 @@ class Vente extends Component {
     }else{info = (<div></div>)}
     return (
       <div className="Header">
-        <div class="row">
+        <div class="row mr-2 ml-0">
            {/*Partie de gauche : Information des futurs achats, validation de la transaction */}
-           <div class="col-7">
+           <div class="col-7 px-0">
             <div class="row">
-              <div class="col-7">
+              <div class="col-7 pr-0">
                 {/*Info Achat*/}
                 <div class={maxSizeTable}>
                   <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
@@ -106,7 +106,7 @@ class Vente extends Component {
           </div>
           {/*Liste des articles selon le type sélectionné*/}
 
-          <div class="col-5">
+          <div class="col-5 px-0">
               <div class="tab-content" id="nav-tabContent">
                 <ListeArticle sessionId={this.props.sessionId}></ListeArticle>
               </div>

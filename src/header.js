@@ -19,7 +19,7 @@ class Header extends Component {
   constructor(props){
     super(props)
     this.state = {
-      loead : 'Menu'
+      load : 'Menu'
     }
     this.setMenuPage = this.setMenuPage.bind(this)
     this.setVentePage = this.setVentePage.bind(this)
@@ -87,8 +87,7 @@ class Header extends Component {
         <WebSocketConnexion></WebSocketConnexion>
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
 
-        {connected===true && picked===false &&<TypeEvents></TypeEvents>}
-
+        {connected===true && picked===false && <TypeEvents></TypeEvents>}
         <div className="Header">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="" onClick={()=> restart()}>Beethoven</a>
