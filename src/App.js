@@ -6,7 +6,7 @@ import Header from './header';
 import MenuBody from './containers/Menu/menu';
 
 
-import MenusToServe from './containers/webTVs/menusdisplayer'
+import MenusToServe from './containers/NextMenus/menusdisplayer'
 import PicBar from './containers/PicBar/picBar'
 import PicSalle from './containers/PicSalle/picSalle'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
