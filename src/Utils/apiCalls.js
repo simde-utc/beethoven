@@ -106,14 +106,25 @@ export const loginCas = (success, failure)=>{
 }
 
 
+export const getLocations = (sessionid, success, failure)=>{
+  brequest('apiRequest', 'POST', 'POSS3', 'getSalesLocations', {fun_id:FUND_ID, event_id:EVENT_ID},sessionid)
+  .then(res1 => res1.json())
+  .then((dataLocation) => {
+    success(dataLocation)
+  },
+  (error) => {
+      failure(error)
+  }).catch((err)=>{failure(err)})
+}
 
-
-export const getCategories = (sessionid, success, failure)=>{
+export const getCategories = (sessionid,location , success, failure)=>{
   brequest('apiRequest', 'POST', 'POSS3', 'getSalesLocations', {fun_id:FUND_ID, event_id:EVENT_ID},sessionid)
   .then(res1 => res1.json())
   .then(
     (dataLocation) => {
-      let id_Categ = dataLocation[0].categories;
+      console.log(dataLocation)
+      console.log(location)
+      let id_Categ = dataLocation[parseInt(location)].categories;
       brequest('apiRequest', 'POST', 'POSS3', 'getCategories', {fun_id:FUND_ID},sessionid)
         .then(res => res.json())
         .then(

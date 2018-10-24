@@ -61,7 +61,12 @@ import { 
   CANCEL_ARTICLE_REQUEST,
   CANCEL_ARTICLE_SUCCESS,
   CANCEL_ARTICLE_ERROR,
-  DELETE_ARTICLE_CANCELED
+  DELETE_ARTICLE_CANCELED,
+  GET_EVENT_ARTICLES,
+  GET_SALES_LOCATION_ERROR,
+  GET_SALES_LOCATION_SUCCESS,
+  GET_SALES_LOCATION_REQUEST,
+  RESTART
 } from "../constants";
 
 function menus(state={}, action)
@@ -227,7 +232,13 @@ function errors(state = {}, action)
       errorsList : errorsList
       })
       return state;
-
+    case GET_SALES_LOCATION_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.shift();
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
       case SET_TRANSACTION_ERROR:
         errorsList = state.errorsList.slice()
         errorsList.shift();
@@ -249,8 +260,6 @@ function errors(state = {}, action)
           errorsList : errorsList
         })
         return state;
-
-
     default:
       return state
   }
@@ -347,6 +356,19 @@ function cas(state={}, action)
 
 function vente(state={}, action){
   switch(action.type){
+    case GET_EVENT_ARTICLES:
+      state = Object.assign({}, state,{
+        event_id: action.event_id,
+        picked : true
+      });
+      return state;
+    case GET_SALES_LOCATION_REQUEST:
+      return state;
+    case GET_SALES_LOCATION_SUCCESS:
+      state = Object.assign({}, state,{
+        listLocation: action.listLocation
+      });
+      return state;
     case GET_CATEGORIES_ERROR:
       state = Object.assign({}, state,{
         loaded: false,
@@ -439,7 +461,13 @@ function vente(state={}, action){
       state = Object.assign({}, state,{
         selectedArticles: []
       });
-    return state;
+      return state;
+    case RESTART:
+      state = Object.assign({}, state,{
+        picked : false,
+        event_id : null
+      });
+      return state;
     default:
       return state;
   }
