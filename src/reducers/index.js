@@ -48,7 +48,20 @@ import { 
   SET_TVLINK_SUCCESS,
   GET_MESSAGES_LIST_ERROR,
   GET_MESSAGES_LIST_REQUEST,
-  GET_MESSAGES_LIST_SUCCESS
+  GET_MESSAGES_LIST_SUCCESS,
+  SET_TRANSACTION_SUCCESS,
+  SET_TRANSACTION_REQUEST,
+  SET_TRANSACTION_ERROR,
+  SET_TRANSACTION_STATE,
+  GET_CLIENT_UID,
+  GET_CLIENT_INFO_REQUEST,
+  GET_CLIENT_INFO_SUCCESS,
+  GET_CLIENT_INFO_ERROR,
+  SET_CLIENT_STATE,
+  CANCEL_ARTICLE_REQUEST,
+  CANCEL_ARTICLE_SUCCESS,
+  CANCEL_ARTICLE_ERROR,
+  DELETE_ARTICLE_CANCELED
 } from "../constants";
 
 function menus(state={}, action)
@@ -109,7 +122,6 @@ function menus(state={}, action)
     {
       listSales : {"menu": newListInformation, "orders": newListSales}
     })
-
       return state;
 
     case GET_TOSERVE_SUCCESS:
@@ -184,10 +196,6 @@ function errors(state = {}, action)
           errorsList: errorsList
         })
         return state;
-
-
-
-
     case DELETE_ERROR:
       errorsList = state.errorsList.slice()
       errorsList.shift();
@@ -219,6 +227,28 @@ function errors(state = {}, action)
       errorsList : errorsList
       })
       return state;
+
+      case SET_TRANSACTION_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.shift();
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
+      case GET_CLIENT_INFO_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.shift();
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
+      case CANCEL_ARTICLE_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.shift();
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
 
 
     default:
@@ -405,6 +435,11 @@ function vente(state={}, action){
         listArticles: action.listArticles
       });
       return state;
+    case SET_TRANSACTION_SUCCESS:
+      state = Object.assign({}, state,{
+        selectedArticles: []
+      });
+    return state;
     default:
       return state;
   }
@@ -438,10 +473,57 @@ function webTV(state={}, action)
   }
 }
 
+function achats(state={}, action)
+{
+  switch(action.type){
+    case GET_CLIENT_UID:
+      state = Object.assign({}, state,{
+        clientUid : action.clientUid
+      })
+      return state;
+    case SET_TRANSACTION_STATE:
+      state = Object.assign({}, state,{
+        state_transaction : action.state_transaction
+      })
+      return state;
+    case SET_TRANSACTION_REQUEST:
+      return state;
+    case SET_TRANSACTION_SUCCESS:
+      state = Object.assign({}, state,{
+        state_transaction : 'success'
+      });
+      return state;
+    case GET_CLIENT_INFO_REQUEST:
+     return state;
+    case GET_CLIENT_INFO_SUCCESS:
+      state = Object.assign({}, state,{
+        info_client : action.info_client
+      });
+      return state;
+    case SET_CLIENT_STATE:
+      state = Object.assign({}, state,{
+        info_client : null
+      });
+      return state;
+    case CANCEL_ARTICLE_REQUEST:
+      return state;
+    case CANCEL_ARTICLE_SUCCESS:
+      state = Object.assign({}, state,{
+        cancel : action.cancel
+      });
+      return state;
+    case DELETE_ARTICLE_CANCELED:
+      return state;
+    default:
+      return state;
+    }
+  }
+
 export default combineReducers({
   menus,
   errors,
   cas,
   vente,
-   webTV
+  achats,
+  webTV
 });

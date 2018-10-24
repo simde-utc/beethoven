@@ -31,6 +31,11 @@ const initialStore = {
     loadedArt : false,
     listArticles : []
   },
+  achats: {
+    clientUid : null,
+    state_transaction : 'listen',
+    info_client : null
+  },
 
   webTV: {
     tvLink : null,

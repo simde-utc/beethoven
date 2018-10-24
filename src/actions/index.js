@@ -47,7 +47,20 @@ import {
   SET_TVLINK_SUCCESS,
   GET_MESSAGES_LIST_ERROR,
   GET_MESSAGES_LIST_REQUEST,
-  GET_MESSAGES_LIST_SUCCESS
+  GET_MESSAGES_LIST_SUCCESS,
+  SET_TRANSACTION_REQUEST,
+  SET_TRANSACTION_SUCCESS,
+  SET_TRANSACTION_ERROR,
+  GET_CLIENT_UID,
+  SET_TRANSACTION_STATE,
+  GET_CLIENT_INFO_REQUEST,
+  GET_CLIENT_INFO_SUCCESS,
+  GET_CLIENT_INFO_ERROR,
+  SET_CLIENT_STATE,
+  CANCEL_ARTICLE_REQUEST,
+  CANCEL_ARTICLE_SUCCESS,
+  CANCEL_ARTICLE_ERROR,
+  DELETE_ARTICLE_CANCELED
 } from "../constants"
 
 import {
@@ -59,9 +72,15 @@ import {
   loginCas,
   getCategories,
   getArticles,
+<<<<<<< HEAD
+  setUserTransaction,
+  getUserInformation,
+  cancelUserTransaction
+=======
   getTvUrl,
   setTvUrl,
   fetchToServe
+>>>>>>> master
 } from '../Utils/apiCalls.js'
 
 
@@ -402,9 +421,6 @@ export function deleteAllArticles(selectedArticles){
 // Gestion Connexion
 // **************************************************************************
 
-
-
-
 //gestion du websocket de badgeuse
 export function badgeuseIsPresent(badgeuse){
   return{
@@ -536,6 +552,33 @@ export function disconnect()
   }
 }
 
+<<<<<<< HEAD
+// **************************************************************************
+// Gestion User
+// **************************************************************************
+//Achat du panier
+export function setTransactionRequest(sessionId,selectedArticles){
+  return{
+    type: SET_TRANSACTION_REQUEST,
+    sessionId : sessionId,
+    selectedArticles
+  }
+}
+
+export function setTransactionSuccess(data)
+{
+  return{
+    type: SET_TRANSACTION_SUCCESS,
+    transaction : data,
+    state_transaction : 'success'
+  }
+}
+
+export function setTransactionError(error)
+{
+  return{
+    type : SET_TRANSACTION_ERROR,
+=======
 
 // **************************************************************************
 // Gestion WebTV
@@ -561,10 +604,27 @@ export function getTvLinkError(error)
 {
   return{
     type : GET_TVLINK_ERROR,
+>>>>>>> master
     error : error
   }
 }
 
+<<<<<<< HEAD
+export function setTransaction(sessionId,selectedArticles,badge_id)
+{
+  return (dispatch) =>{
+    dispatch(setTransactionRequest(sessionId,selectedArticles));
+    setUserTransaction(
+      sessionId,
+      badge_id,
+      selectedArticles,
+      (data)=> {
+        dispatch(setTransactionSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(setTransactionError('Erreur : Transaction avortée'))
+=======
 export function getTvLink(idTv)
 {
   return (dispatch)=>{
@@ -575,11 +635,99 @@ export function getTvLink(idTv)
       },
       (err)=>{
         dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
+>>>>>>> master
       }
     )
   }
 }
 
+<<<<<<< HEAD
+export function setTransactionState(state_transaction){
+  return{
+    type: SET_TRANSACTION_STATE,
+    state_transaction : state_transaction
+  }
+}
+
+//Récupérer l'id du client
+export function getClientUid(clientUid){
+  return{
+    type: GET_CLIENT_UID,
+    clientUid : clientUid
+  }
+}
+
+//Récuperation des infos d'un user
+export function getInformationRequest(sessionId){
+  return{
+    type: GET_CLIENT_INFO_REQUEST,
+    sessionId : sessionId,
+  }
+}
+
+export function getInformationSuccess(info_client)
+{
+  return{
+    type: GET_CLIENT_INFO_SUCCESS,
+    info_client : info_client
+  }
+}
+
+export function getInformationError(error)
+{
+  return{
+    type : GET_CLIENT_INFO_ERROR,
+    error : error
+  }
+}
+
+export function getInformation(sessionId,badge_id)
+{
+  return (dispatch) =>{
+    dispatch(getInformationRequest(sessionId));
+    getUserInformation(
+      sessionId,
+      badge_id,
+      (data)=> {
+        dispatch(getInformationSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(getInformationError('Erreur : Probleme dans la récupération des infos'))
+      }
+    )
+  }
+}
+
+export function setClientState(){
+  return{
+    type : SET_CLIENT_STATE,
+    info_client : null
+  }
+}
+
+
+//cancel la transaction d'un achat
+export function cancelTransactionRequest(sessionId){
+  return{
+    type: CANCEL_ARTICLE_REQUEST,
+    sessionId : sessionId,
+  }
+}
+
+export function cancelTransactionSuccess(cancel)
+{
+  return{
+    type: CANCEL_ARTICLE_SUCCESS,
+    cancel : cancel
+  }
+}
+
+export function cancelTransactionError(error)
+{
+  return{
+    type : CANCEL_ARTICLE_ERROR,
+=======
 
 
 
@@ -604,10 +752,37 @@ export function setTvLinkError(error)
 {
   return{
     type : SET_TVLINK_ERROR,
+>>>>>>> master
     error : error
   }
 }
 
+<<<<<<< HEAD
+export function cancelTransaction(sessionId,pur_id)
+{
+  return (dispatch) =>{
+    dispatch(cancelTransactionRequest(sessionId,pur_id));
+    cancelUserTransaction(
+      sessionId,
+      pur_id,
+      (data)=> {
+        dispatch(cancelTransactionSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(cancelTransactionError('Erreur : Impossible de cancel la transaction'))
+      }
+    )
+    dispatch(deleteArticleCanceled(pur_id));
+  }
+}
+
+//supprimer affichage d'un article canceled en attendant pOSS4
+export function deleteArticleCanceled(pur_id){
+  return{
+    type : DELETE_ARTICLE_CANCELED,
+    pur_id : pur_id,
+=======
 export function setTvLink(idTv)
 {
   return (dispatch)=>{
@@ -620,5 +795,6 @@ export function setTvLink(idTv)
         dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
       }
     )
+>>>>>>> master
   }
 }

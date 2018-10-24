@@ -91,10 +91,28 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const DISCONNECT = "DISCONNECT"
 
 // **************************************************************************
-// Gestion WebTV
+// Gestion User
 // **************************************************************************
+//achat du panier
+export const SET_TRANSACTION_SUCCESS = "SET_TRANSACTION_SUCCESS"
+export const SET_TRANSACTION_REQUEST = "SET_TRANSACTION_REQUEST"
+export const SET_TRANSACTION_ERROR = "SET_TRANSACTION_ERROR"
+export const SET_TRANSACTION_STATE = "SET_TRANSACTION_STATE"
 
-//getUrl
+//recupere info client
+export const GET_CLIENT_UID = "GET_CLIENT_UID"
+export const GET_CLIENT_INFO_REQUEST = "GET_CLIENT_INFO_REQUEST"
+export const GET_CLIENT_INFO_SUCCESS = "GET_CLIENT_INFO_SUCCESS"
+export const GET_CLIENT_INFO_ERROR = "GET_CLIENT_INFO_ERROR"
+export const SET_CLIENT_STATE = "SET_CLIENT_STATE"
+
+//annuler un achat
+export const CANCEL_ARTICLE_REQUEST = "CANCEL_ARTICLE_REQUEST"
+export const CANCEL_ARTICLE_SUCCESS = "CANCEL_ARTICLE_SUCCESS"
+export const CANCEL_ARTICLE_ERROR = "CANCEL_ARTICLE_ERROR"
+export const DELETE_ARTICLE_CANCELED = "DELETE_ARTICLE_CANCELED"
+
+
 export const GET_TVLINK_REQUEST = "GET_TVLINK_REQUEST"
 export const GET_TVLINK_SUCCESS = "GET_TVLINK_SUCCESS"
 export const GET_TVLINK_ERROR = "GET_TVLINK_ERROR"

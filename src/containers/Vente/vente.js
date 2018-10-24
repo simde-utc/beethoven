@@ -7,7 +7,7 @@ import Achats from "./venteAchats.js"
 import ListeArticle from "./venteListeArticle.js"
 import Categorie from "./venteCategories.js"
 
-import { getListCateg, deleteAllArticles } from "../../actions"
+import { getListCateg, deleteAllArticles, setTransactionState, setClientState, cancelTransaction } from "../../actions"
 
 
 class Vente extends Component {
@@ -15,13 +15,61 @@ class Vente extends Component {
     const maxSizeTable = {
       maxHeight: 50
     }
-    const { deleteAllArticles } = this.props;
-    const { selectedArticles } = this.props;
+    const { deleteAllArticles, setTransactionState, setClientState, cancelTransaction } = this.props;
+    const { selectedArticles, state_transaction, info_client, sessionId } = this.props;
     const annuler =             (<div>
                                     <button class="btn btn-primary ml-2 mb-2 btn-block" onClick={() => deleteAllArticles(selectedArticles)}>
                                       Annuler tout
                                     </button>
                                   </div>)
+
+    let stateTrans;
+    if(state_transaction=='success'){
+      stateTrans = (<div class="alert alert-success ml-2 w-100" role="alert">
+                    Transaction effectuée !
+                  </div>);
+      setTimeout(function(){setTransactionState('listen')}, 3000)
+    }else if(state_transaction=='listen'){
+       stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
+                        Prêt !
+                      </div>)
+            }
+    let info;
+    if(info_client){
+      let list_last_purchases = [];
+      info_client.last_purchases.forEach(function(el) {
+        list_last_purchases.push(
+          <tr>
+            <th scope="row">{el.obj_id}</th>
+            <td> {el.pur_qte} </td>
+            <td> {el.pur_price/100} € </td>
+              <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() =>
+                      cancelTransaction(sessionId,el.pur_id)
+                    }>
+                    Annuler
+                  </button>
+              </td>
+          </tr>
+        )
+      });
+      info = (<div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}     |      Solde : {info_client.solde/100}€</h5>
+                            </div>
+                            <div class="modal-body text-info">
+                              <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
+                                {list_last_purchases}
+                              </table>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>)
+    }else{info = (<div></div>)}
     return (
       <div className="Header">
         <div class="row">
@@ -44,29 +92,9 @@ class Vente extends Component {
             {/*Annulation des achats en cours*/}
               {annuler}
             {/*Information sur la carte -> Annuler un paiment / info sur la carte*/}
-            <button class="btn btn-primary ml-2 mb-3 btn-block" data-toggle="modal" data-target="#infoUser">Info Carte</button>
-            <div class="modal fade" id="infoUser" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title text-info" id="exampleModalLabel">Information de la carte</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p class="text-info">Les infos du user ici</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              {info}
             {/*Etat de la transaction*/}
-            <div class="alert alert-dark ml-2 w-100" role="alert">
-              Prêt !
-            </div>
+              {stateTrans}
           </div>
           {/*Différents type d'articles*/}
           <div class="col">
@@ -89,15 +117,21 @@ class Vente extends Component {
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
+    sessionId : state.cas.sessionId || null,
     listCateg : state.vente.listCateg || [],
-    selectedArticles : state.vente.selectedArticles || []
+    selectedArticles : state.vente.selectedArticles || [],
+    state_transaction : state.achats.state_transaction || 'listen',
+    info_client : state.achats.info_client || null
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
     getListCateg : (sessionId)=> dispatch(getListCateg(sessionId)),
-    deleteAllArticles : (list)=> dispatch(deleteAllArticles(list))
+    deleteAllArticles : (list)=> dispatch(deleteAllArticles(list)),
+    setTransactionState : (state)=> dispatch(setTransactionState(state)),
+    setClientState : ()=> dispatch(setClientState()),
+    cancelTransaction : (session,id)=> dispatch(cancelTransaction(session,id))
   }
 }
 
