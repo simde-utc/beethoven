@@ -4,20 +4,23 @@ import {REFRESH_TIMER} from '../../Utils/config'
 import '../../App.css';
 import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
-import MenuRow from './menuRow'
 import {getList} from "../../actions"
+import {getToServe} from "../../actions"
 
-class MenuList extends Component{
+import NextMenuRow from './nextMenusRows'
 
-returnMenuList(List){
+class MenuToServe extends Component{
+
+returnMenuToServe(List){
   return(
-    <Table>
+    <Table style = {{
+        fontSize : '2em'
+      }}>
       <thead>
         <tr>
           <th> Nom </th>
           <th> Prénom </th>
           <th> Qte </th>
-          <th> Servi </th>
         </tr>
       </thead>
       <tbody>
@@ -36,26 +39,30 @@ componentWillUnMount(){
 }
 
 updateData = ()=>{
-  const {NavIndex} = this.props;
+  const {getToServe} = this.props
 
     this.interval = setInterval(
       ()=>{
-          this.props.getList(this.props.NavIndex)
+        getToServe()
+
+
+
+        console.log();
       },
       REFRESH_TIMER
     )
 }
 
 render(){
-  const {NavIndex, listSales, loading} = this.props;
+  const {NavIndex, listToServe, loading} = this.props;
   const {getList} = this.props;
   let MenuList = []
 
 
-  if(listSales !==[] && listSales.orders !== undefined )
+  if(listToServe !==[] && listToServe.orders !== undefined )
   {
-      listSales.orders.forEach((menu)=>{
-        MenuList.push(<MenuRow
+      listToServe.orders.forEach((menu)=>{
+        MenuList.push(<NextMenuRow
           last_name={menu.last_name}
           first_name={menu.first_name}
           quantity={menu.quantity}
@@ -66,15 +73,7 @@ render(){
   }
   return(
     <div className="Menu">
-      <h2>
-        {loading===true ? '':
-          NavIndex!==null && NavIndex.toString()===listSales.menu.id_payutc && listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+
-          listSales.menu.quantity+' - Commandes Servies : '+listSales.menu.served_quantity
-        }
-      </h2>
-      {NavIndex === null ?  <h3> Veuillez choisir un Menu de la liste</h3>
-      :   loading === true || NavIndex.toString()!==listSales.menu.id_payutc  ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
-      NavIndex.toString()===listSales.menu.id_payutc && this.returnMenuList(MenuList)
+      {MenuList!==[] && this.returnMenuToServe(MenuList)
   }
 
     </div>
@@ -88,14 +87,15 @@ let mapStateToProps = (state)=>{
     //mettre ce qu'on veut faire passer en props du composant
 
     loading : state.menus.loading || null,
-    listSales : state.menus.listSales || [],
+    listToServe : state.menus.listToServe || [],
     NavIndex : state.menus.NavIndex || null
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
-    getList : (index)=> dispatch(getList(index))
+    getList : (index)=> dispatch(getList(index)),
+    getToServe : ()=> dispatch(getToServe())
   }
 }
 
@@ -104,4 +104,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps)
-  (MenuList);
+  (MenuToServe);

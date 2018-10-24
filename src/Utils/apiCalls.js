@@ -140,7 +140,6 @@ export const getArticles = (sessionid, success, failure)=>{
   .then(res => res.json())
   .then(
     (result) => {
-      console.log(result)
       success(result);
     },
     (error) => {
@@ -150,6 +149,7 @@ export const getArticles = (sessionid, success, failure)=>{
 }
 
 
+<<<<<<< HEAD
 //transaction des items dans la cardlist
 export const setUserTransaction = (sessionid, badge, list_achats, success, failure)=>{
   var d = [];
@@ -178,6 +178,15 @@ export const getUserInformation = (sessionId, badge, success, failure)=>{
   .then(
     (result) => {
       console.log(result)
+=======
+
+//Gestion des WebTV
+export const getTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', null, 'webTv', idTv, null)
+  .then(res => res.json())
+  .then(
+    (result) => {
+>>>>>>> master
       success(result);
     },
     (error) => {
@@ -186,6 +195,7 @@ export const getUserInformation = (sessionId, badge, success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
+<<<<<<< HEAD
 //cancel une transaction
 export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
   brequest('apiRequest', 'POST', 'POSS3', 'cancel', {fun_id: FUND_ID, pur_id:pur_id},sessionId)
@@ -193,6 +203,14 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
   .then(
     (result) => {
       console.log(result)
+=======
+
+export const setTvUrl = (idTv, success, failure)=>{
+  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
+  .then(res => res.json())
+  .then(
+    (result) => {
+>>>>>>> master
       success(result);
     },
     (error) => {
@@ -200,3 +218,26 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
     }
   ).catch((err)=>{failure(err)})
 }
+<<<<<<< HEAD
+=======
+
+export const fetchToServe = (success, failure)=>{
+  fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
+    method: 'GET',
+    mode: 'cors',
+    headers:{
+      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  })
+  .then(res => res.json())
+  .then(
+    (result)=>{
+      success(result)
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+
+}
+>>>>>>> master

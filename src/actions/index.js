@@ -9,6 +9,9 @@ import {
   GET_LIST_ERROR,
   GET_LIST_SUCCESS,
   GET_LIST_REQUEST,
+  GET_TOSERVE_ERROR,
+  GET_TOSERVE_SUCCESS,
+  GET_TOSERVE_REQUEST,
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
@@ -36,6 +39,15 @@ import {
   LOGIN_BADGE_SUCCESS,
   LOGIN_BADGE_ERROR,
   DISCONNECT,
+  GET_TVLINK_ERROR,
+  GET_TVLINK_REQUEST,
+  GET_TVLINK_SUCCESS,
+  SET_TVLINK_ERROR,
+  SET_TVLINK_REQUEST,
+  SET_TVLINK_SUCCESS,
+  GET_MESSAGES_LIST_ERROR,
+  GET_MESSAGES_LIST_REQUEST,
+  GET_MESSAGES_LIST_SUCCESS,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_ERROR,
@@ -60,9 +72,15 @@ import {
   loginCas,
   getCategories,
   getArticles,
+<<<<<<< HEAD
   setUserTransaction,
   getUserInformation,
   cancelUserTransaction
+=======
+  getTvUrl,
+  setTvUrl,
+  fetchToServe
+>>>>>>> master
 } from '../Utils/apiCalls.js'
 
 
@@ -194,6 +212,46 @@ export function getList(idMenu){
     }
   }
 }
+
+
+
+//reccupérer l'ensemble des commandes d'un menu donné
+export function getToServeRequest(){
+  return{
+    type: GET_TOSERVE_REQUEST,
+  }
+}
+
+export function getToServeSuccess(listToServe){
+  return{
+    type: GET_TOSERVE_SUCCESS,
+    listToServe: listToServe
+  }
+}
+
+export function getToServeError(error){
+  return{
+    type: GET_TOSERVE_ERROR,
+    error : error
+  }
+}
+
+
+export function getToServe(){
+  return (dispatch)=>
+  {
+    dispatch(getToServeRequest());
+    fetchToServe(
+      (data)=>{
+        dispatch(getToServeSuccess(data))
+      },
+      (err)=>{
+        dispatch(getToServeError("Erreur : menus web TV"))
+      }
+    )
+  }
+}
+
 
 
 //valider menu servi
@@ -494,6 +552,7 @@ export function disconnect()
   }
 }
 
+<<<<<<< HEAD
 // **************************************************************************
 // Gestion User
 // **************************************************************************
@@ -519,10 +578,38 @@ export function setTransactionError(error)
 {
   return{
     type : SET_TRANSACTION_ERROR,
+=======
+
+// **************************************************************************
+// Gestion WebTV
+// **************************************************************************
+
+
+export function getTvLinkRequest()
+{
+  return{
+    type : GET_TVLINK_REQUEST
+  }
+}
+
+export function getTvLinkSuccess(data)
+{
+  return{
+    type : GET_TVLINK_SUCCESS,
+    data : data
+  }
+}
+
+export function getTvLinkError(error)
+{
+  return{
+    type : GET_TVLINK_ERROR,
+>>>>>>> master
     error : error
   }
 }
 
+<<<<<<< HEAD
 export function setTransaction(sessionId,selectedArticles,badge_id)
 {
   return (dispatch) =>{
@@ -537,11 +624,24 @@ export function setTransaction(sessionId,selectedArticles,badge_id)
       (err)=>{
         console.log(err)
         dispatch(setTransactionError('Erreur : Transaction avortée'))
+=======
+export function getTvLink(idTv)
+{
+  return (dispatch)=>{
+    dispatch(getTvLinkRequest());
+    getTvUrl(idTv,
+      (data)=>{
+        dispatch(getTvLinkSuccess(data))
+      },
+      (err)=>{
+        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
+>>>>>>> master
       }
     )
   }
 }
 
+<<<<<<< HEAD
 export function setTransactionState(state_transaction){
   return{
     type: SET_TRANSACTION_STATE,
@@ -627,10 +727,37 @@ export function cancelTransactionError(error)
 {
   return{
     type : CANCEL_ARTICLE_ERROR,
+=======
+
+
+
+
+
+export function setTvLinkRequest()
+{
+  return{
+    type : SET_TVLINK_REQUEST
+  }
+}
+
+export function setTvLinkSuccess(tvLink)
+{
+  return{
+    type : SET_TVLINK_SUCCESS,
+    tvLink : tvLink
+  }
+}
+
+export function setTvLinkError(error)
+{
+  return{
+    type : SET_TVLINK_ERROR,
+>>>>>>> master
     error : error
   }
 }
 
+<<<<<<< HEAD
 export function cancelTransaction(sessionId,pur_id)
 {
   return (dispatch) =>{
@@ -655,5 +782,19 @@ export function deleteArticleCanceled(pur_id){
   return{
     type : DELETE_ARTICLE_CANCELED,
     pur_id : pur_id,
+=======
+export function setTvLink(idTv)
+{
+  return (dispatch)=>{
+    dispatch(setTvLinkRequest());
+    setTvUrl(idTv,
+      (data)=>{
+        dispatch(getTvLinkSuccess(idTv))
+      },
+      (err)=>{
+        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
+      }
+    )
+>>>>>>> master
   }
 }
