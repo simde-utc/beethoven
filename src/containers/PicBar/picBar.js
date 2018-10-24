@@ -61,7 +61,7 @@ class PicBar extends Component {
       <div
         className="PicBar"
         style= {{
-          height : enableMessages===true ? '90vh' : '99vh'
+          height : enableMessages===true ? '89vh' : '99vh'
         }}
         >
         <Iframe url={tvLink}

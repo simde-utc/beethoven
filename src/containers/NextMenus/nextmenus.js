@@ -13,7 +13,9 @@ class MenuToServe extends Component{
 
 returnMenuToServe(List){
   return(
-    <Table>
+    <Table style = {{
+        fontSize : '2em'
+      }}>
       <thead>
         <tr>
           <th> Nom </th>
