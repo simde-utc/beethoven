@@ -126,3 +126,11 @@ export const SET_TVLINK_ERROR = "SET_TVLINK_ERROR"
 export const GET_MESSAGES_LIST_REQUEST = "GET_MESSAGES_LIST_REQUEST"
 export const GET_MESSAGES_LIST_SUCCESS = "GET_MESSAGES_LIST_SUCCESS"
 export const GET_MESSAGES_LIST_ERROR = "GET_MESSAGES_LIST_ERROR"
+
+
+
+// **************************************************************************
+// Admin Management
+// **************************************************************************
+
+export const UPDATE_ADMIN_NAV = "UPDATE_ADMIN_NAV"

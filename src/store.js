@@ -41,6 +41,14 @@ const initialStore = {
     tvLink : null,
     enableMessages : false,
     messages : []
+  },
+
+  admin : {
+    AdminNav : null,
+    webTv1Url : null,
+    webTv2Url : null,
+    webTv1Messages : false,
+    webTv2Messages : false
   }
 }
 

@@ -60,7 +60,8 @@ import {
   CANCEL_ARTICLE_REQUEST,
   CANCEL_ARTICLE_SUCCESS,
   CANCEL_ARTICLE_ERROR,
-  DELETE_ARTICLE_CANCELED
+  DELETE_ARTICLE_CANCELED,
+  UPDATE_ADMIN_NAV
 } from "../constants"
 
 import {
@@ -591,11 +592,12 @@ export function getTvLinkRequest()
   }
 }
 
-export function getTvLinkSuccess(data)
+export function getTvLinkSuccess(idTv, data)
 {
   return{
     type : GET_TVLINK_SUCCESS,
-    data : data
+    data : data,
+    idTv : idTv
   }
 }
 
@@ -606,6 +608,77 @@ export function getTvLinkError(error)
     error : error
   }
 }
+
+export function getTvLink(idTv)
+{
+  return (dispatch)=>{
+    dispatch(getTvLinkRequest());
+    getTvUrl(idTv,
+      (data)=>{
+        dispatch(getTvLinkSuccess(idTv, data))
+      },
+      (err)=>{
+        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
+      }
+    )
+  }
+}
+
+
+
+export function setTvLinkRequest()
+{
+  return{
+    type : SET_TVLINK_REQUEST
+  }
+}
+
+export function setTvLinkSuccess(idTv, tvLink)
+{
+  return{
+    type : SET_TVLINK_SUCCESS,
+    tvLink : tvLink,
+    idTv : idTv
+  }
+}
+
+export function setTvLinkError(error)
+{
+  return{
+    type : SET_TVLINK_ERROR,
+    error : error
+  }
+}
+
+export function setTvLink(idTv, url, messages)
+{
+  return (dispatch)=>{
+    dispatch(setTvLinkRequest());
+    setTvUrl(idTv, url, messages,
+      (data)=>{
+        dispatch(setTvLinkSuccess(idTv, url))
+      },
+      (err)=>{
+        dispatch(setTvLinkError('Erreur : Changement de lien WebTV'))
+      }
+    )
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function setTransaction(sessionId,selectedArticles,badge_id)
 {
@@ -626,20 +699,7 @@ export function setTransaction(sessionId,selectedArticles,badge_id)
   }
 }
 
-export function getTvLink(idTv)
-{
-  return (dispatch)=>{
-    dispatch(getTvLinkRequest());
-    getTvUrl(idTv,
-      (data)=>{
-        dispatch(getTvLinkSuccess(data))
-      },
-      (err)=>{
-        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
-      }
-    )
-  }
-}
+
 
 export function setTransactionState(state_transaction){
   return{
@@ -730,34 +790,6 @@ export function cancelTransactionError(error)
   }
 }
 
-
-
-
-
-
-export function setTvLinkRequest()
-{
-  return{
-    type : SET_TVLINK_REQUEST
-  }
-}
-
-export function setTvLinkSuccess(tvLink)
-{
-  return{
-    type : SET_TVLINK_SUCCESS,
-    tvLink : tvLink
-  }
-}
-
-export function setTvLinkError(error)
-{
-  return{
-    type : SET_TVLINK_ERROR,
-    error : error
-  }
-}
-
 export function cancelTransaction(sessionId,pur_id)
 {
   return (dispatch) =>{
@@ -785,17 +817,13 @@ export function deleteArticleCanceled(pur_id){
   }
 }
 
-export function setTvLink(idTv)
+
+
+
+export function updateAdminNav(AdminNav)
 {
-  return (dispatch)=>{
-    dispatch(setTvLinkRequest());
-    setTvUrl(idTv,
-      (data)=>{
-        dispatch(getTvLinkSuccess(idTv))
-      },
-      (err)=>{
-        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
-      }
-    )
+  return{
+    type : UPDATE_ADMIN_NAV,
+    AdminNav : AdminNav
   }
 }

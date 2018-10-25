@@ -217,8 +217,20 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
 }
 
 
-export const setTvUrl = (idTv, success, failure)=>{
-  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
+export const setTvUrl = (idTv, url, messages, success, failure)=>{
+  fetch(
+    "http://37.139.25.111/webTv/setConfig/",
+    {
+      method : 'POST',
+      body : JSON.stringify({"id": idTv,
+      "url":url,
+      "messages": messages
+    }),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+  )
   .then(res => res.json())
   .then(
     (result) => {

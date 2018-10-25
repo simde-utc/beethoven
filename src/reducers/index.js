@@ -61,7 +61,8 @@ import { 
   CANCEL_ARTICLE_REQUEST,
   CANCEL_ARTICLE_SUCCESS,
   CANCEL_ARTICLE_ERROR,
-  DELETE_ARTICLE_CANCELED
+  DELETE_ARTICLE_CANCELED,
+  UPDATE_ADMIN_NAV
 } from "../constants";
 
 function menus(state={}, action)
@@ -463,10 +464,7 @@ function webTV(state={}, action)
     case SET_TVLINK_REQUEST:
     return state;
 
-    case SET_TVLINK_SUCCESS:
-    state = Object.assign({}, state, {
-      tvLink : action.tvLink
-    })
+
 
     default:
     return state;
@@ -519,11 +517,70 @@ function achats(state={}, action)
     }
   }
 
+
+function admin(state={}, action)
+{
+  switch(action.type)
+  {
+    case UPDATE_ADMIN_NAV:
+    state = Object.assign({}, state,{
+      AdminNav : action.AdminNav
+    })
+    return state;
+
+    case GET_TVLINK_SUCCESS:
+    switch(action.idTv)
+    {
+      case 1:
+      state = Object.assign({}, state, {
+        webTv1Url : action.data.url,
+        webTv1Messages : action.data.enable_messages
+      })
+      break;
+
+      case 2:
+      state = Object.assign({}, state, {
+        webTv2Url : action.data.url,
+        webTv2Messages : action.data.enable_messages
+      })
+      break;
+
+      default :
+      break;
+    }
+    return state
+
+    case SET_TVLINK_SUCCESS:
+    switch(action.idTv)
+    {
+      case 1:
+      state = Object.assign({}, state, {
+        webTv1Url : action.tvLink
+      })
+      break;
+
+      case 2:
+      state = Object.assign({}, state, {
+        webTv2Url : action.tvLink
+      })
+      break;
+
+      default:
+      break;
+    }
+    return state
+
+
+    default :
+    return state;
+  }
+}
 export default combineReducers({
   menus,
   errors,
   cas,
   vente,
   achats,
-  webTV
+  webTV,
+  admin
 });
