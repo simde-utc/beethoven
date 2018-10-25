@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../../App.css';
 import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
-
 import Achats from "./venteAchats.js"
 import ListeArticle from "./venteListeArticle.js"
 import Categorie from "./venteCategories.js"
@@ -16,7 +15,7 @@ class Vente extends Component {
       maxHeight: 50
     }
     const { deleteAllArticles, setTransactionState, setClientState, cancelTransaction } = this.props;
-    const { selectedArticles, state_transaction, info_client, sessionId } = this.props;
+    const { selectedArticles, state_transaction, info_client, sessionId, info_transaction, listArticles} = this.props;
     const annuler =             (<div>
                                     <button class="btn btn-primary ml-2 mb-2 btn-block" onClick={() => deleteAllArticles(selectedArticles)}>
                                       Annuler tout
@@ -25,8 +24,8 @@ class Vente extends Component {
 
     let stateTrans;
     if(state_transaction=='success'){
-      stateTrans = (<div class="alert alert-success ml-2 w-100" role="alert">
-                    Transaction effectuée !
+      stateTrans = (<div class="alert ml-2 w-100 bg-success" role="alert">
+                    Transaction effectuée, ton nouveau solde Payutc est de {info_transaction.solde/100} € !
                   </div>);
       setTimeout(function(){setTransactionState('listen')}, 3000)
     }else if(state_transaction=='listen'){
@@ -34,14 +33,31 @@ class Vente extends Component {
                         Prêt !
                       </div>)
             }
+      else if(state_transaction=='failed'){
+        stateTrans = (<div class="alert ml-2 w-100 bg-danger" role="alert">
+                       {info_transaction.error.message}
+                    </div>);
+        setTimeout(function(){setTransactionState('listen')}, 3000)
+      }
     let info;
     if(info_client){
       let list_last_purchases = [];
+      list_last_purchases.push(
+        <tr>
+          <td> Quantité </td>
+          <td scope="row"> Nom </td>
+          <td> Prix </td>
+            <td>
+            </td>
+        </tr>
+      )
       info_client.last_purchases.forEach(function(el) {
+        let name = listArticles.filter((item) =>  item.id == el.obj_id);
+        console.log(name)
         list_last_purchases.push(
           <tr>
-            <th scope="row">{el.obj_id}</th>
             <td> {el.pur_qte} </td>
+            <th scope="row">{name[0].name}</th>
             <td> {el.pur_price/100} € </td>
               <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() =>
                       cancelTransaction(sessionId,el.pur_id)
@@ -105,13 +121,11 @@ class Vente extends Component {
             </div>
           </div>
           {/*Liste des articles selon le type sélectionné*/}
-
-          <div class="col-5 px-0">
+          <div class="col-5 px-0 fill"  id="tableau-articles">
               <div class="tab-content" id="nav-tabContent">
                 <ListeArticle sessionId={this.props.sessionId}></ListeArticle>
               </div>
           </div>
-
         </div>
       </div>
     );
@@ -125,9 +139,11 @@ let mapStateToProps = (state)=>{
     //mettre ce qu'on veut faire passer en props du composant
     sessionId : state.cas.sessionId || null,
     listCateg : state.vente.listCateg || [],
+    listArticles : state.vente.listArticles || [],
     selectedArticles : state.vente.selectedArticles || [],
     state_transaction : state.achats.state_transaction || 'listen',
-    info_client : state.achats.info_client || null
+    info_client : state.achats.info_client || null,
+    info_transaction : state.achats.info_transaction || null
   };
 }
 
