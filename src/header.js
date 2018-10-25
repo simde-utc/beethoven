@@ -19,7 +19,7 @@ class Header extends Component {
   constructor(props){
     super(props)
     this.state = {
-      load : 'Admin'
+      load : 'Vente'
     }
     this.setMenuPage = this.setMenuPage.bind(this)
     this.setVentePage = this.setVentePage.bind(this)
