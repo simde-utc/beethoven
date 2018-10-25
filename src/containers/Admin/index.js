@@ -19,7 +19,7 @@ class AdminPanel extends Component {
                 md="1"
 
                 style = {{
-                  backgroundColor:'#e9e9e9',
+
                   padding:'0px'
                 }}
                 ><AdminNav></AdminNav> </Col>

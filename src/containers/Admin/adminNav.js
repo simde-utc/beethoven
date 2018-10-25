@@ -10,9 +10,6 @@ class AdminNav extends Component {
   render() {
     let myRows = [
       {logo:"MdTv", nom : 'WebTVs'},
-      {logo:"", nom:'Test'},
-      {logo:"", nom:'Test2'},
-
     ]
 
     let dataToStore = []
@@ -41,7 +38,8 @@ class AdminNav extends Component {
         style =
         {{
           paddingTop:'20px',
-          color : 'black'
+          color : 'black',
+          backgroundColor:'#e9e9e9',
         }}
         >
 
