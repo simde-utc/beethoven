@@ -94,11 +94,11 @@ export function getMenusRequest()
   }
 }
 
-export function getMenusSuccess(listMenus)
+export function getMenusSuccess(MenuList)
 {
   return{
     type : GET_MENUS_SUCCESS,
-    listMenus : listMenus
+    MenuList : MenuList
   }
 }
 
@@ -128,16 +128,19 @@ export function getMenus(){
 
 
 // Supprimer un Menu de la Liste
-export function deleteMenuRequest(idMenu){
+export function deleteMenuRequest(idMenu, MenuList){
   return{
     type : DELETE_MENU_REQUEST,
-    idMenu : idMenu
+    idMenu : idMenu,
+    MenuList : MenuList
   }
 }
 
-export function deleteMenuSuccess(){
+export function deleteMenuSuccess(idMenu, MenuList){
   return{
-    type : DELETE_MENU_SUCCESS
+    type : DELETE_MENU_SUCCESS,
+    idMenu : idMenu,
+    MenuList : MenuList
   }
 }
 
@@ -148,13 +151,13 @@ export function deleteMenuError(error){
   }
 }
 
-export function deleteMenus(idMenu){
+export function deleteMenus(idMenu, MenuList){
   return (dispatch)=>
   {
-    dispatch(deleteMenuRequest(idMenu));
+    dispatch(deleteMenuRequest(idMenu, MenuList));
     onTrashClick(idMenu,
     (data)=>{
-      dispatch(deleteMenuSuccess())
+      dispatch(deleteMenuSuccess(idMenu, MenuList))
     },
     (err)=>{
       dispatch(deleteMenuError("Erreur : Supression Menu"))
@@ -256,7 +259,8 @@ export function getToServe(){
 export function validateMenuRequest(idMenu, listSales){
   return{
     type: VALIDATE_MENU_REQUEST,
-    idMenu : idMenu
+    idMenu : idMenu,
+    listSales : listSales
   }
 }
 
@@ -277,7 +281,7 @@ export function validateMenuError(error){
 
 export function validateMenu(idMenu, listSales){
   return (dispatch) =>{
-    dispatch(validateMenuRequest(idMenu));
+    dispatch(validateMenuRequest(idMenu, listSales));
     fetchServed(
       idMenu,
       (data)=> {

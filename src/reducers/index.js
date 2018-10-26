@@ -77,16 +77,23 @@ function menus(state={}, action)
     case GET_MENUS_SUCCESS:
       state = Object.assign({}, state,
         {
-          listMenus : action.listMenus
+          MenuList : action.MenuList
         });
         return state;
 
 
     case DELETE_MENU_REQUEST:
-      return state;
+    return state
 
     case DELETE_MENU_SUCCESS:
-      return state;
+    console.log(action.idMenu)
+    let newListMenu = action.MenuList.filter(i => i.article.id_payutc.toString() !== action.idMenu.toString())
+    console.log(newListMenu)
+    state = Object.assign({}, state,
+    {
+      MenuList : newListMenu
+    })
+    return state;
 
     case UPDATE_NAVINDEX:
       state = Object.assign({}, state,
@@ -108,10 +115,6 @@ function menus(state={}, action)
 
 
     case VALIDATE_MENU_REQUEST :
-    return state
-
-
-    case VALIDATE_MENU_SUCCESS :
     let validated = action.listSales.orders.find(function(elt){
       return elt.id_transaction === action.idMenu
     })
@@ -123,6 +126,9 @@ function menus(state={}, action)
     {
       listSales : {"menu": newListInformation, "orders": newListSales}
     })
+
+
+    case VALIDATE_MENU_SUCCESS :
       return state;
 
     case GET_TOSERVE_SUCCESS:

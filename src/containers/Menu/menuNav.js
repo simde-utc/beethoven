@@ -19,11 +19,11 @@ class MenuNav extends Component{
   }
 
   render(){
-    const {listMenus, NavIndex} = this.props;
+    const {MenuList, NavIndex} = this.props;
     const {getMenus, updateNavIndex, getList} = this.props;
     let List = []
-    if(listMenus!== [] ){
-      listMenus.forEach((item)=>{
+    if(MenuList!== [] ){
+      MenuList.forEach((item)=>{
         List.push(
           <MenuNavButton
           index = {item.article.id_payutc}
@@ -35,8 +35,12 @@ class MenuNav extends Component{
 
     return(
       <div className = "MenuNav"
-
-
+        style =
+        {{
+          paddingTop:'20px',
+          color : 'black',
+          backgroundColor:'#e9e9e9',
+        }}
         >
       <Nav vertical>
         <table style={{width:'100%'}}>
@@ -51,7 +55,7 @@ class MenuNav extends Component{
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-    listMenus : state.menus.listMenus || [],
+    MenuList : state.menus.MenuList || [],
     NavIndex : state.menus.NavIndex || null
   };
 }

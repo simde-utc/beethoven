@@ -13,14 +13,11 @@ class MenuBody extends Component {
   render() {
     const {sessionId, username} = this.props
     return (
-      <div
-        className="MenuBody"
-        style = {{paddingTop : '20px'}}
-        >
+      <div className="MenuBody">
         {sessionId !== null && username!==null ?
           <Container fluid>
             <Row>
-            <Col md="3"> <MenuNav/></Col>
+            <Col md="3" style={{padding:'0px'}}> <MenuNav/></Col>
             <Col md="9"> <MenuList/></Col>
             </Row>
           </Container> :
