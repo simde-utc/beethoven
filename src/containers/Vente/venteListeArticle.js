@@ -64,7 +64,7 @@ class ListeArticle extends Component {
       }
     });
     return (
-        <div class="row mt-2 mr-2">
+        <div class="row mt-2 mr-2 d-flex flex-wrap">
           {displayArticle}
         </div>
     );

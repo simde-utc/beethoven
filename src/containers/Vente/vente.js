@@ -133,7 +133,7 @@ class Vente extends Component {
 }
 
 
-
+//1366 * 768
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
