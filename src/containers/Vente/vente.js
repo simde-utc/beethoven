@@ -90,7 +90,7 @@ class Vente extends Component {
       <div className="Header">
         <div class="row mr-2 ml-0">
            {/*Partie de gauche : Information des futurs achats, validation de la transaction */}
-           <div class="col-7 px-0">
+           <div class="col-6 px-0">
             <div class="row">
               <div class="col-7 pr-0">
                 {/*Info Achat*/}
@@ -121,10 +121,8 @@ class Vente extends Component {
             </div>
           </div>
           {/*Liste des articles selon le type sélectionné*/}
-          <div class="col-5 px-0 fill"  id="tableau-articles">
-              <div class="tab-content" id="nav-tabContent">
+          <div class="col-6 px-0 fill tableau-articles no-gutters" >
                 <ListeArticle sessionId={this.props.sessionId}></ListeArticle>
-              </div>
           </div>
         </div>
       </div>
