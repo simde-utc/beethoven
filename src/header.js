@@ -19,7 +19,7 @@ class Header extends Component {
   constructor(props){
     super(props)
     this.state = {
-      load : 'Menu'
+      load : 'Vente'
     }
     this.setMenuPage = this.setMenuPage.bind(this)
     this.setVentePage = this.setVentePage.bind(this)
@@ -58,7 +58,7 @@ class Header extends Component {
     let affichage;
     switch(this.state.load){
       case 'Vente':
-        if(sessionId!==null)
+        if(sessionId!==null && picked==true)
         {
           affichage = <Vente></Vente>
         }

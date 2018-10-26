@@ -40,12 +40,31 @@ class ListeArticle extends Component {
     }
     var styleImg = { borderRadius: '10px'}
     var displayArticle = [];
-    listArticles.forEach(function(element) {
+    listArticles.forEach(function(element,i) {
       if(element.categorie_id==id_Categ){
-
+        if(i==0){
+          if(element.image_url){
+            displayArticle.push(
+              <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
+                  <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
+                </button>
+              </div>
+              )
+            }
+            else{
+              displayArticle.push(
+                <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                  <button type="button" class="btn btn-lg btn-block" style={styleButton}>
+                      <div class="card-img-top" style={styleDiv}>{element.name}</div>
+                  </button>
+                </div>
+                )
+            }
+        }
         if(element.image_url){
           displayArticle.push(
-            <div class="col-sm-3 mb-1" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+            <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
               <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
                 <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
               </button>
@@ -54,8 +73,8 @@ class ListeArticle extends Component {
           }
           else{
             displayArticle.push(
-              <div class="col-sm-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-                <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
+              <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                <button type="button" class="btn btn-lg btn-block" style={styleButton}>
                     <div class="card-img-top" style={styleDiv}>{element.name}</div>
                 </button>
               </div>
@@ -64,7 +83,7 @@ class ListeArticle extends Component {
       }
     });
     return (
-        <div class="row mt-2 mr-2">
+        <div class="d-flex flex-wrap">
           {displayArticle}
         </div>
     );

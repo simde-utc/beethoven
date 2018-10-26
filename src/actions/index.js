@@ -447,6 +447,7 @@ export function getListArticles(sessionid){
   }
 }
 
+
 //Delete un article du panier
 export function deleteArticle(newID,selectedArticles){
   return{
@@ -622,7 +623,7 @@ export function setTransactionSuccess(data)
 {
   return{
     type: SET_TRANSACTION_SUCCESS,
-    transaction : data,
+    info_transaction : data,
     state_transaction : 'success'
   }
 }
@@ -635,6 +636,24 @@ export function setTransactionError(error)
   }
 }
 
+export function setTransaction(sessionId,selectedArticles,badge_id)
+{
+  return (dispatch) =>{
+    dispatch(setTransactionRequest(sessionId,selectedArticles));
+    setUserTransaction(
+      sessionId,
+      badge_id,
+      selectedArticles,
+      (data)=> {
+        dispatch(setTransactionSuccess(data))
+      },
+      (err)=>{
+        console.log(err)
+        dispatch(setTransactionError('Erreur : Transaction avortée'))
+      }
+    )
+  }
+}
 
 // **************************************************************************
 // Gestion WebTV
@@ -661,25 +680,6 @@ export function getTvLinkError(error)
   return{
     type : GET_TVLINK_ERROR,
     error : error
-  }
-}
-
-export function setTransaction(sessionId,selectedArticles,badge_id)
-{
-  return (dispatch) =>{
-    dispatch(setTransactionRequest(sessionId,selectedArticles));
-    setUserTransaction(
-      sessionId,
-      badge_id,
-      selectedArticles,
-      (data)=> {
-        dispatch(setTransactionSuccess(data))
-      },
-      (err)=>{
-        console.log(err)
-        dispatch(setTransactionError('Erreur : Transaction avortée'))
-      }
-    )
   }
 }
 

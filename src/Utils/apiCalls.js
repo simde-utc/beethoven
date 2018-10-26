@@ -160,7 +160,6 @@ export const getArticles = (sessionid, success, failure)=>{
 }
 
 
-
 //transaction des items dans la cardlist
 export const setUserTransaction = (sessionid, badge, list_achats, success, failure)=>{
   var d = [];
