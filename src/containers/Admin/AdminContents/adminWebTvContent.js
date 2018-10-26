@@ -74,22 +74,21 @@ class AdminWebTvContent extends Component {
             <Row style = {{marginBottom : '1vh'}}>
               <Col xs={{size:6, offset:3}}>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">@ WebTV 2 </InputGroupAddon>
+                  <InputGroupAddon addonType="prepend">@ WebTV 2</InputGroupAddon>
                   <Input
                     placeholder={webTv2Url}
                     style={{marginRight : '5px'}}
                     onChange = {(e)=>this.setState({webTv2:e.target.value})}
-                    />
+                    />{' '}
                     <Button
                       style={{marginRight : '5px'}}
                       onClick = {()=>{
                         setTvLink(2, this.state.webTv2, this.state.messages2)
 
                       }}
-
                       >
-                      Envoyer
 
+                      Envoyer
                     </Button>
                     <Button
                       color={this.state.messages2 === true ? 'success' : 'danger'}
