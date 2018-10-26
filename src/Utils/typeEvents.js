@@ -64,7 +64,6 @@ class TypeEvents extends Component{
     return(
       <Modal
         isOpen = {this.state.modal}
-        toggle = {this.toggle}
         >
         <ModalBody centered = {true}
           style = {
