@@ -37,6 +37,14 @@ export const VALIDATE_MENU_ERROR = "VALIDATE_MENU_ERROR"
 // **************************************************************************
 // Gestion Articles et catégories
 // **************************************************************************
+//Récupérer l'events choisi
+export const GET_EVENT_ARTICLES = "GET_EVENT_ARTICLES"
+
+//Récupérer les location des ventes pour une fondation
+export const GET_SALES_LOCATION_REQUEST = "GET_SALES_LOCATION_REQUEST"
+export const GET_SALES_LOCATION_SUCCESS = "GET_SALES_LOCATION_SUCCESS"
+export const GET_SALES_LOCATION_ERROR = "GET_SALES_LOCATION_ERROR"
+
 
 // Reccuperer les catégories des Articles
 export const GET_CATEGORIES_REQUEST = "GET_CATEGORIES_REQUEST"
@@ -89,6 +97,8 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 
 //deconnexion
 export const DISCONNECT = "DISCONNECT"
+//Restart applicatio
+export const RESTART = "RESTART"
 
 // **************************************************************************
 // Gestion User

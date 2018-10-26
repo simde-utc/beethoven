@@ -8,18 +8,36 @@ import { updateCategorie, getChosenArticle, getListArticles } from "../../action
 {/*Affichage des articles dans la colonne de droites par catégorie*/}
 class ListeArticle extends Component {
   componentWillMount() {
-
     const { sessionId, listArticles } = this.props;
     const { getListArticles } = this.props;
     console.log('LE SESSION ID VAUT' + sessionId)
-
     getListArticles(sessionId);
   }
   render() {
     const { id_Categ, listArticles, selectedArticles } = this.props
     const { getChosenArticle } = this.props
-    var styleButton = {background: 'none'}
-    var styleText = {color: 'white'}
+    var styleButton = {background: 'none',
+                       minWidth: '120px',
+                       minHeight: '120px'}
+    var styleText = {color: 'black',
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      overflow: 'hidden'
+                    }
+    var styleDiv = {
+      background: 'white',
+      minWidth: '100px',
+      minHeight: '100px',
+      borderRadius: '10px',
+      color: 'black',
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        display: 'flex',
+                        overflow: 'hidden'
+
+    }
     var styleImg = { borderRadius: '10px'}
     var displayArticle = [];
     listArticles.forEach(function(element) {
@@ -27,18 +45,18 @@ class ListeArticle extends Component {
 
         if(element.image_url){
           displayArticle.push(
-            <div class="col-sm-2 mb-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-              <button type="button" class="btn btn-lg btn-block" style={styleButton}>
-                <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="180" height="100"></img>
+            <div class="col-sm-3 mb-1" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+              <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
+                <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
               </button>
             </div>
             )
           }
           else{
             displayArticle.push(
-              <div class="col-sm-2 mb-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-                <button type="button" class="btn btn-lg btn-block" style={styleButton}>
-                    <p class="card-img-top" style={styleText}>{element.name}</p>
+              <div class="col-sm-3" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
+                    <div class="card-img-top" style={styleDiv}>{element.name}</div>
                 </button>
               </div>
               )
@@ -46,7 +64,7 @@ class ListeArticle extends Component {
       }
     });
     return (
-        <div class="row mt-3 mr-2">
+        <div class="row mt-2 mr-2">
           {displayArticle}
         </div>
     );
