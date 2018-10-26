@@ -32,7 +32,7 @@ const initialStore = {
     listArticles : [],
     event_id : null,
     picked : false
-  },
+    },
   achats: {
     clientUid : null,
     state_transaction : 'listen',

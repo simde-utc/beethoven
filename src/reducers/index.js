@@ -231,7 +231,6 @@ function errors(state = {}, action)
       errorsList: errorsList
     })
     return state;
-
     case GET_TOSERVE_ERROR:
       errorsList = state.errorsList.slice();
       errorsList.push(action.error);
@@ -391,10 +390,10 @@ function vente(state={}, action){
     case GET_CATEGORIES_REQUEST:
       return state;
     case UPDATE_CATEGORIE:
-    state = Object.assign({}, state,
-    {
-      id_Categ : action.id_Categ
-    })
+      state = Object.assign({}, state,
+      {
+        id_Categ : action.id_Categ
+      })
       return state;
     case GET_CHOSEN_ARTICLE:
       if(typeof action.selectedArticles !== 'undefined' && action.selectedArticles.length>0){
@@ -521,9 +520,17 @@ function achats(state={}, action)
     case SET_TRANSACTION_REQUEST:
       return state;
     case SET_TRANSACTION_SUCCESS:
-      state = Object.assign({}, state,{
-        state_transaction : 'success'
-      });
+      if(!action.info_transaction.error){
+        state = Object.assign({}, state,{
+          state_transaction : 'success',
+          info_transaction : action.info_transaction
+        });
+      }else{
+        state = Object.assign({}, state,{
+          state_transaction : 'failed',
+          info_transaction : action.info_transaction
+        });
+      }
       return state;
     case GET_CLIENT_INFO_REQUEST:
      return state;

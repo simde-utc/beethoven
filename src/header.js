@@ -66,7 +66,7 @@ class Header extends Component {
     let affichage;
     switch(this.state.load){
       case 'Vente':
-        if(sessionId!==null)
+        if(sessionId!==null && picked==true)
         {
           affichage = <Vente></Vente>
         }
