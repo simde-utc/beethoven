@@ -36,11 +36,18 @@ class MenuNav extends Component{
     return(
       <div className = "MenuNav"
         style =
-        {{
+        {List.length>0 ?{
           paddingTop:'20px',
           color : 'black',
           backgroundColor:'#e9e9e9',
-        }}
+        }:
+        {
+          paddingTop:'20px',
+          color : 'black',
+          backgroundColor:'none',
+
+        }
+      }
         >
       <Nav vertical>
         <table style={{width:'100%'}}>
