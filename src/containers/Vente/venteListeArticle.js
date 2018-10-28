@@ -10,7 +10,6 @@ class ListeArticle extends Component {
   componentWillMount() {
     const { sessionId, listArticles } = this.props;
     const { getListArticles } = this.props;
-    console.log('LE SESSION ID VAUT' + sessionId)
     getListArticles(sessionId);
   }
   render() {
@@ -55,7 +54,7 @@ class ListeArticle extends Component {
             else{
               displayArticle.push(
                 <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-                  <button type="button" class="btn btn-lg btn-block" style={styleButton}>
+                  <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
                       <div class="card-img-top" style={styleDiv}>{element.name}</div>
                   </button>
                 </div>
@@ -74,7 +73,7 @@ class ListeArticle extends Component {
           else{
             displayArticle.push(
               <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-                <button type="button" class="btn btn-lg btn-block" style={styleButton}>
+                <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
                     <div class="card-img-top" style={styleDiv}>{element.name}</div>
                 </button>
               </div>
@@ -95,7 +94,7 @@ let mapStateToProps = (state)=>{
     //mettre ce qu'on veut faire passer en props du composant
     sessionId : state.cas.sessionId || null,
     selectedArticles : state.vente.selectedArticles || [],
-    id_Categ : state.vente.id_Categ || 3,
+    id_Categ : state.vente.id_Categ || null,
     listArticles : state.vente.listArticles || [],
     loadedArt : state.vente.loadedArt || false
   };

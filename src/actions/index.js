@@ -368,7 +368,8 @@ export function getCategoriesRequest(sessionid,location){
 export function getCategoriesSuccess(listCateg){
   return{
     type: GET_CATEGORIES_SUCCESS,
-    listCateg: listCateg
+    listCateg: listCateg,
+    id_Categ: listCateg[0].id
   }
 }
 
@@ -545,8 +546,6 @@ export function loginBadge(userUid, userPin)
         dispatch(loginBadgeSuccess(data))
       },
       (err)=>{
-
-        console.log(err)
         dispatch(loginBadgeError('Erreur : Connexion échouée'))
       }
     )
@@ -648,7 +647,6 @@ export function setTransaction(sessionId,selectedArticles,badge_id)
         dispatch(setTransactionSuccess(data))
       },
       (err)=>{
-        console.log(err)
         dispatch(setTransactionError('Erreur : Transaction avortée'))
       }
     )
@@ -748,7 +746,6 @@ export function getInformation(sessionId,badge_id)
         dispatch(getInformationSuccess(data))
       },
       (err)=>{
-        console.log(err)
         dispatch(getInformationError('Erreur : Probleme dans la récupération des infos'))
       }
     )
@@ -826,7 +823,6 @@ export function cancelTransaction(sessionId,pur_id)
         dispatch(cancelTransactionSuccess(data))
       },
       (err)=>{
-        console.log(err)
         dispatch(cancelTransactionError('Erreur : Impossible de cancel la transaction'))
       }
     )

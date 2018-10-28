@@ -10,6 +10,9 @@ import { getChosenArticle, setTransaction } from "../../actions"
 class Achats extends Component {
   render() {
     const { selectedArticles } = this.props
+
+
+
     var chosenArticles = [];
     if(selectedArticles!==[]){
       selectedArticles.forEach(function(element) {

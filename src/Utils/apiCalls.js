@@ -122,8 +122,6 @@ export const getCategories = (sessionid,location , success, failure)=>{
   .then(res1 => res1.json())
   .then(
     (dataLocation) => {
-      console.log(dataLocation)
-      console.log(location)
       let id_Categ = dataLocation[parseInt(location)].categories;
       brequest('apiRequest', 'POST', 'POSS3', 'getCategories', {fun_id:FUND_ID},sessionid)
         .then(res => res.json())
