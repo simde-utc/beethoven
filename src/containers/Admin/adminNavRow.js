@@ -5,7 +5,10 @@ import {connect} from 'react-redux'
 import {MdTv} from 'react-icons/md'
 import {NavItem, NavLink} from 'reactstrap'
 
+import { Container, Col, Row } from 'reactstrap';
+
 import {updateAdminNav, setTvLink} from '../../actions'
+import Hidden from '@material-ui/core/Hidden'
 class AdminNavRow extends Component {
   render() {
     const {AdminNav} = this.props
@@ -20,7 +23,7 @@ class AdminNavRow extends Component {
           }
         }
         >
-        <NavItem
+        <Row
           href='#'
           focus = {this.props.index === AdminNav}
           style = {
@@ -52,17 +55,13 @@ class AdminNavRow extends Component {
           }}
 
           >
-          <table>
-            <tr>
-              <td>{this.props.logo}</td>
-              {window.innerWidth>=980?
-                <td>{this.props.nom}</td>:
-                  ""
-              }
-            </tr>
-          </table>
+          {this.props.logo!=="" && <Col md='12' lg='3' sm='12' xs='12'>{this.props.logo}</Col>}
+          <Hidden mdDown>
+            <Col   lg='9' xl='9'>{this.props.nom}</Col>
+          </Hidden>
 
-        </NavItem>
+
+        </Row>
 
       </div>
     )

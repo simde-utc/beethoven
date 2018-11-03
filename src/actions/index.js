@@ -48,6 +48,9 @@ import {
   GET_MESSAGES_LIST_ERROR,
   GET_MESSAGES_LIST_REQUEST,
   GET_MESSAGES_LIST_SUCCESS,
+  ADD_MESSAGE_REQUEST,
+  ADD_MESSAGE_SUCCESS,
+  ADD_MESSAGE_ERROR,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_ERROR,
@@ -84,6 +87,8 @@ import {
   getLocations,
   getTvUrl,
   setTvUrl,
+  fetchMessagesList,
+  addMessageToList,
   fetchToServe
 } from '../Utils/apiCalls.js'
 
@@ -745,6 +750,85 @@ export function setTvLink(idTv, url, messages)
   }
 }
 
+
+export function getMessagesListRequest()
+{
+  return{
+    type: GET_MESSAGES_LIST_REQUEST
+  }
+}
+
+export function getMessagesListSuccess(messages)
+{
+  return{
+    type: GET_MESSAGES_LIST_SUCCESS,
+    messages: messages
+  }
+}
+
+export function getMessagesListError(error)
+{
+  return{
+    type: GET_MESSAGES_LIST_ERROR,
+    error : error
+  }
+}
+
+export function getMessagesList()
+{
+  return (dispatch)=>{
+    dispatch(getMessagesListRequest());
+    fetchMessagesList(
+      (data)=>{dispatch(getMessagesListSuccess(data))},
+      (err)=>{dispatch(getMessagesListError('Erreur : Chargement liste Messages'))},
+    )
+  }
+
+}
+
+export function addMessageRequest()
+{
+  return{
+    type : ADD_MESSAGE_REQUEST
+  }
+}
+
+export function addMessageSuccess(title, text)
+{
+  return{
+    type : ADD_MESSAGE_SUCCESS,
+    title : title,
+    text:  text
+
+  }
+}
+
+export function addMessageError(error)
+{
+  return{
+    type : ADD_MESSAGE_ERROR,
+    error:  error
+  }
+}
+
+export function addMessage(title, text)
+{
+  return (dispatch)=>{
+    dispatch(addMessageRequest());
+    addMessageToList(
+      title,
+      text,
+      (data)=>{dispatch(addMessageSuccess(title,text))},
+      (err)=>{dispatch(addMessageError('Erreur : Ajout de Message'))}
+    )    
+  }
+}
+
+
+// **************************************************************************
+// Gestion Transactions
+// **************************************************************************
+
 export function setTransactionState(state_transaction){
   return{
     type: SET_TRANSACTION_STATE,
@@ -864,6 +948,9 @@ export function deleteArticleCanceled(pur_id){
 
 
 
+// **************************************************************************
+// Gestion Admin
+// **************************************************************************
 
 export function updateAdminNav(AdminNav)
 {

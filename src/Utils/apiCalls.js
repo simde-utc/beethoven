@@ -237,7 +237,7 @@ export const setTvUrl = (idTv, url, messages, success, failure)=>{
       "messages": messages
     }),
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       }
     }
   )
@@ -250,6 +250,46 @@ export const setTvUrl = (idTv, url, messages, success, failure)=>{
       failure(error);
     }
   ).catch((err)=>{failure(err)})
+}
+
+//reccupération de la liste de messages
+export const fetchMessagesList = (success, failure)=>{
+  brequest('picsousRequest', 'GET', null, 'messages',null,null)
+  .then(res=>res.json())
+  .then(
+    (result)=>{
+      success(result)
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+//ajouter un message à la liste
+export const addMessageToList = (title, text, success, failure)=>{
+  fetch(
+    "http://37.139.25.111/messages/",
+    {
+      method : 'POST',
+      body : JSON.stringify({"title": title,
+      "text": text
+    }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+
 }
 
 export const fetchToServe = (success, failure)=>{

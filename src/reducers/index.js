@@ -49,6 +49,9 @@ import { 
   GET_MESSAGES_LIST_ERROR,
   GET_MESSAGES_LIST_REQUEST,
   GET_MESSAGES_LIST_SUCCESS,
+  ADD_MESSAGE_REQUEST,
+  ADD_MESSAGE_SUCCESS,
+  ADD_MESSAGE_ERROR,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_ERROR,
@@ -240,28 +243,46 @@ function errors(state = {}, action)
       return state;
     case GET_SALES_LOCATION_ERROR:
       errorsList = state.errorsList.slice()
-      errorsList.shift();
+      errorsList.push(action.error);
       state = Object.assign({}, state, {
         errorsList : errorsList
       })
       return state;
       case SET_TRANSACTION_ERROR:
         errorsList = state.errorsList.slice()
-        errorsList.shift();
+        errorsList.push(action.error);
         state = Object.assign({}, state, {
           errorsList : errorsList
         })
         return state;
       case GET_CLIENT_INFO_ERROR:
         errorsList = state.errorsList.slice()
-        errorsList.shift();
+        errorsList.push(action.error);
         state = Object.assign({}, state, {
           errorsList : errorsList
         })
         return state;
+
+      case GET_MESSAGES_LIST_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+
+      case ADD_MESSAGE_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+
+
       case CANCEL_ARTICLE_ERROR:
         errorsList = state.errorsList.slice()
-        errorsList.shift();
+        errorsList.push(action.error);
         state = Object.assign({}, state, {
           errorsList : errorsList
         })
@@ -493,6 +514,27 @@ function webTV(state={}, action)
       enableMessages : action.data.enable_messages
     })
     return state;
+
+    case GET_MESSAGES_LIST_REQUEST:
+    return state;
+
+    case GET_MESSAGES_LIST_SUCCESS:
+    state=Object.assign({}, state, {
+      messages : action.messages
+    })
+    return state;
+
+    case ADD_MESSAGE_REQUEST:
+    return state;
+
+    case ADD_MESSAGE_SUCCESS:
+    let messages = state.messages.slice()
+    messages.push({title : action.title, text : action.text});
+    state = Object.assign({}, state, {
+      messages : messages
+    })
+    return state;
+
 
     case SET_TVLINK_REQUEST:
     return state;

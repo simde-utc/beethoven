@@ -41,9 +41,9 @@ class AdminWebTvContent extends Component {
                 <br></br>
               </Col>
             </Row>
-
+            {/*Liste des Télés et lien de chacune*/}
             <Row style = {{marginBottom : '1vh'}}>
-              <Col xs={{size:6, offset:3}}>
+              <Col xs={{size:12, offset:0}} lg={{size:6, offset:3}}>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend">@ WebTV 1</InputGroupAddon>
                   <Input
@@ -54,11 +54,11 @@ class AdminWebTvContent extends Component {
                     <Button
                       style={{marginRight : '5px'}}
                       onClick = {()=>{
+
                         setTvLink(1, this.state.webTv1, this.state.messages1)
 
                       }}
                       >
-
                       Envoyer
                     </Button>
                     <Button
@@ -72,7 +72,7 @@ class AdminWebTvContent extends Component {
             </Row>
 
             <Row style = {{marginBottom : '1vh'}}>
-              <Col xs={{size:6, offset:3}}>
+              <Col xs={{size:12, offset:0}} lg={{size:6, offset:3}}>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend">@ WebTV 2</InputGroupAddon>
                   <Input
@@ -99,6 +99,9 @@ class AdminWebTvContent extends Component {
                 </InputGroup>
                 </Col>
             </Row>
+
+
+            {/*TODO: Ajouter la liste des boutons de préselection*/}
         </Container>
           :""
 
@@ -126,7 +129,7 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     //myfunction : ()=> dispatch(myfunction())
     getTvLink : (idTv)=>dispatch(getTvLink(idTv)),
-    setTvLink : (idTv, url, messages)=>dispatch(setTvLink(idTv,url,messages))
+    setTvLink : (idTv, url, messages)=>dispatch(setTvLink(idTv,url,messages)),
   }
 }
 

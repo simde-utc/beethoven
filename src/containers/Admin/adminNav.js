@@ -3,24 +3,39 @@ import '../../App.css';
 import {connect} from 'react-redux'
 
 import {Nav} from 'reactstrap';
-import {MdTv} from 'react-icons/md'
+import {MdTv, MdMessage, MdPhoto} from 'react-icons/md'
+
+import { Container, Col, Row } from 'reactstrap';
+
 
 import AdminNavRow from './adminNavRow'
 class AdminNav extends Component {
   render() {
     let myRows = [
       {logo:"MdTv", nom : 'WebTVs'},
+      {logo:'MdMessage', nom : 'Messages'},
+      {logo:'MdPhoto', nom : 'Images'}
     ]
 
     let dataToStore = []
     myRows.forEach(function(elt, id){
-      console.log(id)
-
       switch(elt.logo)
       {
         case "MdTv":
         dataToStore.push(
             <AdminNavRow index = {id+1} logo={<MdTv size="2em"></MdTv>} nom={elt.nom}></AdminNavRow>
+          )
+        break;
+
+        case "MdMessage":
+        dataToStore.push(
+            <AdminNavRow index = {id+1} logo={<MdMessage size="2em"></MdMessage>} nom={elt.nom}></AdminNavRow>
+          )
+        break;
+
+        case "MdPhoto":
+        dataToStore.push(
+            <AdminNavRow index = {id+1} logo={<MdPhoto size="2em"></MdPhoto>} nom={elt.nom}></AdminNavRow>
           )
         break;
 
@@ -42,10 +57,9 @@ class AdminNav extends Component {
           backgroundColor:'#e9e9e9',
         }}
         >
-
-        <Nav vertical>
+        <Container>
           {dataToStore}
-        </Nav>
+        </Container>
       </div>
     )
   }

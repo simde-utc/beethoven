@@ -6,13 +6,14 @@ import Iframe from 'react-iframe';
 
 import {REFRESH_WEBTV} from '../../Utils/config'
 
-import {getTvLink, setTvLink} from '../../actions'
+import {getTvLink, setTvLink, getMessagesList} from '../../actions'
 
 class PicBar extends Component {
   componentWillMount()
   {
-    const {getTvLink} = this.props;
+    const {getTvLink, getMessagesList} = this.props;
     getTvLink(1)
+    getMessagesList()
   }
 
 
@@ -25,36 +26,31 @@ class PicBar extends Component {
   }
 
   updateData = ()=>{
-    const {getTvLink} = this.props;
+    const {getTvLink, getMessagesList} = this.props;
 
       this.interval = setInterval(
         ()=>{
           getTvLink(1)
+          getMessagesList()
         },
         REFRESH_WEBTV
       )
   }
 
   render() {
-    const {tvLink, enableMessages} = this.props;
+    const {tvLink, enableMessages, messages} = this.props;
     const {getTvLink} = this.props;
 
     let marqueeList = []
-    let data = [
-      {title : 'Hugo', data:'#Sanji'},
-      {title : 'Test', data:'Ceci est un Test.'}
-    ]
 
 
-
-
-    data.forEach(function(elt){
+    messages.forEach(function(elt){
       marqueeList.push(
         <span style={
             {
               marginRight : '50px'
             }
-          }><b>{elt.title} : </b> {elt.data}</span>
+          }><b>{elt.title} : </b> {elt.text}</span>
       )
     })
     return (
@@ -97,7 +93,7 @@ let mapStateToProps = (state)=>{
 
     tvLink : state.webTV.tvLink || null,
     enableMessages : state.webTV.enableMessages || false,
-    messages : state.webTV.username || [],
+    messages : state.webTV.messages || [],
   };
 }
 
@@ -105,6 +101,7 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     getTvLink : (idTv)=> dispatch(getTvLink(idTv)),
     setTvLink : (idTv)=> dispatch(getTvLink(idTv)),
+    getMessagesList : ()=> dispatch(getMessagesList())
 
   }
 }

@@ -137,6 +137,10 @@ export const GET_MESSAGES_LIST_REQUEST = "GET_MESSAGES_LIST_REQUEST"
 export const GET_MESSAGES_LIST_SUCCESS = "GET_MESSAGES_LIST_SUCCESS"
 export const GET_MESSAGES_LIST_ERROR = "GET_MESSAGES_LIST_ERROR"
 
+//Ajouter un Message à la liste
+export const ADD_MESSAGE_REQUEST = "ADD_MESSAGE_REQUEST"
+export const ADD_MESSAGE_SUCCESS = "ADD_MESSAGE_SUCCESS"
+export const ADD_MESSAGE_ERROR = "ADD_MESSAGE_ERROR"
 
 
 // **************************************************************************
