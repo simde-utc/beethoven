@@ -61,6 +61,7 @@ render(){
           quantity={menu.quantity}
           id_transaction= {menu.id_transaction}
           served = {menu.served}
+          is_staff={menu.is_staff}
           />)
       })
   }

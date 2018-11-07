@@ -45,7 +45,7 @@ class AdminWebTvContent extends Component {
             <Row style = {{marginBottom : '1vh'}}>
               <Col xs={{size:12, offset:0}} lg={{size:6, offset:3}}>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">@ WebTV 1</InputGroupAddon>
+                  <InputGroupAddon addonType="prepend">@ PicSalle</InputGroupAddon>
                   <Input
                     placeholder={webTv1Url}
                     style={{marginRight : '5px'}}
@@ -74,7 +74,7 @@ class AdminWebTvContent extends Component {
             <Row style = {{marginBottom : '1vh'}}>
               <Col xs={{size:12, offset:0}} lg={{size:6, offset:3}}>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">@ WebTV 2</InputGroupAddon>
+                  <InputGroupAddon addonType="prepend">@ PicBar</InputGroupAddon>
                   <Input
                     placeholder={webTv2Url}
                     style={{marginRight : '5px'}}

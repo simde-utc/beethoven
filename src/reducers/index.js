@@ -140,10 +140,29 @@ function menus(state={}, action)
     {
       listSales : {"menu": newListInformation, "orders": newListSales}
     })
+    return state
 
 
     case VALIDATE_MENU_SUCCESS :
       return state;
+
+    case SET_STAFF_REQUEST :
+    let staffed = state.listSales.orders.find(function(elt){
+      return elt.id_transaction === action.idMenu
+    })
+    staffed.is_staff = !staffed.is_staff;
+    let newListSales1 = state.listSales.orders.filter(i => i.id_transaction !== action.idMenu)
+    newListSales1.push(staffed)
+    let newListInformation1 = state.listSales.menu
+    state = Object.assign({}, state,
+    {
+      listSales : {"menu": newListInformation1, "orders": newListSales1}
+    })
+    return state
+
+
+    case SET_STAFF_SUCCESS:
+    return state;
 
     case GET_TOSERVE_SUCCESS:
     state = Object.assign({}, state,
@@ -301,6 +320,16 @@ function errors(state = {}, action)
           errorsList : errorsList
         })
         return state;
+
+      case SET_STAFF_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.push(action.error);
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
+
+
     default:
       return state
   }
@@ -553,7 +582,7 @@ function webTV(state={}, action)
     return state;
 
     case DELETE_MESSAGE_SUCCESS:
-    let newMessages = state.messages.filter(mymessage=>state.messages.indexOf(mymessage)!==action.idMessage)
+    let newMessages = state.messages.filter(mymessage=>mymessage.id!==action.idMessage)
     state = Object.assign({}, state, {
       messages : newMessages
     })

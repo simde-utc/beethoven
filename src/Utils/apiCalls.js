@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID} from './config'
+import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL} from './config'
 import brequest from './brequest'
 
 
@@ -241,7 +241,7 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
 
 export const setTvUrl = (idTv, url, messages, success, failure)=>{
   fetch(
-    "http://37.139.25.111/webTv/setConfig/",
+    PICSOUS_URL+"webTv/setConfig/",
     {
       method : 'POST',
       body : JSON.stringify({"id": idTv,
@@ -281,7 +281,7 @@ export const fetchMessagesList = (success, failure)=>{
 //ajouter un message à la liste
 export const addMessageToList = (title, text, success, failure)=>{
   fetch(
-    "http://37.139.25.111/messages/",
+    PICSOUS_URL+"messages/",
     {
       method : 'POST',
       body : JSON.stringify({"title": title,
@@ -308,7 +308,7 @@ export const addMessageToList = (title, text, success, failure)=>{
 //supprimer un message de la liste
 export const deleteMessageFromList = (idMessage, success, failure)=>{
   fetch(
-    "http://37.139.25.111/messages/"+idMessage,
+    PICSOUS_URL+"messages/"+idMessage+"/",
     {
       method : 'DELETE',
 
@@ -317,21 +317,14 @@ export const deleteMessageFromList = (idMessage, success, failure)=>{
       }
     }
   )
-  .then(res => res.json())
-  .then(
-    (result) => {
-      success(result);
-    },
-    (error) => {
-      failure(error);
-    }
-  ).catch((err)=>{failure(err)})
+  .then((result)=> {success(result)})
+  .catch((err)=>{failure(err)})
 
 }
 
 
 export const fetchToServe = (success, failure)=>{
-  fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
+  fetch(PICSOUS_URL+"getOrdersForTv/?random="+Math.random(), {
     method: 'GET',
     mode: 'cors',
     headers:{

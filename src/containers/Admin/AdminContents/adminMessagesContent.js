@@ -35,7 +35,7 @@ class AdminWebTvContent extends Component {
         <tr>
           <td>{elt.title}</td>
           <td>{elt.text}</td>
-          <td><FaTrash onClick={()=>deleteMessage(messages.indexOf(elt))}></FaTrash></td>
+          <td><FaTrash onClick={()=>deleteMessage(elt.id)}></FaTrash></td>
       </tr>)
     })
     return(
