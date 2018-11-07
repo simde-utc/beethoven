@@ -34,6 +34,12 @@ export const VALIDATE_MENU_SUCCESS = "VALIDATE_MENU_SUCCESS"
 export const VALIDATE_MENU_ERROR = "VALIDATE_MENU_ERROR"
 
 
+//Remiser les menus des permananciers
+export const SET_STAFF_REQUEST = "SET_STAFF_REQUEST"
+export const SET_STAFF_SUCCESS = "SET_STAFF_SUCCESS"
+export const SET_STAFF_ERROR = "SET_STAFF_ERROR"
+
+
 // **************************************************************************
 // Gestion Articles et catégories
 // **************************************************************************
@@ -123,6 +129,11 @@ export const CANCEL_ARTICLE_ERROR = "CANCEL_ARTICLE_ERROR"
 export const DELETE_ARTICLE_CANCELED = "DELETE_ARTICLE_CANCELED"
 
 
+
+// **************************************************************************
+// TV Management
+// **************************************************************************
+
 export const GET_TVLINK_REQUEST = "GET_TVLINK_REQUEST"
 export const GET_TVLINK_SUCCESS = "GET_TVLINK_SUCCESS"
 export const GET_TVLINK_ERROR = "GET_TVLINK_ERROR"
@@ -141,6 +152,11 @@ export const GET_MESSAGES_LIST_ERROR = "GET_MESSAGES_LIST_ERROR"
 export const ADD_MESSAGE_REQUEST = "ADD_MESSAGE_REQUEST"
 export const ADD_MESSAGE_SUCCESS = "ADD_MESSAGE_SUCCESS"
 export const ADD_MESSAGE_ERROR = "ADD_MESSAGE_ERROR"
+
+//supprimer Un message de la liste
+export const DELETE_MESSAGE_REQUEST = "DELETE_MESSAGE_REQUEST"
+export const DELETE_MESSAGE_SUCCESS = "DELETE_MESSAGE_SUCCESS"
+export const DELETE_MESSAGE_ERROR = "DELETE_MESSAGE_ERROR"
 
 
 // **************************************************************************

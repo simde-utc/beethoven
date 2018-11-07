@@ -69,9 +69,12 @@ class PicBar extends Component {
       <marquee
         style={
           {
-            height:'9vh',
+            height:'10vh',
             paddingTop : '20px',
-            fontSize : '2em'
+            margin : '0',
+            fontSize : '2em',
+            color:'black',
+            backgroundColor : 'white'
           }
         }
 

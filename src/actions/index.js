@@ -15,6 +15,9 @@ import {
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
+  SET_STAFF_REQUEST,
+  SET_STAFF_SUCCESS,
+  SET_STAFF_ERROR,
   ADD_ERROR,
   DELETE_ERROR,
   REDIRECT_LOGIN,
@@ -51,6 +54,9 @@ import {
   ADD_MESSAGE_REQUEST,
   ADD_MESSAGE_SUCCESS,
   ADD_MESSAGE_ERROR,
+  DELETE_MESSAGE_REQUEST,
+  DELETE_MESSAGE_SUCCESS,
+  DELETE_MESSAGE_ERROR,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_ERROR,
@@ -89,7 +95,9 @@ import {
   setTvUrl,
   fetchMessagesList,
   addMessageToList,
-  fetchToServe
+  deleteMessageFromList,
+  fetchToServe,
+  changeStaff
 } from '../Utils/apiCalls.js'
 
 
@@ -300,6 +308,44 @@ export function validateMenu(idMenu, listSales){
       },
       (err)=>{
         dispatch(validateMenuError("Erreur : Validation Menu"))
+      }
+    )
+  }
+}
+
+
+//gestion des staff
+export function setStaffRequest(idMenu){
+  return {
+    type : SET_STAFF_REQUEST,
+    idMenu : idMenu
+  }
+}
+
+
+export function setStaffSuccess(){
+  return {
+    type : SET_STAFF_SUCCESS
+  }
+}
+
+export function setStaffError(error){
+  return {
+    type : SET_STAFF_ERROR,
+    error : error
+  }
+}
+
+export function setStaff(idMenu){
+  return (dispatch)=>{
+    dispatch(setStaffRequest(idMenu));
+    changeStaff(
+      idMenu,
+      (data)=>{
+        dispatch(setStaffSuccess())
+      },
+      (err)=>{
+        dispatch(setStaffError('Erreur : Changement d etat Staff'))
       }
     )
   }
@@ -820,10 +866,49 @@ export function addMessage(title, text)
       text,
       (data)=>{dispatch(addMessageSuccess(title,text))},
       (err)=>{dispatch(addMessageError('Erreur : Ajout de Message'))}
-    )    
+    )
   }
 }
 
+
+export function deleteMessageRequest()
+{
+  return{
+    type : DELETE_MESSAGE_REQUEST
+  }
+}
+
+export function deleteMessageSuccess(idMessage)
+{
+  return{
+    type: DELETE_MESSAGE_SUCCESS,
+    idMessage : idMessage
+  }
+}
+
+export function deleteMessageError(error)
+{
+  return{
+    type : DELETE_MESSAGE_ERROR,
+    error: error
+  }
+}
+
+export function deleteMessage(idMessage)
+{
+  return (dispatch)=>{
+    dispatch(deleteMessageRequest())
+    deleteMessageFromList(
+      idMessage,
+      (data)=>{
+        dispatch(deleteMessageSuccess(idMessage))
+      },
+      (err)=>{
+        dispatch(deleteMessageError('Erreur : Supression de Message'))
+      }
+    )
+  }
+}
 
 // **************************************************************************
 // Gestion Transactions

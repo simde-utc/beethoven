@@ -6,9 +6,9 @@ import {InputGroup, InputGroupAddon, InputGroupText, Input, Button, Label} from 
 import { Container, Col, Row, Table } from 'reactstrap';
 
 import {MdMessage} from 'react-icons/md'
+import {FaTrash} from 'react-icons/fa'
 
-
-import {getMessagesList, addMessage} from '../../../actions'
+import {getMessagesList, addMessage, deleteMessage} from '../../../actions'
 class AdminWebTvContent extends Component {
   constructor(props)
   {
@@ -27,7 +27,7 @@ class AdminWebTvContent extends Component {
   }
   render() {
     const {sessionId, username, messages} = this.props
-    const {addMessage} = this.props
+    const {addMessage, deleteMessage} = this.props
 
     let messagesTab = []
     messages.forEach((elt)=>{
@@ -35,7 +35,7 @@ class AdminWebTvContent extends Component {
         <tr>
           <td>{elt.title}</td>
           <td>{elt.text}</td>
-          <td>action</td>
+          <td><FaTrash onClick={()=>deleteMessage(messages.indexOf(elt))}></FaTrash></td>
       </tr>)
     })
     return(
@@ -122,6 +122,7 @@ let mapDispatchToProps = (dispatch)=>{
     //myfunction : ()=> dispatch(myfunction())
     getMessagesList : ()=>dispatch(getMessagesList()),
     addMessage : (title, text)=>dispatch(addMessage(title, text)),
+    deleteMessage : (idMessage)=>dispatch(deleteMessage(idMessage))
   }
 }
 

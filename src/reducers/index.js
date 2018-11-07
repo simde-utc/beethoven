@@ -16,6 +16,9 @@ import { 
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
+  SET_STAFF_ERROR,
+  SET_STAFF_SUCCESS,
+  SET_STAFF_REQUEST,
   ADD_ERROR,
   DELETE_ERROR,
   BADGEUSE_IS_PRESENT,
@@ -52,6 +55,9 @@ import { 
   ADD_MESSAGE_REQUEST,
   ADD_MESSAGE_SUCCESS,
   ADD_MESSAGE_ERROR,
+  DELETE_MESSAGE_REQUEST,
+  DELETE_MESSAGE_SUCCESS,
+  DELETE_MESSAGE_ERROR,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_ERROR,
@@ -272,6 +278,14 @@ function errors(state = {}, action)
       return state;
 
       case ADD_MESSAGE_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+
+      case DELETE_MESSAGE_ERROR:
       errorsList = state.errorsList.slice()
       errorsList.push(action.error);
       state = Object.assign({}, state, {
@@ -529,11 +543,22 @@ function webTV(state={}, action)
 
     case ADD_MESSAGE_SUCCESS:
     let messages = state.messages.slice()
-    messages.push({title : action.title, text : action.text});
+    messages.unshift({title : action.title, text : action.text});
     state = Object.assign({}, state, {
       messages : messages
     })
     return state;
+
+    case DELETE_MESSAGE_REQUEST:
+    return state;
+
+    case DELETE_MESSAGE_SUCCESS:
+    let newMessages = state.messages.filter(mymessage=>state.messages.indexOf(mymessage)!==action.idMessage)
+    state = Object.assign({}, state, {
+      messages : newMessages
+    })
+    return state;
+
 
 
     case SET_TVLINK_REQUEST:

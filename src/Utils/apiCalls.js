@@ -30,7 +30,7 @@ export const fetchMenus  = (success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
-
+//passer une commande en Servi
 export const fetchServed = (id, success, failure)=>{
   brequest('picsousRequest', 'POST', null, 'setMenuServed', id, null)
   .then((result)=>{
@@ -44,6 +44,18 @@ export const fetchServed = (id, success, failure)=>{
 
 }
 
+//remiser les commades des gens de la perm (qui se servent après)
+export const changeStaff = (id, success, failure)=>{
+  brequest('picsousRequest', 'POST', null, 'setMenuIsStaff', id, null)
+  .then((result)=>{
+    if(result.ok){
+      success(result)
+    } else{
+      failure(result)
+    }
+  }).catch((err)=>{failure(err)})
+
+}
 
 
 //reccupérer liste du menu selectionné
@@ -291,6 +303,32 @@ export const addMessageToList = (title, text, success, failure)=>{
   ).catch((err)=>{failure(err)})
 
 }
+
+
+//supprimer un message de la liste
+export const deleteMessageFromList = (idMessage, success, failure)=>{
+  fetch(
+    "http://37.139.25.111/messages/"+idMessage,
+    {
+      method : 'DELETE',
+
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+
+}
+
 
 export const fetchToServe = (success, failure)=>{
   fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
