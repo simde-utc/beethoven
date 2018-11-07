@@ -572,7 +572,7 @@ function webTV(state={}, action)
 
     case ADD_MESSAGE_SUCCESS:
     let messages = state.messages.slice()
-    messages.unshift({title : action.title, text : action.text});
+    messages.unshift(action.data);
     state = Object.assign({}, state, {
       messages : messages
     })

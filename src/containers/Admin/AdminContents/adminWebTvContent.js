@@ -21,9 +21,10 @@ class AdminWebTvContent extends Component {
   }
   componentWillMount()
   {
-    const {getTvLink} = this.props;
+    const {getTvLink,webTv1Url, webTv2Url} = this.props;
     getTvLink(1)
     getTvLink(2)
+    this.setState({webTv1:webTv1Url, webTv2:webTv2Url})
   }
   render() {
     const {sessionId, username, webTv1Url, webTv2Url} = this.props
