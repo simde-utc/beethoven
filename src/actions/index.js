@@ -839,12 +839,11 @@ export function addMessageRequest()
   }
 }
 
-export function addMessageSuccess(title, text)
+export function addMessageSuccess(data)
 {
   return{
     type : ADD_MESSAGE_SUCCESS,
-    title : title,
-    text:  text
+    data: data
 
   }
 }
@@ -864,7 +863,7 @@ export function addMessage(title, text)
     addMessageToList(
       title,
       text,
-      (data)=>{dispatch(addMessageSuccess(title,text))},
+      (data)=>{dispatch(addMessageSuccess(data))},
       (err)=>{dispatch(addMessageError('Erreur : Ajout de Message'))}
     )
   }

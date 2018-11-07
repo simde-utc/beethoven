@@ -12,8 +12,8 @@ class AdminWebTvContent extends Component {
   {
     super(props);
     this.state = {
-      webTv1 : null,
-      webTv2 : null,
+      webTv1 : this.props.webTv1Url,
+      webTv2 : this.props.webTv1Url,
       messages1 : this.props.webTv1Messages,
       messages2 : this.props.webTv2Messages
     }
@@ -21,7 +21,7 @@ class AdminWebTvContent extends Component {
   }
   componentWillMount()
   {
-    const {getTvLink} = this.props;
+    const {getTvLink,webTv1Url, webTv2Url} = this.props;
     getTvLink(1)
     getTvLink(2)
   }
@@ -48,6 +48,7 @@ class AdminWebTvContent extends Component {
                   <InputGroupAddon addonType="prepend">@ PicSalle</InputGroupAddon>
                   <Input
                     placeholder={webTv1Url}
+                    
                     style={{marginRight : '5px'}}
                     onChange = {(e)=>this.setState({webTv1:e.target.value})}
                     />{' '}
@@ -77,6 +78,7 @@ class AdminWebTvContent extends Component {
                   <InputGroupAddon addonType="prepend">@ PicBar</InputGroupAddon>
                   <Input
                     placeholder={webTv2Url}
+
                     style={{marginRight : '5px'}}
                     onChange = {(e)=>this.setState({webTv2:e.target.value})}
                     />{' '}
