@@ -15,6 +15,9 @@ import {
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
+  SET_STAFF_REQUEST,
+  SET_STAFF_SUCCESS,
+  SET_STAFF_ERROR,
   ADD_ERROR,
   DELETE_ERROR,
   REDIRECT_LOGIN,
@@ -48,6 +51,12 @@ import {
   GET_MESSAGES_LIST_ERROR,
   GET_MESSAGES_LIST_REQUEST,
   GET_MESSAGES_LIST_SUCCESS,
+  ADD_MESSAGE_REQUEST,
+  ADD_MESSAGE_SUCCESS,
+  ADD_MESSAGE_ERROR,
+  DELETE_MESSAGE_REQUEST,
+  DELETE_MESSAGE_SUCCESS,
+  DELETE_MESSAGE_ERROR,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_ERROR,
@@ -65,7 +74,8 @@ import {
   GET_SALES_LOCATION_REQUEST,
   GET_SALES_LOCATION_SUCCESS,
   GET_SALES_LOCATION_ERROR,
-  RESTART
+  RESTART,
+  UPDATE_ADMIN_NAV
 } from "../constants"
 
 import {
@@ -83,7 +93,11 @@ import {
   getLocations,
   getTvUrl,
   setTvUrl,
-  fetchToServe
+  fetchMessagesList,
+  addMessageToList,
+  deleteMessageFromList,
+  fetchToServe,
+  changeStaff
 } from '../Utils/apiCalls.js'
 
 
@@ -99,11 +113,11 @@ export function getMenusRequest()
   }
 }
 
-export function getMenusSuccess(listMenus)
+export function getMenusSuccess(MenuList)
 {
   return{
     type : GET_MENUS_SUCCESS,
-    listMenus : listMenus
+    MenuList : MenuList
   }
 }
 
@@ -133,16 +147,19 @@ export function getMenus(){
 
 
 // Supprimer un Menu de la Liste
-export function deleteMenuRequest(idMenu){
+export function deleteMenuRequest(idMenu, MenuList){
   return{
     type : DELETE_MENU_REQUEST,
-    idMenu : idMenu
+    idMenu : idMenu,
+    MenuList : MenuList
   }
 }
 
-export function deleteMenuSuccess(){
+export function deleteMenuSuccess(idMenu, MenuList){
   return{
-    type : DELETE_MENU_SUCCESS
+    type : DELETE_MENU_SUCCESS,
+    idMenu : idMenu,
+    MenuList : MenuList
   }
 }
 
@@ -153,13 +170,13 @@ export function deleteMenuError(error){
   }
 }
 
-export function deleteMenus(idMenu){
+export function deleteMenus(idMenu, MenuList){
   return (dispatch)=>
   {
-    dispatch(deleteMenuRequest(idMenu));
+    dispatch(deleteMenuRequest(idMenu, MenuList));
     onTrashClick(idMenu,
     (data)=>{
-      dispatch(deleteMenuSuccess())
+      dispatch(deleteMenuSuccess(idMenu, MenuList))
     },
     (err)=>{
       dispatch(deleteMenuError("Erreur : Supression Menu"))
@@ -261,7 +278,8 @@ export function getToServe(){
 export function validateMenuRequest(idMenu, listSales){
   return{
     type: VALIDATE_MENU_REQUEST,
-    idMenu : idMenu
+    idMenu : idMenu,
+    listSales : listSales
   }
 }
 
@@ -282,7 +300,7 @@ export function validateMenuError(error){
 
 export function validateMenu(idMenu, listSales){
   return (dispatch) =>{
-    dispatch(validateMenuRequest(idMenu));
+    dispatch(validateMenuRequest(idMenu, listSales));
     fetchServed(
       idMenu,
       (data)=> {
@@ -290,6 +308,44 @@ export function validateMenu(idMenu, listSales){
       },
       (err)=>{
         dispatch(validateMenuError("Erreur : Validation Menu"))
+      }
+    )
+  }
+}
+
+
+//gestion des staff
+export function setStaffRequest(idMenu){
+  return {
+    type : SET_STAFF_REQUEST,
+    idMenu : idMenu
+  }
+}
+
+
+export function setStaffSuccess(){
+  return {
+    type : SET_STAFF_SUCCESS
+  }
+}
+
+export function setStaffError(error){
+  return {
+    type : SET_STAFF_ERROR,
+    error : error
+  }
+}
+
+export function setStaff(idMenu){
+  return (dispatch)=>{
+    dispatch(setStaffRequest(idMenu));
+    changeStaff(
+      idMenu,
+      (data)=>{
+        dispatch(setStaffSuccess())
+      },
+      (err)=>{
+        dispatch(setStaffError('Erreur : Changement d etat Staff'))
       }
     )
   }
@@ -667,11 +723,12 @@ export function getTvLinkRequest()
   }
 }
 
-export function getTvLinkSuccess(data)
+export function getTvLinkSuccess(idTv, data)
 {
   return{
     type : GET_TVLINK_SUCCESS,
-    data : data
+    data : data,
+    idTv : idTv
   }
 }
 
@@ -689,7 +746,7 @@ export function getTvLink(idTv)
     dispatch(getTvLinkRequest());
     getTvUrl(idTv,
       (data)=>{
-        dispatch(getTvLinkSuccess(data))
+        dispatch(getTvLinkSuccess(idTv, data))
       },
       (err)=>{
         dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
@@ -697,6 +754,165 @@ export function getTvLink(idTv)
     )
   }
 }
+
+
+
+export function setTvLinkRequest()
+{
+  return{
+    type : SET_TVLINK_REQUEST
+  }
+}
+
+export function setTvLinkSuccess(idTv, tvLink)
+{
+  return{
+    type : SET_TVLINK_SUCCESS,
+    tvLink : tvLink,
+    idTv : idTv
+  }
+}
+
+export function setTvLinkError(error)
+{
+  return{
+    type : SET_TVLINK_ERROR,
+    error : error
+  }
+}
+
+export function setTvLink(idTv, url, messages)
+{
+  return (dispatch)=>{
+    dispatch(setTvLinkRequest());
+    setTvUrl(idTv, url, messages,
+      (data)=>{
+        dispatch(setTvLinkSuccess(idTv, url))
+      },
+      (err)=>{
+        dispatch(setTvLinkError('Erreur : Changement de lien WebTV'))
+      }
+    )
+  }
+}
+
+
+export function getMessagesListRequest()
+{
+  return{
+    type: GET_MESSAGES_LIST_REQUEST
+  }
+}
+
+export function getMessagesListSuccess(messages)
+{
+  return{
+    type: GET_MESSAGES_LIST_SUCCESS,
+    messages: messages
+  }
+}
+
+export function getMessagesListError(error)
+{
+  return{
+    type: GET_MESSAGES_LIST_ERROR,
+    error : error
+  }
+}
+
+export function getMessagesList()
+{
+  return (dispatch)=>{
+    dispatch(getMessagesListRequest());
+    fetchMessagesList(
+      (data)=>{dispatch(getMessagesListSuccess(data))},
+      (err)=>{dispatch(getMessagesListError('Erreur : Chargement liste Messages'))},
+    )
+  }
+
+}
+
+export function addMessageRequest()
+{
+  return{
+    type : ADD_MESSAGE_REQUEST
+  }
+}
+
+export function addMessageSuccess(title, text)
+{
+  return{
+    type : ADD_MESSAGE_SUCCESS,
+    title : title,
+    text:  text
+
+  }
+}
+
+export function addMessageError(error)
+{
+  return{
+    type : ADD_MESSAGE_ERROR,
+    error:  error
+  }
+}
+
+export function addMessage(title, text)
+{
+  return (dispatch)=>{
+    dispatch(addMessageRequest());
+    addMessageToList(
+      title,
+      text,
+      (data)=>{dispatch(addMessageSuccess(title,text))},
+      (err)=>{dispatch(addMessageError('Erreur : Ajout de Message'))}
+    )
+  }
+}
+
+
+export function deleteMessageRequest()
+{
+  return{
+    type : DELETE_MESSAGE_REQUEST
+  }
+}
+
+export function deleteMessageSuccess(idMessage)
+{
+  return{
+    type: DELETE_MESSAGE_SUCCESS,
+    idMessage : idMessage
+  }
+}
+
+export function deleteMessageError(error)
+{
+  return{
+    type : DELETE_MESSAGE_ERROR,
+    error: error
+  }
+}
+
+export function deleteMessage(idMessage)
+{
+  return (dispatch)=>{
+    dispatch(deleteMessageRequest())
+    deleteMessageFromList(
+      idMessage,
+      (data)=>{
+        dispatch(deleteMessageSuccess(idMessage))
+      },
+      (err)=>{
+        dispatch(deleteMessageError('Erreur : Supression de Message'))
+      }
+    )
+  }
+}
+
+// **************************************************************************
+// Gestion Transactions
+// **************************************************************************
 
 export function setTransactionState(state_transaction){
   return{
@@ -787,34 +1003,6 @@ export function cancelTransactionError(error)
   }
 }
 
-
-
-
-
-
-export function setTvLinkRequest()
-{
-  return{
-    type : SET_TVLINK_REQUEST
-  }
-}
-
-export function setTvLinkSuccess(tvLink)
-{
-  return{
-    type : SET_TVLINK_SUCCESS,
-    tvLink : tvLink
-  }
-}
-
-export function setTvLinkError(error)
-{
-  return{
-    type : SET_TVLINK_ERROR,
-    error : error
-  }
-}
-
 export function cancelTransaction(sessionId,pur_id)
 {
   return (dispatch) =>{
@@ -843,17 +1031,16 @@ export function deleteArticleCanceled(pur_id){
   }
 }
 
-export function setTvLink(idTv)
+
+
+// **************************************************************************
+// Gestion Admin
+// **************************************************************************
+
+export function updateAdminNav(AdminNav)
 {
-  return (dispatch)=>{
-    dispatch(setTvLinkRequest());
-    setTvUrl(idTv,
-      (data)=>{
-        dispatch(getTvLinkSuccess(idTv))
-      },
-      (err)=>{
-        dispatch(getTvLinkError('Erreur : Reccupération du lien WebTV'))
-      }
-    )
+  return{
+    type : UPDATE_ADMIN_NAV,
+    AdminNav : AdminNav
   }
 }

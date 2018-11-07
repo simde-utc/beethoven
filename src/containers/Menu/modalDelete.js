@@ -24,7 +24,7 @@ toggle() {
   }
 
 render(){
-  const {deleteMenus, getMenus} = this.props;
+  const {deleteMenus, getMenus, MenuList} = this.props;
 
   return(
     <Modal
@@ -49,8 +49,7 @@ render(){
         onClick={
           ()=> {
 
-            deleteMenus(this.props.index)
-            getMenus()
+            deleteMenus(this.props.index, MenuList)
             this.props.setFalse();
             this.toggle()
           }
@@ -75,12 +74,13 @@ render(){
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
+    MenuList : state.menus.MenuList || []
   };
 }
 
 let mapDispatchToProps = (dispatch)=>{
   return{
-    deleteMenus : (index)=>dispatch(deleteMenus(index)),
+    deleteMenus : (index, list)=>dispatch(deleteMenus(index, list)),
     getMenus : ()=>dispatch(getMenus())
   }
 }

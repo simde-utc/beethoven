@@ -24,7 +24,7 @@ class MenuNavButton extends Component{
       <tr style = {
         this.props.index === NavIndex ?
         {height : '2.5em', background:'#B22132'} :
-        {height : '2.5em', background:'#f9f9f9'}
+        {height : '2.5em', background:'#e9e9e9'}
         }>
         <td>
         <NavItem
@@ -78,7 +78,7 @@ let mapDispatchToProps = (dispatch)=>{
     getMenus : ()=> dispatch(getMenus()),
     getList : (index)=> dispatch(getList(index)),
     updateNavIndex : (index)=>dispatch(updateNavIndex(index)),
-    deleteMenus : (index)=>dispatch(deleteMenus(index)),
+    deleteMenus : (index, menuList)=>dispatch(deleteMenus(index, menuList)),
   }
 }
 

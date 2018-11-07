@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID} from './config'
+import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL} from './config'
 import brequest from './brequest'
 
 
@@ -30,7 +30,7 @@ export const fetchMenus  = (success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
-
+//passer une commande en Servi
 export const fetchServed = (id, success, failure)=>{
   brequest('picsousRequest', 'POST', null, 'setMenuServed', id, null)
   .then((result)=>{
@@ -44,6 +44,18 @@ export const fetchServed = (id, success, failure)=>{
 
 }
 
+//remiser les commades des gens de la perm (qui se servent après)
+export const changeStaff = (id, success, failure)=>{
+  brequest('picsousRequest', 'POST', null, 'setMenuIsStaff', id, null)
+  .then((result)=>{
+    if(result.ok){
+      success(result)
+    } else{
+      failure(result)
+    }
+  }).catch((err)=>{failure(err)})
+
+}
 
 
 //reccupérer liste du menu selectionné
@@ -227,8 +239,20 @@ export const cancelUserTransaction = (sessionId,pur_id,success,failure)=>{
 }
 
 
-export const setTvUrl = (idTv, success, failure)=>{
-  brequest('picsousRequest', 'GET', 'webTv', idTv, null)
+export const setTvUrl = (idTv, url, messages, success, failure)=>{
+  fetch(
+    PICSOUS_URL+"webTv/setConfig/",
+    {
+      method : 'POST',
+      body : JSON.stringify({"id": idTv,
+      "url":url,
+      "messages": messages
+    }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
   .then(res => res.json())
   .then(
     (result) => {
@@ -240,8 +264,67 @@ export const setTvUrl = (idTv, success, failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
+//reccupération de la liste de messages
+export const fetchMessagesList = (success, failure)=>{
+  brequest('picsousRequest', 'GET', null, 'messages',null,null)
+  .then(res=>res.json())
+  .then(
+    (result)=>{
+      success(result)
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+}
+
+//ajouter un message à la liste
+export const addMessageToList = (title, text, success, failure)=>{
+  fetch(
+    PICSOUS_URL+"messages/",
+    {
+      method : 'POST',
+      body : JSON.stringify({"title": title,
+      "text": text
+    }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  .then(res => res.json())
+  .then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+
+}
+
+
+//supprimer un message de la liste
+export const deleteMessageFromList = (idMessage, success, failure)=>{
+  fetch(
+    PICSOUS_URL+"messages/"+idMessage+"/",
+    {
+      method : 'DELETE',
+
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+  .then((result)=> {success(result)})
+  .catch((err)=>{failure(err)})
+
+}
+
+
 export const fetchToServe = (success, failure)=>{
-  fetch("http://37.139.25.111/getOrdersForTv/?random="+Math.random(), {
+  fetch(PICSOUS_URL+"getOrdersForTv/?random="+Math.random(), {
     method: 'GET',
     mode: 'cors',
     headers:{

@@ -3,6 +3,7 @@ import './App.css';
 
 import MenuBody from './containers/Menu/menu'
 import Vente from './containers/Vente/vente'
+import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
 
 import {login, redirectLogin, deleteError, restart} from './actions'
@@ -23,6 +24,7 @@ class Header extends Component {
     }
     this.setMenuPage = this.setMenuPage.bind(this)
     this.setVentePage = this.setVentePage.bind(this)
+    this.setAdminPage = this.setAdminPage.bind(this)
   }
 
   setMenuPage(){
@@ -34,6 +36,12 @@ class Header extends Component {
   setVentePage(){
     this.setState({
       load:'Vente'
+    })
+  }
+
+  setAdminPage(){
+    this.setState({
+      load:'Admin'
     })
   }
 
@@ -69,6 +77,12 @@ class Header extends Component {
           affichage = <MenuBody></MenuBody>
         }
         break;
+
+      case 'Admin':
+        if(sessionId!==null)
+        {
+          affichage = <AdminPanel></AdminPanel>
+        }
       default:
         break;
     }
@@ -107,7 +121,7 @@ class Header extends Component {
               </ul>
               <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setMenuPage}>Menu</button>" "
               <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setVentePage}>Vente</button>" "
-              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Admin</button>
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onClick={this.setAdminPage}>Admin</button>
             </div>
           </nav>
         </div>

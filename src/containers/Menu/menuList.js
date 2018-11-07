@@ -61,11 +61,15 @@ render(){
           quantity={menu.quantity}
           id_transaction= {menu.id_transaction}
           served = {menu.served}
+          is_staff={menu.is_staff}
           />)
       })
   }
   return(
-    <div className="Menu">
+    <div className="Menu"
+      style = {{paddingTop:'20px'}}
+
+      >
       <h2>
         {loading===true ? '':
           NavIndex!==null && NavIndex.toString()===listSales.menu.id_payutc && listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+

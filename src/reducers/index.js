@@ -16,6 +16,9 @@ import { 
   VALIDATE_MENU_ERROR,
   VALIDATE_MENU_REQUEST,
   VALIDATE_MENU_SUCCESS,
+  SET_STAFF_ERROR,
+  SET_STAFF_SUCCESS,
+  SET_STAFF_REQUEST,
   ADD_ERROR,
   DELETE_ERROR,
   BADGEUSE_IS_PRESENT,
@@ -49,6 +52,12 @@ import { 
   GET_MESSAGES_LIST_ERROR,
   GET_MESSAGES_LIST_REQUEST,
   GET_MESSAGES_LIST_SUCCESS,
+  ADD_MESSAGE_REQUEST,
+  ADD_MESSAGE_SUCCESS,
+  ADD_MESSAGE_ERROR,
+  DELETE_MESSAGE_REQUEST,
+  DELETE_MESSAGE_SUCCESS,
+  DELETE_MESSAGE_ERROR,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_ERROR,
@@ -66,7 +75,8 @@ import { 
   GET_SALES_LOCATION_ERROR,
   GET_SALES_LOCATION_SUCCESS,
   GET_SALES_LOCATION_REQUEST,
-  RESTART
+  RESTART,
+  UPDATE_ADMIN_NAV
 } from "../constants";
 
 function menus(state={}, action)
@@ -81,16 +91,23 @@ function menus(state={}, action)
     case GET_MENUS_SUCCESS:
       state = Object.assign({}, state,
         {
-          listMenus : action.listMenus
+          MenuList : action.MenuList
         });
         return state;
 
 
     case DELETE_MENU_REQUEST:
-      return state;
+    return state
 
     case DELETE_MENU_SUCCESS:
-      return state;
+    console.log(action.idMenu)
+    let newListMenu = action.MenuList.filter(i => i.article.id_payutc.toString() !== action.idMenu.toString())
+    console.log(newListMenu)
+    state = Object.assign({}, state,
+    {
+      MenuList : newListMenu
+    })
+    return state;
 
     case UPDATE_NAVINDEX:
       state = Object.assign({}, state,
@@ -112,10 +129,6 @@ function menus(state={}, action)
 
 
     case VALIDATE_MENU_REQUEST :
-    return state
-
-
-    case VALIDATE_MENU_SUCCESS :
     let validated = action.listSales.orders.find(function(elt){
       return elt.id_transaction === action.idMenu
     })
@@ -127,7 +140,29 @@ function menus(state={}, action)
     {
       listSales : {"menu": newListInformation, "orders": newListSales}
     })
+    return state
+
+
+    case VALIDATE_MENU_SUCCESS :
       return state;
+
+    case SET_STAFF_REQUEST :
+    let staffed = state.listSales.orders.find(function(elt){
+      return elt.id_transaction === action.idMenu
+    })
+    staffed.is_staff = !staffed.is_staff;
+    let newListSales1 = state.listSales.orders.filter(i => i.id_transaction !== action.idMenu)
+    newListSales1.push(staffed)
+    let newListInformation1 = state.listSales.menu
+    state = Object.assign({}, state,
+    {
+      listSales : {"menu": newListInformation1, "orders": newListSales1}
+    })
+    return state
+
+
+    case SET_STAFF_SUCCESS:
+    return state;
 
     case GET_TOSERVE_SUCCESS:
     state = Object.assign({}, state,
@@ -233,32 +268,68 @@ function errors(state = {}, action)
       return state;
     case GET_SALES_LOCATION_ERROR:
       errorsList = state.errorsList.slice()
-      errorsList.shift();
+      errorsList.push(action.error);
       state = Object.assign({}, state, {
         errorsList : errorsList
       })
       return state;
       case SET_TRANSACTION_ERROR:
         errorsList = state.errorsList.slice()
-        errorsList.shift();
+        errorsList.push(action.error);
         state = Object.assign({}, state, {
           errorsList : errorsList
         })
         return state;
       case GET_CLIENT_INFO_ERROR:
         errorsList = state.errorsList.slice()
-        errorsList.shift();
+        errorsList.push(action.error);
         state = Object.assign({}, state, {
           errorsList : errorsList
         })
         return state;
+
+      case GET_MESSAGES_LIST_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+
+      case ADD_MESSAGE_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+
+      case DELETE_MESSAGE_ERROR:
+      errorsList = state.errorsList.slice()
+      errorsList.push(action.error);
+      state = Object.assign({}, state, {
+        errorsList : errorsList
+      })
+      return state;
+
+
       case CANCEL_ARTICLE_ERROR:
         errorsList = state.errorsList.slice()
-        errorsList.shift();
+        errorsList.push(action.error);
         state = Object.assign({}, state, {
           errorsList : errorsList
         })
         return state;
+
+      case SET_STAFF_ERROR:
+        errorsList = state.errorsList.slice()
+        errorsList.push(action.error);
+        state = Object.assign({}, state, {
+          errorsList : errorsList
+        })
+        return state;
+
+
     default:
       return state
   }
@@ -487,13 +558,42 @@ function webTV(state={}, action)
     })
     return state;
 
+    case GET_MESSAGES_LIST_REQUEST:
+    return state;
+
+    case GET_MESSAGES_LIST_SUCCESS:
+    state=Object.assign({}, state, {
+      messages : action.messages
+    })
+    return state;
+
+    case ADD_MESSAGE_REQUEST:
+    return state;
+
+    case ADD_MESSAGE_SUCCESS:
+    let messages = state.messages.slice()
+    messages.unshift({title : action.title, text : action.text});
+    state = Object.assign({}, state, {
+      messages : messages
+    })
+    return state;
+
+    case DELETE_MESSAGE_REQUEST:
+    return state;
+
+    case DELETE_MESSAGE_SUCCESS:
+    let newMessages = state.messages.filter(mymessage=>mymessage.id!==action.idMessage)
+    state = Object.assign({}, state, {
+      messages : newMessages
+    })
+    return state;
+
+
+
     case SET_TVLINK_REQUEST:
     return state;
 
-    case SET_TVLINK_SUCCESS:
-    state = Object.assign({}, state, {
-      tvLink : action.tvLink
-    })
+
 
     default:
     return state;
@@ -554,11 +654,70 @@ function achats(state={}, action)
     }
   }
 
+
+function admin(state={}, action)
+{
+  switch(action.type)
+  {
+    case UPDATE_ADMIN_NAV:
+    state = Object.assign({}, state,{
+      AdminNav : action.AdminNav
+    })
+    return state;
+
+    case GET_TVLINK_SUCCESS:
+    switch(action.idTv)
+    {
+      case 1:
+      state = Object.assign({}, state, {
+        webTv1Url : action.data.url,
+        webTv1Messages : action.data.enable_messages
+      })
+      break;
+
+      case 2:
+      state = Object.assign({}, state, {
+        webTv2Url : action.data.url,
+        webTv2Messages : action.data.enable_messages
+      })
+      break;
+
+      default :
+      break;
+    }
+    return state
+
+    case SET_TVLINK_SUCCESS:
+    switch(action.idTv)
+    {
+      case 1:
+      state = Object.assign({}, state, {
+        webTv1Url : action.tvLink
+      })
+      break;
+
+      case 2:
+      state = Object.assign({}, state, {
+        webTv2Url : action.tvLink
+      })
+      break;
+
+      default:
+      break;
+    }
+    return state
+
+
+    default :
+    return state;
+  }
+}
 export default combineReducers({
   menus,
   errors,
   cas,
   vente,
   achats,
-  webTV
+  webTV,
+  admin
 });
