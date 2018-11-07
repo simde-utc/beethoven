@@ -448,7 +448,8 @@ function vente(state={}, action){
     case GET_CATEGORIES_SUCCESS:
       state = Object.assign({}, state,{
         loaded: true,
-        listCateg: action.listCateg
+        listCateg: action.listCateg,
+        id_Categ: action.id_Categ
       });
       return state;
     case GET_CATEGORIES_REQUEST:
@@ -466,7 +467,7 @@ function vente(state={}, action){
             if (action.selectedArticles[i].newID === action.newID) {
                 found = true;
                 let arr = [...state.selectedArticles]
-                arr[i] = {...arr[i]}        // Object.assign({}, arr[index])
+                arr[i] = {...arr[i]}
                 arr[i]['newQTE'] = arr[i]['newQTE'] + 1
                 return {
                   ...state,

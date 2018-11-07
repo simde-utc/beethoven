@@ -26,7 +26,7 @@ const initialStore = {
   vente: {
     loaded : false,
     listCateg : [],
-    id_Cated : 3,
+    id_Categ : null,
     selectedArticles : [],
     loadedArt : false,
     listArticles : [],

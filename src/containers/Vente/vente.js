@@ -53,7 +53,6 @@ class Vente extends Component {
       )
       info_client.last_purchases.forEach(function(el) {
         let name = listArticles.filter((item) =>  item.id == el.obj_id);
-        console.log(name)
         list_last_purchases.push(
           <tr>
             <td> {el.pur_qte} </td>
@@ -88,7 +87,7 @@ class Vente extends Component {
     }else{info = (<div></div>)}
     return (
       <div className="Header">
-        <div class="row mr-2 ml-0">
+        <div class="row mr-4 ml-0">
            {/*Partie de gauche : Information des futurs achats, validation de la transaction */}
            <div class="col-6 px-0">
             <div class="row">

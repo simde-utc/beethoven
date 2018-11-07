@@ -10,8 +10,7 @@ import { getListCateg, updateCategorie } from "../../actions"
 class Categorie extends Component {
   componentWillMount() {
     const {listCateg, sessionId, loaded, event_id} = this.props
-    const { getListCateg } = this.props;
-    let xx = sessionId;
+    const { getListCateg, updateCategorie } = this.props;
     getListCateg(sessionId,event_id);
   }
   render() {
