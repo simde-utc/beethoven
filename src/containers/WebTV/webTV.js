@@ -8,11 +8,11 @@ import {REFRESH_WEBTV} from '../../Utils/config'
 
 import {getTvLink, setTvLink, getMessagesList} from '../../actions'
 
-class PicBar extends Component {
+class WebTV extends Component {
   componentWillMount()
   {
     const {getTvLink, getMessagesList} = this.props;
-    getTvLink(1)
+    getTvLink(this.props.tv)
     getMessagesList()
   }
 
@@ -114,4 +114,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )
-(PicBar);
+(WebTV);
