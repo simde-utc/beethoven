@@ -43,7 +43,7 @@ class MenuRow extends Component {
             }
             }
 
-            >{this.props.served===true ? 'Annuler' : this.props.is_staff===true ?'not Staff' : 'Staff'}</Button>
+            >{this.props.served===true ? 'Annuler' : this.props.is_staff===true ?'Remettre' : 'Reporter'}</Button>
         </td>
       </tr>
     )
