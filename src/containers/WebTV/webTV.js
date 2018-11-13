@@ -57,14 +57,21 @@ class WebTV extends Component {
       <div
         className="PicBar"
         style= {{
-          height : enableMessages===true ? '89vh' : '99vh'
+          height : enableMessages===true ? '89vh' : '99vh',
+
         }}
         >
         <Iframe url={tvLink}
       width = '100%'
       display="initial"
       position="relative"
-      allowFullScreen/>
+      allowFullScreen
+      style = {{
+        overflowY : 'hidden',
+        overflowX : 'hidden'}
+      }
+
+      />
     {enableMessages===true ?
       <marquee
         style={
