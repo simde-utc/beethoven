@@ -20,6 +20,7 @@ import {
   SET_STAFF_ERROR,
   ADD_ERROR,
   DELETE_ERROR,
+  DELETE_ALERT,
   REDIRECT_LOGIN,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -363,6 +364,14 @@ export function addError(information){
 export function deleteError(){
   return{
     type : DELETE_ERROR,
+  }
+}
+
+
+//Gestion des Alertes
+export function deleteAlert(){
+  return{
+    type : DELETE_ALERT
   }
 }
 
@@ -762,12 +771,13 @@ export function setTvLinkRequest()
   }
 }
 
-export function setTvLinkSuccess(idTv, tvLink)
+export function setTvLinkSuccess(idTv, tvLink, message)
 {
   return{
     type : SET_TVLINK_SUCCESS,
     tvLink : tvLink,
-    idTv : idTv
+    idTv : idTv,
+    message : message
   }
 }
 
@@ -785,7 +795,7 @@ export function setTvLink(idTv, url, messages)
     dispatch(setTvLinkRequest());
     setTvUrl(idTv, url, messages,
       (data)=>{
-        dispatch(setTvLinkSuccess(idTv, url))
+        dispatch(setTvLinkSuccess(idTv, url, 'Lien de Télé Changé'))
       },
       (err)=>{
         dispatch(setTvLinkError('Erreur : Changement de lien WebTV'))

@@ -6,8 +6,8 @@ import Vente from './containers/Vente/vente'
 import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
 
-import {login, redirectLogin, deleteError, restart} from './actions'
-import {printError} from './Utils/utils'
+import {login, redirectLogin, deleteError, restart, deleteAlert} from './actions'
+import {printAlert} from './Utils/utils'
 import {CAS_LINK} from './Utils/config'
 import BadgeConnexion from './Utils/badgeConnexion'
 import WebSocketConnexion from './Utils/websocket'
@@ -47,17 +47,17 @@ class Header extends Component {
 
 
   render() {
-    const {errorsList, badgeuse, redirected} = this.props;
+    const {alertList, badgeuse, redirected} = this.props;
     const {deleteError, redirectLogin, login, restart} = this.props;
     const{sessionId, connected, username} = this.props;
     const {event_id, picked} = this.props
 
     //affichage de l'ensemble des erreurs du programme
-    let ListErrors = []
-    if(errorsList.length > 0)
+    let ListAlerts = []
+    if(alertList.length > 0)
     {
-      errorsList.forEach((element)=>{
-        ListErrors.push(printError(element))
+      alertList.forEach((element)=>{
+        ListAlerts.push(printAlert(element.type, element.message))
       })
     }
 
@@ -136,7 +136,7 @@ class Header extends Component {
               borderRadius:'0px'
             }
           }
-          >{ListErrors}</div>
+          >{ListAlerts}</div>
         {affichage}
       </div>
 
@@ -153,7 +153,7 @@ let mapStateToProps = (state)=>{
     connected : state.cas.connected || false,
     sessionId : state.cas.sessionId || null,
     redirected : state.cas.redirected || false,
-    errorsList : state.errors.errorsList || [],
+    alertList : state.alerts.alertList || [],
     badgeuse : state.cas.badgeuse || false,
     username : state.cas.username || null,
     event_id : state.vente.event_id || null,
@@ -165,7 +165,7 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     redirectLogin : ()=>dispatch(redirectLogin()),
     login : ()=>dispatch(login()),
-    deleteError : ()=> dispatch(deleteError()),
+    deleteAlert : ()=> dispatch(deleteAlert()),
     restart : ()=> dispatch(restart())
   }
 }
