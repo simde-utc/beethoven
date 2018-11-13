@@ -9,8 +9,8 @@ const initialStore = {
     ListSales : [],
     loading : null
   },
-  errors:{
-    errorsList : []
+  alerts:{
+    alertList : []
   },
 
   cas : {

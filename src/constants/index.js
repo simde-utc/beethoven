@@ -83,6 +83,10 @@ export const DELETE_ALL_ARTICLES = "DELETE_ALL_ARTICLES"
 export const ADD_ERROR = "ADD_ERROR"
 export const DELETE_ERROR = "DELETE_ERROR"
 
+//Gestion des Alertes
+export const DELETE_ALERT = "DELETE_ALERT"
+
+
 //gestion du websocket de la badgeuse
 export const BADGEUSE_IS_PRESENT = "WEBSOCKET_IS_PRESENT"
 export const GET_USER_UID = "GET_USER_UID"

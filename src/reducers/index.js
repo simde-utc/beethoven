@@ -21,6 +21,7 @@ import { 
   SET_STAFF_REQUEST,
   ADD_ERROR,
   DELETE_ERROR,
+  DELETE_ALERT,
   BADGEUSE_IS_PRESENT,
   SET_USER_CONNECTED,
   GET_USER_PIN,
@@ -81,7 +82,7 @@ import { 
 
 function menus(state={}, action)
 {
-  let errorsList;
+  let alertList;
 
   switch(action.type)
   {
@@ -184,150 +185,161 @@ function menus(state={}, action)
 //reducer gérant les erreurs pour toute l'application
 // Il faut absolument mettre ses GET_ et POST_ ERROR ici pour une
 //gestion automatique
-function errors(state = {}, action)
+function alerts(state = {}, action)
 {
-  let errorsList;
+  let alertList;
 
   switch(action.type)
   {
     case GET_MENUS_ERROR:
-      errorsList = state.errorsList.slice(); //slice permet de copier la valeur actuelle
-      errorsList.push(action.error);
+      alertList = state.alertList.slice(); //slice permet de copier la valeur actuelle
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
       return state;
 
     case DELETE_MENU_ERROR:
-      errorsList = state.errorsList.slice();
-      errorsList.push(action.error);
+      alertList = state.alertList.slice();
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-                  errorsList : errorsList
+                  alertList : alertList
       })
         return state;
     case GET_LIST_ERROR:
-      errorsList = state.errorsList.slice();
-      errorsList.push(action.error);
+      alertList = state.alertList.slice();
+      alertList.push({type:'danger', message:action.error});
             state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
           return state;
 
     case VALIDATE_MENU_ERROR:
-      errorsList = state.errorsList.slice();
-      errorsList.push(action.error);
+      alertList = state.alertList.slice();
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
       return state;
 
     case LOGIN_BADGE_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.push(action.error);
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList: errorsList
+        alertList: alertList
       })
       return state;
 
       case LOGIN_ERROR:
-        errorsList = state.errorsList.slice()
-        errorsList.push(action.error);
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
         state = Object.assign({}, state, {
-          errorsList: errorsList
+          alertList: alertList
         })
         return state;
-    case DELETE_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.shift();
-      state = Object.assign({}, state, {
-        errorsList : errorsList
-      })
-      return state;
 
     case GET_TVLINK_ERROR :
-    errorsList = state.errorsList.slice()
-    errorsList.push(action.error);
+    alertList = state.alertList.slice()
+    alertList.push({type:'danger', message:action.error});
     state = Object.assign({}, state, {
-      errorsList: errorsList
+      alertList: alertList
     })
     return state;
 
     case SET_TVLINK_ERROR :
-    errorsList = state.errorsList.slice()
-    errorsList.push(action.error);
+    alertList = state.alertList.slice()
+    alertList.push({type:'danger', message:action.error});
     state = Object.assign({}, state, {
-      errorsList: errorsList
+      alertList: alertList
     })
     return state;
     case GET_TOSERVE_ERROR:
-      errorsList = state.errorsList.slice();
-      errorsList.push(action.error);
+      alertList = state.alertList.slice();
+      alertList.push({type:'danger', message:action.error});
           state = Object.assign({}, state, {
-      errorsList : errorsList
+      alertList : alertList
       })
       return state;
     case GET_SALES_LOCATION_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.push(action.error);
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
       return state;
       case SET_TRANSACTION_ERROR:
-        errorsList = state.errorsList.slice()
-        errorsList.push(action.error);
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
         state = Object.assign({}, state, {
-          errorsList : errorsList
+          alertList : alertList
         })
         return state;
       case GET_CLIENT_INFO_ERROR:
-        errorsList = state.errorsList.slice()
-        errorsList.push(action.error);
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
         state = Object.assign({}, state, {
-          errorsList : errorsList
+          alertList : alertList
         })
         return state;
 
       case GET_MESSAGES_LIST_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.push(action.error);
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
       return state;
 
       case ADD_MESSAGE_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.push(action.error);
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
       return state;
 
       case DELETE_MESSAGE_ERROR:
-      errorsList = state.errorsList.slice()
-      errorsList.push(action.error);
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
       state = Object.assign({}, state, {
-        errorsList : errorsList
+        alertList : alertList
       })
       return state;
 
 
       case CANCEL_ARTICLE_ERROR:
-        errorsList = state.errorsList.slice()
-        errorsList.push(action.error);
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
         state = Object.assign({}, state, {
-          errorsList : errorsList
+          alertList : alertList
         })
         return state;
 
       case SET_STAFF_ERROR:
-        errorsList = state.errorsList.slice()
-        errorsList.push(action.error);
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
         state = Object.assign({}, state, {
-          errorsList : errorsList
+          alertList : alertList
         })
         return state;
+
+      case SET_TVLINK_SUCCESS:
+      alertList = state.alertList.slice()
+      alertList.push({type:'success', message:action.message});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
+
+
+        case DELETE_ALERT:
+          alertList = state.alertList.slice()
+          alertList.shift();
+          state = Object.assign({}, state, {
+            alertList : alertList
+          })
+          return state;
 
 
     default:
@@ -715,7 +727,7 @@ function admin(state={}, action)
 }
 export default combineReducers({
   menus,
-  errors,
+  alerts,
   cas,
   vente,
   achats,

@@ -15,7 +15,8 @@ class AdminWebTvContent extends Component {
       webTv1 : this.props.webTv1Url,
       webTv2 : this.props.webTv1Url,
       messages1 : this.props.webTv1Messages,
-      messages2 : this.props.webTv2Messages
+      messages2 : this.props.webTv2Messages,
+      init : false
     }
 
   }
@@ -25,9 +26,27 @@ class AdminWebTvContent extends Component {
     getTvLink(1)
     getTvLink(2)
   }
+
+
   render() {
+
     const {sessionId, username, webTv1Url, webTv2Url} = this.props
     const {setTvLink} = this.props
+
+    //initiation des state avec les values actuelles
+    if(this.state.init===false && webTv1Url !== null && webTv2Url !== null)
+    {
+      this.setState({
+        webTv1 : webTv1Url,
+        webTv2 : webTv1Url,
+        messages1 : this.props.webTv1Messages,
+        messages2 : this.props.webTv2Messages,
+        init : true
+      })
+
+    }
+
+
     return(
       <div
         className ="AdminPanel"
@@ -48,7 +67,7 @@ class AdminWebTvContent extends Component {
                   <InputGroupAddon addonType="prepend">@ PicSalle</InputGroupAddon>
                   <Input
                     placeholder={webTv1Url}
-                    
+
                     style={{marginRight : '5px'}}
                     onChange = {(e)=>this.setState({webTv1:e.target.value})}
                     />{' '}
@@ -94,7 +113,9 @@ class AdminWebTvContent extends Component {
                     </Button>
                     <Button
                       color={this.state.messages2 === true ? 'success' : 'danger'}
-                      onClick = {()=>{this.setState({messages2:!this.state.messages2})}}
+                      onClick = {()=>{
+                        this.setState({messages2:!this.state.messages2})
+                      }}
                       >
                       Messages
                     </Button>
@@ -120,8 +141,8 @@ let mapStateToProps = (state)=>{
     username : state.cas.username || null,
     webTv1Url : state.admin.webTv1Url || null,
     webTv2Url : state.admin.webTv2Url || null,
-    webTv1Messages : state.admin.webTv1Messages || null,
-    webTv2Messages : state.admin.webTv2Messages || null,
+    webTv1Messages : state.admin.webTv1Messages || false,
+    webTv2Messages : state.admin.webTv2Messages || false,
 
   };
 }

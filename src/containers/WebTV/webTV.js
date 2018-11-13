@@ -8,11 +8,11 @@ import {REFRESH_WEBTV} from '../../Utils/config'
 
 import {getTvLink, setTvLink, getMessagesList} from '../../actions'
 
-class PicBar extends Component {
+class WebTV extends Component {
   componentWillMount()
   {
     const {getTvLink, getMessagesList} = this.props;
-    getTvLink(1)
+    getTvLink(this.props.tv)
     getMessagesList()
   }
 
@@ -57,14 +57,21 @@ class PicBar extends Component {
       <div
         className="PicBar"
         style= {{
-          height : enableMessages===true ? '89vh' : '99vh'
+          height : enableMessages===true ? '89vh' : '99vh',
+
         }}
         >
         <Iframe url={tvLink}
       width = '100%'
       display="initial"
       position="relative"
-      allowFullScreen/>
+      allowFullScreen
+      style = {{
+        overflowY : 'hidden',
+        overflowX : 'hidden'}
+      }
+
+      />
     {enableMessages===true ?
       <marquee
         style={
@@ -114,4 +121,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )
-(PicBar);
+(WebTV);
