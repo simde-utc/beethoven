@@ -5,6 +5,7 @@ import MenuBody from './containers/Menu/menu'
 import Vente from './containers/Vente/vente'
 import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
+import { Button } from 'reactstrap';
 
 import {login, redirectLogin, deleteError, restart, deleteAlert} from './actions'
 import {printAlert} from './Utils/utils'
@@ -25,6 +26,14 @@ class Header extends Component {
     this.setMenuPage = this.setMenuPage.bind(this)
     this.setVentePage = this.setVentePage.bind(this)
     this.setAdminPage = this.setAdminPage.bind(this)
+  }
+
+  componentDidMount() {
+    setInterval( () => {
+      this.setState({
+        curTime : new Date().toLocaleString().split(" ")[2]
+      })
+    },1000)
   }
 
   setMenuPage(){
@@ -110,18 +119,17 @@ class Header extends Component {
 
                   <span style={{color:'black'}}> {username}</span>}
               </span>" "
-              <span className="input-group-btn">
-                <a href="https://cas.utc.fr/cas/logout">LOGOUT</a>
-              </span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               </ul>
-              <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setMenuPage}>Menu</button>" "
-              <button class="btn btn-outline-secondary my-2 my-sm-0" onClick={this.setVentePage}>Vente</button>" "
-              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onClick={this.setAdminPage}>Admin</button>
+              <span style={{color:'black', marginRight:'20px'}}> {this.state.curTime}</span>
+              <Button outline color="secondary" onClick={this.setMenuPage}>Menu</Button>" "
+              <Button outline color="secondary" onClick={this.setVentePage}>Vente</Button>" "
+              <Button outline color="primary" onClick={this.setAdminPage}>Admin</Button>" "
+              <Button color="danger" href="https://cas.utc.fr/cas/logout">Déconnexion</Button>
             </div>
           </nav>
         </div>
