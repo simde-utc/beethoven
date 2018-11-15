@@ -13,7 +13,9 @@ returnMenuList(List){
   return(
     <Table>
       <thead>
-        <tr>
+        <tr style={{
+            fontSize : '1.5em'
+          }}>
           <th> Nom </th>
           <th> Prénom </th>
           <th> Qte </th>
@@ -64,7 +66,10 @@ render(){
           is_staff={menu.is_staff}
           />)
       })
+
   }
+  console.log(MenuList)
+
   return(
     <div className="Menu"
       style = {{paddingTop:'20px'}}
@@ -76,7 +81,9 @@ render(){
           listSales.menu.quantity+' - Commandes Servies : '+listSales.menu.served_quantity
         }
       </h2>
-      {NavIndex === null ?  <h3> Veuillez choisir un Menu de la liste</h3>
+
+      {
+        MenuList.length===0?' ':NavIndex === null? <h3> Veuillez choisir un Menu de la liste</h3>
       :   loading === true || NavIndex.toString()!==listSales.menu.id_payutc  ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
       NavIndex.toString()===listSales.menu.id_payutc && this.returnMenuList(MenuList)
   }

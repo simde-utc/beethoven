@@ -106,7 +106,8 @@ function menus(state={}, action)
     console.log(newListMenu)
     state = Object.assign({}, state,
     {
-      MenuList : newListMenu
+      MenuList : newListMenu,
+      NavIndex : null
     })
     return state;
 
