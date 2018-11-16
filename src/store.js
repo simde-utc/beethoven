@@ -15,11 +15,11 @@ const initialStore = {
 
   cas : {
     badgeuse : false,
-    connected : true, //default : false
+    connected : false, //default : false
     userUid : null,
     userPin : null,
     sessionId : null,
-    username : 'qrichard', //default : null
+    username : null, //default : null
     redirected : false
   },
 
@@ -30,8 +30,8 @@ const initialStore = {
     selectedArticles : [],
     loadedArt : false,
     listArticles : [],
-    event_id : 2, //default : null
-    picked : true //default : false
+    event_id : null, //default : null
+    picked : false //default : false
     },
   achats: {
     clientUid : null,
