@@ -80,9 +80,9 @@ class AdminWebTvContent extends Component {
                 }}
                 color = {this.state.webTv2===elt.url ? 'success':'danger'}
                 onClick = {()=>{
-                  setTvLink(2, elt.url, this.state.messages1)
+                  setTvLink(2, elt.url, this.state.messages2)
                   this.setState({
-                    webTv1 : elt.url
+                    webTv2 : elt.url
                   })
                 }}
                 >{elt.name}

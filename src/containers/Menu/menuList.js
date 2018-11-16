@@ -68,7 +68,6 @@ render(){
       })
 
   }
-  console.log(MenuList)
 
   return(
     <div className="Menu"
