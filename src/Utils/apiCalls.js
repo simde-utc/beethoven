@@ -320,6 +320,29 @@ export const deleteMessageFromList = (idMessage, success, failure)=>{
 
 }
 
+//reccupérer la liste des urls par defaut
+export const getUrls = (success, failure)=>{
+  fetch(
+    PICSOUS_URL+"urls/?random="+Math.random(),
+    {
+      method : 'GET',
+      headers : {
+        'Content-Type':'application/json'
+      }
+    }
+  )
+  .then(res=>res.json())
+  .then(
+    (result)=>{
+      console.log(result)
+      success(result)
+    },
+    (error)=>{
+      failure(error)
+    }
+  ).catch((err)=>{failure(err)})
+}
+
 
 export const fetchToServe = (success, failure)=>{
   fetch(PICSOUS_URL+"getOrdersForTv/?random="+Math.random(), {

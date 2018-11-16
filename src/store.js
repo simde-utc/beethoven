@@ -50,7 +50,8 @@ const initialStore = {
     webTv1Url : null,
     webTv2Url : null,
     webTv1Messages : false,
-    webTv2Messages : false
+    webTv2Messages : false,
+    urls : []
   }
 }
 

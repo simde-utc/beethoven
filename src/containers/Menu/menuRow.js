@@ -14,10 +14,12 @@ class MenuRow extends Component {
         style = {this.props.served===true ?
           {
             color : 'white',
+            fontSize : '1.5em',
             background : 'rgba(171,163,150,0.5)'
           } :
         {
           color : 'white',
+          fontSize : '1.5em',
           background :  'none'
         } }
         >

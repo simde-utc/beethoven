@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
 
-import {InputGroup, InputGroupAddon, InputGroupText, Input, Button, Label} from 'reactstrap'
+import {InputGroup, InputGroupAddon, InputGroupText, Input, Button,ButtonGroup, Label} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
 
 
-import {getTvLink, setTvLink} from '../../../actions'
+import {getTvLink, setTvLink, getDefaultUrl} from '../../../actions'
 class AdminWebTvContent extends Component {
   constructor(props)
   {
@@ -22,15 +22,17 @@ class AdminWebTvContent extends Component {
   }
   componentWillMount()
   {
-    const {getTvLink,webTv1Url, webTv2Url} = this.props;
+    const {getTvLink,webTv1Url, webTv2Url, getDefaultUrl} = this.props;
     getTvLink(1)
     getTvLink(2)
+    getDefaultUrl()
   }
+
 
 
   render() {
 
-    const {sessionId, username, webTv1Url, webTv2Url} = this.props
+    const {sessionId, username, webTv1Url, webTv2Url,urls} = this.props
     const {setTvLink} = this.props
 
     //initiation des state avec les values actuelles
@@ -43,7 +45,53 @@ class AdminWebTvContent extends Component {
         messages2 : this.props.webTv2Messages,
         init : true
       })
+    }
+    let buttonswebTv1 = [], buttonswebTv2 = []
 
+    if(urls!==[])
+    {
+      urls.forEach(
+        (elt)=>{
+          buttonswebTv1.push(
+            <Col xs={{size:4}}  lg='3'>
+              <Button
+                style = {{
+                  marginTop : '5px',
+                  width : '110px'
+                }}
+                color = {this.state.webTv1===elt.url ? 'success':'danger'}
+                onClick = {()=>{
+                  setTvLink(1, elt.url, this.state.messages1)
+                  this.setState({
+                    webTv1 : elt.url
+                  })
+                }}
+                >{elt.name}
+              </Button>
+            </Col>
+          )
+
+          buttonswebTv2.push(
+            <Col xs='4' lg='3'>
+              <Button
+                style = {{
+                  marginTop : '5px',
+                  width : '110px'
+                }}
+                color = {this.state.webTv2===elt.url ? 'success':'danger'}
+                onClick = {()=>{
+                  setTvLink(2, elt.url, this.state.messages2)
+                  this.setState({
+                    webTv2 : elt.url
+                  })
+                }}
+                >{elt.name}
+              </Button>
+            </Col>
+          )
+
+        }
+      )
     }
 
 
@@ -62,65 +110,144 @@ class AdminWebTvContent extends Component {
             </Row>
             {/*Liste des Télés et lien de chacune*/}
             <Row style = {{marginBottom : '1vh'}}>
-              <Col xs={{size:12, offset:0}} lg={{size:6, offset:3}}>
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend">@ PicSalle</InputGroupAddon>
-                  <Input
-                    placeholder={webTv1Url}
+              <Col xs={{size:6, offset:0}} lg={{size:5}} >
+                <Row>
+                  <Col xs={{size:12}}>
+                    <h3>Pic Salle</h3>
 
-                    style={{marginRight : '5px'}}
-                    onChange = {(e)=>this.setState({webTv1:e.target.value})}
-                    />{' '}
-                    <Button
-                      style={{marginRight : '5px'}}
-                      onClick = {()=>{
+                  </Col>
 
-                        setTvLink(1, this.state.webTv1, this.state.messages1)
+                </Row>
 
-                      }}
-                      >
-                      Envoyer
-                    </Button>
-                    <Button
-                      color={this.state.messages1 === true ? 'success' : 'danger'}
-                      onClick = {()=>{this.setState({messages1:!this.state.messages1})}}
-                      >
-                      Messages
-                    </Button>
-                </InputGroup>
+                <Row>
+                  <Col xs={{size:12, offset:0}}>
+                    <InputGroup>
+                      <Col xs={{size:1}} lg={{size:1}}>
+                        <InputGroupAddon
+                          style={{
+                            marginTop : '5px'
+                          }}
+                          addonType="prepend">@</InputGroupAddon>
+                      </Col>
+                      <Col xs={{size:11}} lg={{size:7}}>
+                        <Input
+                          placeholder={webTv1Url}
+                          style={{
+                            marginTop : '5px'
+                          }}
+                          onChange = {(e)=>this.setState({webTv1:e.target.value})}
+                          />{' '}
+                      </Col>
+                      <Col xs={{size:12}} lg={{size:4}}>
+                        <Button
+                          style={{
+                            marginRight : '5px',
+                            marginTop : '5px'
+                          }}
+                          onClick = {()=>{
+                            setTvLink(1, this.state.webTv1, this.state.messages1)
+                          }}
+                          >
+                          Envoyer
+                        </Button>
+                        <Button
+                          style={{
+                            marginTop : '5px'
+                          }}
+                          color={this.state.messages1 === true ? 'success' : 'danger'}
+                          onClick = {()=>{this.setState({messages1:!this.state.messages1})}}
+                          >
+                          Messages
+                        </Button>
+                      </Col>
+
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <br></br>
+                <Row>
+                  {buttonswebTv1}
+                </Row>
                 </Col>
+
+
+                <Col xs={{size:6, offset:0}} lg={{size:5, offset:2}}>
+                  <Row>
+                    <Col xs={{size:12}}>
+                      <h3>Pic Bar</h3>
+
+                    </Col>
+
+                  </Row>
+
+                  <Row>
+                    <Col xs={{size:12, offset:0}}>
+                      <InputGroup>
+                        <Col xs={{size:1}} lg={{size:1}}>
+                          <InputGroupAddon
+                            style={{
+                              marginTop : '5px'
+                            }}
+                            addonType="prepend">@</InputGroupAddon>
+                        </Col>
+                        <Col xs={{size:11}} lg={{size:7}}>
+                        <Input
+                          placeholder={webTv2Url}
+                          style={{
+                            marginTop : '5px'
+                          }}
+
+
+                          onChange = {(e)=>this.setState({webTv2:e.target.value})}
+                          />
+                      </Col>
+                      <Col xs={{size:12}} lg={{size:4}}>
+                          <Button
+                            style={{
+                              marginRight : '5px',
+                              marginTop : '5px'
+
+                            }}
+
+                            onClick = {()=>{
+                              setTvLink(2, this.state.webTv2, this.state.messages2)
+
+                            }}
+                            >
+
+                            Envoyer
+                          </Button>
+                          <Button
+                            style={{
+                              marginTop : '5px'
+                            }}
+                            color={this.state.messages2 === true ? 'success' : 'danger'}
+                            onClick = {()=>{
+                              this.setState({messages2:!this.state.messages2})
+                            }}
+                            >
+                            Messages
+                          </Button>
+                        </Col>
+                      </InputGroup>
+
+                    </Col>
+
+                  </Row>
+
+                  <br></br>
+                  <Row>
+                    {buttonswebTv2}
+                  </Row>
+
+
+
+                  </Col>
+
             </Row>
 
             <Row style = {{marginBottom : '1vh'}}>
-              <Col xs={{size:12, offset:0}} lg={{size:6, offset:3}}>
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend">@ PicBar</InputGroupAddon>
-                  <Input
-                    placeholder={webTv2Url}
 
-                    style={{marginRight : '5px'}}
-                    onChange = {(e)=>this.setState({webTv2:e.target.value})}
-                    />{' '}
-                    <Button
-                      style={{marginRight : '5px'}}
-                      onClick = {()=>{
-                        setTvLink(2, this.state.webTv2, this.state.messages2)
-
-                      }}
-                      >
-
-                      Envoyer
-                    </Button>
-                    <Button
-                      color={this.state.messages2 === true ? 'success' : 'danger'}
-                      onClick = {()=>{
-                        this.setState({messages2:!this.state.messages2})
-                      }}
-                      >
-                      Messages
-                    </Button>
-                </InputGroup>
-                </Col>
             </Row>
 
 
@@ -143,6 +270,7 @@ let mapStateToProps = (state)=>{
     webTv2Url : state.admin.webTv2Url || null,
     webTv1Messages : state.admin.webTv1Messages || false,
     webTv2Messages : state.admin.webTv2Messages || false,
+    urls : state.admin.urls || []
 
   };
 }
@@ -153,6 +281,7 @@ let mapDispatchToProps = (dispatch)=>{
     //myfunction : ()=> dispatch(myfunction())
     getTvLink : (idTv)=>dispatch(getTvLink(idTv)),
     setTvLink : (idTv, url, messages)=>dispatch(setTvLink(idTv,url,messages)),
+    getDefaultUrl : ()=>dispatch(getDefaultUrl())
   }
 }
 

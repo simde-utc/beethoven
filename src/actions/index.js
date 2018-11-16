@@ -58,6 +58,9 @@ import {
   DELETE_MESSAGE_REQUEST,
   DELETE_MESSAGE_SUCCESS,
   DELETE_MESSAGE_ERROR,
+  GET_DEFAULT_URL_REQUEST,
+  GET_DEFAULT_URL_SUCCESS,
+  GET_DEFAULT_URL_ERROR,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_ERROR,
@@ -98,7 +101,8 @@ import {
   addMessageToList,
   deleteMessageFromList,
   fetchToServe,
-  changeStaff
+  changeStaff,
+  getUrls
 } from '../Utils/apiCalls.js'
 
 
@@ -916,6 +920,42 @@ export function deleteMessage(idMessage)
     )
   }
 }
+
+
+export function getDefaultUrlRequest()
+{
+  return{
+    type : GET_DEFAULT_URL_REQUEST
+  }
+}
+
+export function getDefaultUrlSuccess(urls)
+{
+  return{
+    type : GET_DEFAULT_URL_SUCCESS,
+    urls : urls
+  }
+}
+
+export function getDefaultUrlError(error)
+{
+  return{
+    type : GET_DEFAULT_URL_ERROR,
+    error:error
+  }
+}
+
+export function getDefaultUrl()
+{
+  return (dispatch)=>{
+    dispatch(getDefaultUrlRequest())
+    getUrls(
+      (data)=>{dispatch(getDefaultUrlSuccess(data))},
+      (err)=>{dispatch(getDefaultUrlError('Erreur : Reccupération des liens'))}
+    )
+  }
+}
+
 
 // **************************************************************************
 // Gestion Transactions
