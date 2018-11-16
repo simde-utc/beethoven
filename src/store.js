@@ -15,11 +15,11 @@ const initialStore = {
 
   cas : {
     badgeuse : false,
-    connected : false, //default : false
+    connected : true, //default : false
     userUid : null,
     userPin : null,
     sessionId : null,
-    username : null, //default : null
+    username : 'qrichard', //default : null
     redirected : false
   },
 
@@ -30,8 +30,8 @@ const initialStore = {
     selectedArticles : [],
     loadedArt : false,
     listArticles : [],
-    event_id : null, //default : null
-    picked : false //default : false
+    event_id : 2, //default : null
+    picked : true //default : false
     },
   achats: {
     clientUid : null,
@@ -50,7 +50,8 @@ const initialStore = {
     webTv1Url : null,
     webTv2Url : null,
     webTv1Messages : false,
-    webTv2Messages : false
+    webTv2Messages : false,
+    urls : []
   }
 }
 

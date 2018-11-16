@@ -30,7 +30,8 @@ class WebTV extends Component {
 
       this.interval = setInterval(
         ()=>{
-          getTvLink(1)
+
+          getTvLink(this.props.tv)
           getMessagesList()
         },
         REFRESH_WEBTV
@@ -55,7 +56,7 @@ class WebTV extends Component {
     })
     return (
       <div
-        className="PicBar"
+        className="webTV"
         style= {{
           height : enableMessages===true ? '89vh' : '99vh',
 
