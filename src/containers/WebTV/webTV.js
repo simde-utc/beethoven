@@ -63,13 +63,14 @@ class WebTV extends Component {
         >
         <Iframe url={tvLink}
       width = '100%'
+      height = '90%'
+      frameborder = "0"
+      border = "0"
       display="initial"
       position="relative"
       allowFullScreen
-      style = {{
-        overflowY : 'hidden',
-        overflowX : 'hidden'}
-      }
+      style = "overflow : hidden;"
+
 
       />
     {enableMessages===true ?
