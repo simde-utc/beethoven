@@ -64,7 +64,7 @@ class WebTV extends Component {
         >
         <Iframe url={tvLink}
       width = '100%'
-      height = '90%'
+      height =  '99,9%'
       frameborder = "0"
       border = "0"
       display="initial"
