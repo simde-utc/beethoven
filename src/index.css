@@ -4,4 +4,9 @@ body {
   font-family: sans-serif;
   background-color: #000223;
   color: #FFFFFF;
+  background-image: url("images/pic_logo.png");
+  background-repeat:no-repeat;
+  background-position:50% 40%;
+  background-size: 40%;
+  background-attachment:fixed;
 }
