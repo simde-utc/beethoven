@@ -6,7 +6,7 @@ import {Nav, NavItem, NavLink} from 'reactstrap';
 import {Table, Button } from 'reactstrap';
 import MenuRow from './menuRow'
 import {getList} from "../../actions"
-
+import Loading from '../../Utils/loading'
 class MenuList extends Component{
 
 returnMenuList(List){
@@ -82,9 +82,8 @@ render(){
         }
       </h2>
 
-      {
-        MenuList.length===0?' ':NavIndex === null? <h3> Veuillez choisir un Menu de la liste</h3>
-      :   loading === true || NavIndex.toString()!==listSales.menu.id_payutc  ? <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> :
+      {NavIndex === null ?  <h3> Veuillez choisir un Menu de la liste</h3>
+      :   loading === true || NavIndex.toString()!==listSales.menu.id_payutc  ? <Loading height='200px'></Loading> :
       NavIndex.toString()===listSales.menu.id_payutc && this.returnMenuList(MenuList)
   }
 
