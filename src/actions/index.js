@@ -25,6 +25,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  GET_RIGHTS_SUCCESS,
+  GET_RIGHTS_REQUEST,
+  GET_RIGHTS_ERROR,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_ERROR,
@@ -98,7 +101,8 @@ import {
   addMessageToList,
   deleteMessageFromList,
   fetchToServe,
-  changeStaff
+  changeStaff,
+  getUsersRights
 } from '../Utils/apiCalls.js'
 
 
@@ -671,6 +675,47 @@ export function disconnect()
   }
 }
 
+
+export function getRightsRequest()
+{
+  return{
+    type: GET_RIGHTS_REQUEST
+  }
+}
+
+export function getRightsSuccess(rightsList)
+{
+  return{
+    type: GET_RIGHTS_SUCCESS,
+    rightsList : rightsList
+  }
+}
+
+export function getRightsError(error)
+{
+  return{
+    type : GET_RIGHTS_ERROR,
+    error: error
+  }
+}
+
+export function getRights(sessionid){
+  return (dispatch)=>
+  {
+    dispatch(getRightsRequest())
+    getUsersRights(
+      sessionid,
+      (data)=>{
+        dispatch(getRightsSuccess(data))
+      },
+      (err)=>{
+        dispatch(getRightsError('Erreur : Reccupération des Droits'))
+      }
+    )
+
+  }
+
+}
 // **************************************************************************
 // Gestion User
 // **************************************************************************

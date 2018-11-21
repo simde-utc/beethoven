@@ -7,7 +7,7 @@ import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
 import { Button } from 'reactstrap';
 
-import {login, redirectLogin, deleteError, restart, deleteAlert} from './actions'
+import {login, redirectLogin, deleteError, restart, deleteAlert, getRights} from './actions'
 import {printAlert} from './Utils/utils'
 import {CAS_LINK} from './Utils/config'
 import BadgeConnexion from './Utils/badgeConnexion'
@@ -34,6 +34,13 @@ class Header extends Component {
         curTime : new Date().toLocaleString().split(" ")[2]
       })
     },1000)
+
+    const {sessionId, getRights} = this.props
+
+
+
+
+
   }
 
   setMenuPage(){
@@ -56,8 +63,8 @@ class Header extends Component {
 
 
   render() {
-    const {alertList, badgeuse, redirected} = this.props;
-    const {deleteError, redirectLogin, login, restart} = this.props;
+    const {alertList, badgeuse, redirected, rightsList} = this.props;
+    const {deleteError, redirectLogin, login, restart, getRights} = this.props;
     const{sessionId, connected, username} = this.props;
     const {event_id, picked} = this.props
 
@@ -69,6 +76,8 @@ class Header extends Component {
         ListAlerts.push(printAlert(element.type, element.message))
       })
     }
+
+
 
 
 
@@ -103,6 +112,9 @@ class Header extends Component {
       login();
       redirectLogin();
     }
+
+    sessionId !== null && rightsList === null && getRights(sessionId)
+
 
     return (
 
@@ -165,7 +177,8 @@ let mapStateToProps = (state)=>{
     badgeuse : state.cas.badgeuse || false,
     username : state.cas.username || null,
     event_id : state.vente.event_id || null,
-    picked : state.vente.picked || false
+    picked : state.vente.picked || false,
+    rightsList : state.cas.rightsList || null
   };
 }
 
@@ -174,7 +187,8 @@ let mapDispatchToProps = (dispatch)=>{
     redirectLogin : ()=>dispatch(redirectLogin()),
     login : ()=>dispatch(login()),
     deleteAlert : ()=> dispatch(deleteAlert()),
-    restart : ()=> dispatch(restart())
+    restart : ()=> dispatch(restart()),
+    getRights : (sessionid)=>dispatch(getRights(sessionid))
   }
 }
 

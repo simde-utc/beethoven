@@ -110,6 +110,12 @@ export const DISCONNECT = "DISCONNECT"
 //Restart applicatio
 export const RESTART = "RESTART"
 
+
+//reccupération des droits utilisateurs de la fondation
+export const GET_RIGHTS_REQUEST = "GET_RIGHTS_REQUEST"
+export const GET_RIGHTS_SUCCESS = "GET_RIGHTS_SUCCESS"
+export const GET_RIGHTS_ERROR = "GET_RIGHTS_ERROR"
+
 // **************************************************************************
 // Gestion User
 // **************************************************************************

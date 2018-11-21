@@ -340,3 +340,16 @@ export const fetchToServe = (success, failure)=>{
   ).catch((err)=>{failure(err)})
 
 }
+
+export const getUsersRights = (sessionid, success, failure)=>{
+  brequest('apiRequest', 'POST', 'USERRIGHT', 'getAllMyRights', {},sessionid)
+    .then(res => res.json())
+    .then(
+      (result) => {
+        success(result);
+      },
+      (error) => {
+        failure(error);
+      }
+    ).catch((err)=>{failure(err)})
+}
