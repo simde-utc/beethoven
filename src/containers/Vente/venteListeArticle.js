@@ -46,7 +46,7 @@ class ListeArticle extends Component {
             displayArticle.push(
               <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
                 <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
-                  <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
+                  <img class="card-img-top" draggable="false" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
                 </button>
               </div>
               )
@@ -65,7 +65,7 @@ class ListeArticle extends Component {
           displayArticle.push(
             <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
               <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
-                <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
+                <img class="card-img-top" draggable="false" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
               </button>
             </div>
             )
