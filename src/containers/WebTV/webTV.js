@@ -70,8 +70,10 @@ class WebTV extends Component {
       display="initial"
       position="relative"
       allowFullScreen
-      style = "overflow : hidden;"
-
+      style = {{
+        overflowY : 'hidden',
+        overflowX : 'hidden'}
+      }
 
       />
     {enableMessages===true ?
