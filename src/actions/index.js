@@ -364,7 +364,7 @@ export function setStaff(idMenu){
 
 //Gestion des erreurs
 
-//addAlert('danger', 'blablabla')
+//données de la forme addAlert('danger', 'Erreur : blabla')
 export function addAlert(status, information){
   return{
     type : ADD_ALERT,

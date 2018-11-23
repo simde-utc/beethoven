@@ -10,7 +10,6 @@ import MenusToServe from './containers/NextMenus/menusdisplayer'
 import WebTV from './containers/WebTV/webTV'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
-
 class App extends Component {
 
 
@@ -49,4 +48,3 @@ class App extends Component {
 }
 
 export default App;
-//tiens connnard t'as plus de lignes vides. 

@@ -9,11 +9,6 @@ import AdminMessagesContent from './AdminContents/adminMessagesContent'
 
 
 class AdminPanel extends Component {
-
-  componentDidMount(){
-
-  }
-
   render() {
     const {sessionId, username, adminIndex} = this.props
     return(
