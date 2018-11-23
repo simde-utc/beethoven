@@ -7,14 +7,15 @@ import AdminNav from './adminNav'
 import AdminWebTvContent from './AdminContents/adminWebTvContent'
 import AdminMessagesContent from './AdminContents/adminMessagesContent'
 
+
 class AdminPanel extends Component {
   render() {
-    const {sessionId, username, adminIndex } = this.props
+    const {sessionId, username, adminIndex} = this.props
     return(
       <div
         className ="AdminPanel"
         >
-        {sessionId!== null && username !== null ?
+        {sessionId!== null && username !== null   ?
           <Container fluid>
             <Row>
               <Col

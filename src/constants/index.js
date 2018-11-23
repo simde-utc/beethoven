@@ -80,7 +80,7 @@ export const DELETE_ALL_ARTICLES = "DELETE_ALL_ARTICLES"
 // **************************************************************************
 
 //Gestion des erreur
-export const ADD_ERROR = "ADD_ERROR"
+export const ADD_ALERT = "ADD_ALERT"
 export const DELETE_ERROR = "DELETE_ERROR"
 
 //Gestion des Alertes
@@ -109,6 +109,12 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const DISCONNECT = "DISCONNECT"
 //Restart applicatio
 export const RESTART = "RESTART"
+
+
+//reccupération des droits utilisateurs de la fondation
+export const GET_RIGHTS_REQUEST = "GET_RIGHTS_REQUEST"
+export const GET_RIGHTS_SUCCESS = "GET_RIGHTS_SUCCESS"
+export const GET_RIGHTS_ERROR = "GET_RIGHTS_ERROR"
 
 // **************************************************************************
 // Gestion User

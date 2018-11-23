@@ -20,7 +20,8 @@ const initialStore = {
     userPin : null,
     sessionId : null,
     username : null, //default : null
-    redirected : false
+    redirected : false,
+    rightsList : null
   },
 
   vente: {
