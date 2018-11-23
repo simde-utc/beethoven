@@ -18,7 +18,7 @@ import {
   SET_STAFF_REQUEST,
   SET_STAFF_SUCCESS,
   SET_STAFF_ERROR,
-  ADD_ERROR,
+  ADD_ALERT,
   DELETE_ERROR,
   DELETE_ALERT,
   REDIRECT_LOGIN,
@@ -358,9 +358,12 @@ export function setStaff(idMenu){
 
 
 //Gestion des erreurs
-export function addError(information){
+
+//addAlert('danger', 'blablabla')
+export function addAlert(status, information){
   return{
-    type : ADD_ERROR,
+    type : ADD_ALERT,
+    status : status,
     information : information
   }
 }

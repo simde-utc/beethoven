@@ -8,21 +8,19 @@ import AdminWebTvContent from './AdminContents/adminWebTvContent'
 import AdminMessagesContent from './AdminContents/adminMessagesContent'
 
 
-import {getRights} from '../../actions'
 class AdminPanel extends Component {
 
   componentDidMount(){
-  
+
   }
 
   render() {
-    const {sessionId, username, adminIndex, rightsList } = this.props
-    const {getRights} = this.props;
+    const {sessionId, username, adminIndex} = this.props
     return(
       <div
         className ="AdminPanel"
         >
-        {sessionId!== null && username !== null && rightsList !== []  ?
+        {sessionId!== null && username !== null   ?
           <Container fluid>
             <Row>
               <Col
@@ -55,8 +53,7 @@ let mapStateToProps = (state)=>{
     //MyVar : state.location.MyVar || defaultValue
     sessionId : state.cas.sessionId || null,
     username : state.cas.username || null,
-    adminIndex : state.admin.AdminNav || null,
-    rightsList : state.cas.rightsList || []
+    adminIndex : state.admin.AdminNav || null
   };
 }
 
@@ -64,7 +61,6 @@ let mapStateToProps = (state)=>{
 let mapDispatchToProps = (dispatch)=>{
   return{
     //myfunction : ()=> dispatch(myfunction())
-    getRights : (sessionid)=> dispatch(getRights(sessionid))
   }
 }
 

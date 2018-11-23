@@ -80,7 +80,7 @@ export const DELETE_ALL_ARTICLES = "DELETE_ALL_ARTICLES"
 // **************************************************************************
 
 //Gestion des erreur
-export const ADD_ERROR = "ADD_ERROR"
+export const ADD_ALERT = "ADD_ALERT"
 export const DELETE_ERROR = "DELETE_ERROR"
 
 //Gestion des Alertes

@@ -19,7 +19,7 @@ import { 
   SET_STAFF_ERROR,
   SET_STAFF_SUCCESS,
   SET_STAFF_REQUEST,
-  ADD_ERROR,
+  ADD_ALERT,
   DELETE_ERROR,
   DELETE_ALERT,
   BADGEUSE_IS_PRESENT,
@@ -334,6 +334,14 @@ function alerts(state = {}, action)
         })
           return state;
 
+      case ADD_ALERT:
+      alertList = state.alertList.slice()
+      alertList.push({type:action.status, message:action.information});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+        return state;
+
       case SET_TVLINK_SUCCESS:
       alertList = state.alertList.slice()
       alertList.push({type:'success', message:action.message});
@@ -447,7 +455,7 @@ function cas(state={}, action)
     return state;
 
     case GET_RIGHTS_SUCCESS :
-  
+
     state = Object.assign({}, state, {
       rightsList : action.rightsList
     })
