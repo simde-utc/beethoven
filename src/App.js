@@ -34,22 +34,23 @@ class App extends Component {
               <Header></Header>
               </div>
             )}/>
-
-
           <Route exact={true} path="/picBar" render= {() => (
               <div className="App">
                 <WebTV tv='2'></WebTV>
 
               </div>
             )}/>
-
           <Route exact={true} path="/picSalle" render= {() => (
               <div className="App">
                 <WebTV tv='1'></WebTV>
 
               </div>
             )}/>
-
+          <Route exact={true} path="/NextMenus" render= {() => (
+                <div className="App">
+                  <MenusToServe></MenusToServe>
+                </div>
+              )}/>
           </div>
         </Router>
       );

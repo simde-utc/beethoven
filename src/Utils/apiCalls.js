@@ -264,7 +264,7 @@ export const setTvUrl = (idTv, url, messages, success, failure)=>{
 
 //reccupération de la liste de messages
 export const fetchMessagesList = (success, failure)=>{
-  brequest('picsousRequest', 'GET', null, 'messages',null,null)
+  brequest('picsousRequest', 'GET', null, 'messages/',null,null)
   .then(res=>res.json())
   .then(
     (result)=>{
@@ -362,4 +362,17 @@ export const fetchToServe = (success, failure)=>{
     }
   ).catch((err)=>{failure(err)})
 
+}
+
+export const getUsersRights = (sessionid, success, failure)=>{
+  brequest('apiRequest', 'POST', 'USERRIGHT', 'getAllMyRights', {},sessionid)
+    .then(res => res.json())
+    .then(
+      (result) => {
+        success(result);
+      },
+      (error) => {
+        failure(error);
+      }
+    ).catch((err)=>{failure(err)})
 }

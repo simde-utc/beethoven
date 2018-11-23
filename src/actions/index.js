@@ -18,13 +18,16 @@ import {
   SET_STAFF_REQUEST,
   SET_STAFF_SUCCESS,
   SET_STAFF_ERROR,
-  ADD_ERROR,
+  ADD_ALERT,
   DELETE_ERROR,
   DELETE_ALERT,
   REDIRECT_LOGIN,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  GET_RIGHTS_SUCCESS,
+  GET_RIGHTS_REQUEST,
+  GET_RIGHTS_ERROR,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_ERROR,
@@ -102,7 +105,9 @@ import {
   deleteMessageFromList,
   fetchToServe,
   changeStaff,
+  getUsersRights,
   getUrls
+
 } from '../Utils/apiCalls.js'
 
 
@@ -358,9 +363,12 @@ export function setStaff(idMenu){
 
 
 //Gestion des erreurs
-export function addError(information){
+
+//données de la forme addAlert('danger', 'Erreur : blabla')
+export function addAlert(status, information){
   return{
-    type : ADD_ERROR,
+    type : ADD_ALERT,
+    status : status,
     information : information
   }
 }
@@ -675,6 +683,47 @@ export function disconnect()
   }
 }
 
+
+export function getRightsRequest()
+{
+  return{
+    type: GET_RIGHTS_REQUEST
+  }
+}
+
+export function getRightsSuccess(rightsList)
+{
+  return{
+    type: GET_RIGHTS_SUCCESS,
+    rightsList : rightsList
+  }
+}
+
+export function getRightsError(error)
+{
+  return{
+    type : GET_RIGHTS_ERROR,
+    error: error
+  }
+}
+
+export function getRights(sessionid){
+  return (dispatch)=>
+  {
+    dispatch(getRightsRequest())
+    getUsersRights(
+      sessionid,
+      (data)=>{
+        dispatch(getRightsSuccess(data))
+      },
+      (err)=>{
+        dispatch(getRightsError('Erreur : Reccupération des Droits'))
+      }
+    )
+
+  }
+
+}
 // **************************************************************************
 // Gestion User
 // **************************************************************************
