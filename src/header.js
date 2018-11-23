@@ -89,7 +89,10 @@ class Header extends Component {
         if(sessionId!==null && picked==true)
         {
 
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3']))
+          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          || 
+          rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
+        )
           {
             affichage = <Vente></Vente>
             if(this.state.denieAccess){
@@ -105,7 +108,10 @@ class Header extends Component {
       case 'Menu':
         if(sessionId!==null)
         {
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3']))
+          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          || 
+          rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
+        )
           {
           affichage = <MenuBody></MenuBody>
             if(this.state.denieAccess){
@@ -122,7 +128,10 @@ class Header extends Component {
       case 'Admin':
         if(sessionId!==null)
         {
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['ADMINRIGHT']))
+          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['ADMINRIGHT'])
+          || 
+          rightsList[0]!== undefined && checkRights(rightsList[0], ['ADMINRIGHT'])
+        )
           {
           affichage = <AdminPanel></AdminPanel>
             if(this.state.denieAccess){
