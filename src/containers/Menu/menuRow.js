@@ -32,7 +32,7 @@ class MenuRow extends Component {
             validateMenu(this.props.id_transaction, listSales)
           }
           }
-          disabled = {!this.props.served===false && !this.props.is_staff===false}
+          disabled = {this.props.served===true }
 
           >Valider</Button>
           {' '}

@@ -16,7 +16,7 @@ class MenuBody extends Component {
       <div className="MenuBody"
         style={{
           backgroundColor : '#000223',
-          height : '100vh'
+          height : '200vh'
         }}
 
         >
