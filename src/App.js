@@ -4,13 +4,24 @@ import {connect} from 'react-redux'
 import './App.css';
 import Header from './header';
 import MenuBody from './containers/Menu/menu';
-
+import Loading from './Utils/loading'
 
 import MenusToServe from './containers/NextMenus/menusdisplayer'
 import WebTV from './containers/WebTV/webTV'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 class App extends Component {
+
+    constructor(props){
+      super(props)
+      this.state = {
+        loading : true
+      }
+    }
+
+    componentDidMount(){
+      this.setState({loading:false})
+    }
 
 
     render() {
@@ -21,7 +32,6 @@ class App extends Component {
           <Route exact={true} path="/" render= {() => (
             <div className="App">
               <Header></Header>
-
               </div>
             )}/>
           <Route exact={true} path="/picBar" render= {() => (
