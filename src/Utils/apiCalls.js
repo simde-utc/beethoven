@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL} from './config'
+import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL, PERSONNAL_URL} from './config'
 import brequest from './brequest'
 
 
@@ -375,4 +375,37 @@ export const getUsersRights = (sessionid, success, failure)=>{
         failure(error);
       }
     ).catch((err)=>{failure(err)})
+}
+
+
+export const getGoodiesList = (dateDebut, dateFin, quantity, success, failure)=>{
+  fetch(PERSONNAL_URL+"TicketsList?random="+Math.random(), {
+      method : 'POST',
+      body :JSON.stringify({
+        start: dateDebut,
+          end: dateFin
+        }),
+      headers:{
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type' : 'application/json'
+    }
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          let data = [].concat.apply([], result)
+          let toSend = []
+          let i =0;
+
+          for(i=0; i<quantity; i++){
+            let toAdd = data[Math.floor(Math.random()*data.length)]
+            toAdd in toSend ? i-- : toSend.push(toAdd);
+          }
+          success(toSend);
+        },
+
+        (error) => {
+            failure(error)
+        }
+      )
 }

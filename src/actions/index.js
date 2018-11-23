@@ -82,7 +82,10 @@ import {
   GET_SALES_LOCATION_SUCCESS,
   GET_SALES_LOCATION_ERROR,
   RESTART,
-  UPDATE_ADMIN_NAV
+  UPDATE_ADMIN_NAV,
+  GET_GOODIES_REQUEST,
+  GET_GOODIES_SUCCESS,
+  GET_GOODIES_ERROR
 } from "../constants"
 
 import {
@@ -106,7 +109,8 @@ import {
   fetchToServe,
   changeStaff,
   getUsersRights,
-  getUrls
+  getUrls,
+  getGoodiesList
 
 } from '../Utils/apiCalls.js'
 
@@ -1136,5 +1140,44 @@ export function updateAdminNav(AdminNav)
   return{
     type : UPDATE_ADMIN_NAV,
     AdminNav : AdminNav
+  }
+}
+
+
+export function getGoodiesRequest()
+{
+  return{
+    type: GET_GOODIES_REQUEST
+  }
+}
+
+export function getGoodiesSuccess(goodiesList)
+{
+  return{
+    type : GET_GOODIES_SUCCESS,
+    goodiesList: goodiesList
+  }
+}
+
+export function getGoodiesError(error){
+  return{
+    type: GET_GOODIES_ERROR,
+    error:error
+  }
+}
+
+
+export function getGoodies(dateDebut, dateFin, quantite)
+{
+  return (dispatch)=>{
+    dispatch(getGoodiesRequest());
+    getGoodiesList(dateDebut, dateFin, quantite,
+      (data)=>{
+        dispatch(getGoodiesSuccess(data))
+      },
+      (err)=>{
+        dispatch(getGoodiesError('Erreur : Reccupération des gagnants'))
+      }
+    )
   }
 }
