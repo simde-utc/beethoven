@@ -169,6 +169,12 @@ export const DELETE_MESSAGE_SUCCESS = "DELETE_MESSAGE_SUCCESS"
 export const DELETE_MESSAGE_ERROR = "DELETE_MESSAGE_ERROR"
 
 
+//Gestion des urls par defaut
+export const GET_DEFAULT_URL_REQUEST = "GET_DEFAULT_URL_REQUEST"
+export const GET_DEFAULT_URL_SUCCESS = "GET_DEFAULT_URL_SUCCESS"
+export const GET_DEFAULT_URL_ERROR = "GET_DEFAULT_URL_ERROR"
+
+
 // **************************************************************************
 // Admin Management
 // **************************************************************************

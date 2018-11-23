@@ -59,6 +59,9 @@ import { 
   DELETE_MESSAGE_REQUEST,
   DELETE_MESSAGE_SUCCESS,
   DELETE_MESSAGE_ERROR,
+  GET_DEFAULT_URL_REQUEST,
+  GET_DEFAULT_URL_SUCCESS,
+  GET_DEFAULT_URL_ERROR,
   SET_TRANSACTION_SUCCESS,
   SET_TRANSACTION_REQUEST,
   SET_TRANSACTION_ERROR,
@@ -109,7 +112,8 @@ function menus(state={}, action)
     console.log(newListMenu)
     state = Object.assign({}, state,
     {
-      MenuList : newListMenu
+      MenuList : newListMenu,
+      NavIndex : null
     })
     return state;
 
@@ -326,6 +330,7 @@ function alerts(state = {}, action)
         })
         return state;
 
+
       case GET_RIGHTS_ERROR:
         alertList = state.alertList.slice()
         alertList.push({type:'danger', message:action.error});
@@ -341,6 +346,15 @@ function alerts(state = {}, action)
         alertList : alertList
       })
         return state;
+
+      case GET_DEFAULT_URL_ERROR:
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
 
       case SET_TVLINK_SUCCESS:
       alertList = state.alertList.slice()
@@ -635,6 +649,8 @@ function webTV(state={}, action)
 
 
 
+
+
     case SET_TVLINK_REQUEST:
     return state;
 
@@ -751,6 +767,14 @@ function admin(state={}, action)
       break;
     }
     return state
+
+    case GET_DEFAULT_URL_REQUEST:
+    return state;
+
+    case GET_DEFAULT_URL_SUCCESS:
+    state = Object.assign({}, state, {
+      urls: action.urls
+    })
 
 
     default :
