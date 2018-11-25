@@ -9,5 +9,6 @@ export const DELETE_ERROR_TIMOUT = //integer
 
 export const PICSOUS_URL = ''//'http://37.139.25.111/'
 export const API_URL = ''//'https://api.nemopay.net/services/'
+export const PERSONNAL_URL = ''
 export const FUND_ID = //integer
 export const EVENT_ID = //integer
