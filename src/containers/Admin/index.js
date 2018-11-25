@@ -6,6 +6,7 @@ import { Container, Col, Row } from 'reactstrap';
 import AdminNav from './adminNav'
 import AdminWebTvContent from './AdminContents/adminWebTvContent'
 import AdminMessagesContent from './AdminContents/adminMessagesContent'
+import AdminGoodiesContent from './AdminContents/adminGoodiesContent'
 
 
 class AdminPanel extends Component {
@@ -32,6 +33,7 @@ class AdminPanel extends Component {
 
                 {adminIndex===1 && <AdminWebTvContent/>}
                 {adminIndex===2 && <AdminMessagesContent/>}
+                {adminIndex===4 && <AdminGoodiesContent/>}
               </Col>
             </Row>
           </Container>
