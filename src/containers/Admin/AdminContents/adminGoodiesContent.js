@@ -7,7 +7,7 @@ import {Table} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
 
 
-import {getGoodies} from '../../../actions'
+import {getGoodies, addAlert} from '../../../actions'
 class AdminGoodiesContent extends Component {
   constructor(props)
   {
@@ -42,16 +42,22 @@ class AdminGoodiesContent extends Component {
 
         </thead>
       )
+
+
+      for(let i=0; i<this.state.quantite; i++){
+        if(i<goodiesList.length)
+        {
+          myList.push(
+            <tr>
+              <td>{goodiesList[i].lastname}</td>
+              <td>{goodiesList[i].firstname}</td>
+            </tr>
+          )
+        }
+      }
     }
 
-    goodiesList.forEach((elt)=>{
-      myList.push(
-        <tr>
-          <td>{elt.lastname}</td>
-          <td>{elt.firstname}</td>
-        </tr>
-      )
-    })
+
     return(
       <div className ="AdminPanel">
         <Container fluid>
@@ -94,7 +100,7 @@ class AdminGoodiesContent extends Component {
                 <Row>
                   <Col xs={{size:6, offset:3}} lg={{size:12, offset:0}}>
                     <br></br>
-                    <InputGroup>
+      <InputGroup>
                           <InputGroupAddon addonType="prepend">Quantité</InputGroupAddon>
                           <Input
                             placeholder='quantité'
@@ -115,6 +121,7 @@ class AdminGoodiesContent extends Component {
                         onClick = {()=>{
                           //function
                           this.props.getGoodies(this.state.dateDebut, this.state.dateFin, this.state.quantite)
+
                         }}
 
                         >
@@ -161,7 +168,7 @@ let mapStateToProps = (state)=>{
 let mapDispatchToProps = (dispatch)=>{
   return{
     //myfunction : ()=> dispatch(myfunction())
-    getGoodies : (dateDebut, dateFin, quantite) => dispatch(getGoodies(dateDebut, dateFin, quantite))
+    getGoodies : (dateDebut, dateFin, quantite) => dispatch(getGoodies(dateDebut, dateFin, quantite)),
   }
 }
 

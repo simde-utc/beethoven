@@ -1144,10 +1144,11 @@ export function updateAdminNav(AdminNav)
 }
 
 
-export function getGoodiesRequest()
+export function getGoodiesRequest(message)
 {
   return{
-    type: GET_GOODIES_REQUEST
+    type: GET_GOODIES_REQUEST,
+    message : message
   }
 }
 
@@ -1170,7 +1171,7 @@ export function getGoodiesError(error){
 export function getGoodies(dateDebut, dateFin, quantite)
 {
   return (dispatch)=>{
-    dispatch(getGoodiesRequest());
+    dispatch(getGoodiesRequest('Recherche des Gagnants lancée'));
     getGoodiesList(dateDebut, dateFin, quantite,
       (data)=>{
         dispatch(getGoodiesSuccess(data))

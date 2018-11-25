@@ -375,6 +375,14 @@ function alerts(state = {}, action)
       })
       return state;
 
+      case GET_GOODIES_REQUEST:
+      alertList = state.alertList.slice()
+      alertList.push({type:'success', message:action.message});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
 
 
         case DELETE_ALERT:
