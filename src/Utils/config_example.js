@@ -5,6 +5,7 @@ export const SERVICE_URL = ''//'http://localhost:5000'
 export const REFRESH_TIMER = //integer
 export const REFRESH_WEBTV = //integer
 export const DELETE_ERROR_TIMOUT = //integer
+export const PERSONNAL_URL = ""//pour le tirage aux sorts
 
 
 export const PICSOUS_URL = ''//'http://37.139.25.111/'
