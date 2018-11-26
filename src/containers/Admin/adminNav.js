@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import {Nav} from 'reactstrap';
 import {MdTv, MdMessage, MdPhoto, MdCardGiftcard} from 'react-icons/md'
-
+import {FaMedal} from 'react-icons/fa'
 import { Container, Col, Row } from 'reactstrap';
 
 
@@ -16,6 +16,7 @@ class AdminNav extends Component {
       {logo:'MdMessage', nom : 'Messages'},
       {logo:'MdPhoto', nom : 'Images'},
       {logo: 'MdCardGiftcard', nom : 'Gestion Carte'}
+      {logo:'FaMedal', nom: 'Goodies'}
     ]
 
     let dataToStore = []
@@ -39,11 +40,14 @@ class AdminNav extends Component {
             <AdminNavRow index = {id+1} logo={<MdPhoto size="2em"></MdPhoto>} nom={elt.nom}></AdminNavRow>
           )
         break;
-
         case "MdCardGiftcard":
         dataToStore.push(
           <AdminNavRow index = {id+1} logo={<MdCardGiftcard size="2em"></MdCardGiftcard>} nom={elt.nom}></AdminNavRow>
         )
+        case 'FaMedal':
+        dataToStore.push(
+            <AdminNavRow index = {id+1} logo={<FaMedal size="2em"></FaMedal>} nom={elt.nom}></AdminNavRow>
+          )
         break;
 
         default:

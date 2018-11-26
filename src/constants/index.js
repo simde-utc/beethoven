@@ -80,7 +80,7 @@ export const DELETE_ALL_ARTICLES = "DELETE_ALL_ARTICLES"
 // **************************************************************************
 
 //Gestion des erreur
-export const ADD_ERROR = "ADD_ERROR"
+export const ADD_ALERT = "ADD_ALERT"
 export const DELETE_ERROR = "DELETE_ERROR"
 
 //Gestion des Alertes
@@ -109,6 +109,12 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const DISCONNECT = "DISCONNECT"
 //Restart applicatio
 export const RESTART = "RESTART"
+
+
+//reccupération des droits utilisateurs de la fondation
+export const GET_RIGHTS_REQUEST = "GET_RIGHTS_REQUEST"
+export const GET_RIGHTS_SUCCESS = "GET_RIGHTS_SUCCESS"
+export const GET_RIGHTS_ERROR = "GET_RIGHTS_ERROR"
 
 // **************************************************************************
 // Gestion User
@@ -174,3 +180,8 @@ export const GET_DEFAULT_URL_ERROR = "GET_DEFAULT_URL_ERROR"
 // **************************************************************************
 
 export const UPDATE_ADMIN_NAV = "UPDATE_ADMIN_NAV"
+
+//reccupération des gagnants goodies
+export const GET_GOODIES_REQUEST = "GET_GOODIES_REQUEST"
+export const GET_GOODIES_SUCCESS = "GET_GOODIES_SUCCESS"
+export const GET_GOODIES_ERROR = "GET_GOODIES_ERROR"

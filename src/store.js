@@ -7,7 +7,7 @@ const initialStore = {
     NavIndex : null,
     MenuList : [],
     ListSales : [],
-    loading : null
+    loading : false
   },
   alerts:{
     alertList : []
@@ -20,7 +20,8 @@ const initialStore = {
     userPin : null,
     sessionId : null,
     username : null, //default : null
-    redirected : false
+    redirected : false,
+    rightsList : null
   },
 
   vente: {
@@ -51,7 +52,8 @@ const initialStore = {
     webTv2Url : null,
     webTv1Messages : false,
     webTv2Messages : false,
-    urls : []
+    urls : [],
+    goodiesList : []
   }
 }
 

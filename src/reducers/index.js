@@ -19,7 +19,7 @@ import { 
   SET_STAFF_ERROR,
   SET_STAFF_SUCCESS,
   SET_STAFF_REQUEST,
-  ADD_ERROR,
+  ADD_ALERT,
   DELETE_ERROR,
   DELETE_ALERT,
   BADGEUSE_IS_PRESENT,
@@ -80,7 +80,13 @@ import { 
   GET_SALES_LOCATION_SUCCESS,
   GET_SALES_LOCATION_REQUEST,
   RESTART,
-  UPDATE_ADMIN_NAV
+  UPDATE_ADMIN_NAV,
+  GET_RIGHTS_SUCCESS,
+  GET_RIGHTS_REQUEST,
+  GET_RIGHTS_ERROR,
+  GET_GOODIES_REQUEST,
+  GET_GOODIES_SUCCESS,
+  GET_GOODIES_ERROR
 } from "../constants";
 
 function menus(state={}, action)
@@ -327,6 +333,23 @@ function alerts(state = {}, action)
         })
         return state;
 
+
+      case GET_RIGHTS_ERROR:
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
+        state = Object.assign({}, state, {
+          alertList : alertList
+        })
+          return state;
+
+      case ADD_ALERT:
+      alertList = state.alertList.slice()
+      alertList.push({type:action.status, message:action.information});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+        return state;
+
       case GET_DEFAULT_URL_ERROR:
       alertList = state.alertList.slice()
       alertList.push({type:'danger', message:action.error});
@@ -335,7 +358,24 @@ function alerts(state = {}, action)
       })
       return state;
 
+      case GET_GOODIES_ERROR:
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
+
       case SET_TVLINK_SUCCESS:
+      alertList = state.alertList.slice()
+      alertList.push({type:'success', message:action.message});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
+      case GET_GOODIES_REQUEST:
       alertList = state.alertList.slice()
       alertList.push({type:'success', message:action.message});
       state = Object.assign({}, state, {
@@ -441,6 +481,19 @@ function cas(state={}, action)
       sessionId : null,
       username : null
     })
+    return state;
+
+
+    case GET_RIGHTS_REQUEST :
+    return state;
+
+    case GET_RIGHTS_SUCCESS :
+
+    state = Object.assign({}, state, {
+      rightsList : action.rightsList
+    })
+    return state;
+
 
     default:
     return state
@@ -740,6 +793,14 @@ function admin(state={}, action)
     case GET_DEFAULT_URL_SUCCESS:
     state = Object.assign({}, state, {
       urls: action.urls
+    })
+
+    case GET_GOODIES_REQUEST:
+    return state;
+
+    case GET_GOODIES_SUCCESS:
+    state = Object.assign({}, state, {
+      goodiesList: action.goodiesList
     })
 
 

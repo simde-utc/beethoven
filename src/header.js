@@ -7,12 +7,13 @@ import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
 import { Button } from 'reactstrap';
 
-import {login, redirectLogin, deleteError, restart, deleteAlert} from './actions'
+import {login, redirectLogin, deleteError, restart, deleteAlert, getRights, addAlert} from './actions'
 import {printAlert} from './Utils/utils'
 import {CAS_LINK} from './Utils/config'
 import BadgeConnexion from './Utils/badgeConnexion'
 import WebSocketConnexion from './Utils/websocket'
 import TypeEvents from './Utils/typeEvents.js'
+import {checkRights} from './Utils/utils'
 
 
 
@@ -21,7 +22,8 @@ class Header extends Component {
   constructor(props){
     super(props)
     this.state = {
-      load : 'Vente'
+      load : 'Vente',
+      denieAccess : false
     }
     this.setMenuPage = this.setMenuPage.bind(this)
     this.setVentePage = this.setVentePage.bind(this)
@@ -34,6 +36,13 @@ class Header extends Component {
         curTime : new Date().toLocaleString().split(" ")[2]
       })
     },1000)
+
+    const {sessionId, getRights} = this.props
+
+
+
+
+
   }
 
   setMenuPage(){
@@ -56,8 +65,8 @@ class Header extends Component {
 
 
   render() {
-    const {alertList, badgeuse, redirected} = this.props;
-    const {deleteError, redirectLogin, login, restart} = this.props;
+    const {alertList, badgeuse, redirected, rightsList} = this.props;
+    const {deleteError, redirectLogin, login, restart, getRights, addAlert} = this.props;
     const{sessionId, connected, username} = this.props;
     const {event_id, picked} = this.props
 
@@ -72,25 +81,68 @@ class Header extends Component {
 
 
 
-    let affichage;
+
+
+    let affichage=null;
     switch(this.state.load){
       case 'Vente':
         if(sessionId!==null && picked==true)
         {
-          affichage = <Vente></Vente>
+
+          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          || 
+          rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
+        )
+          {
+            affichage = <Vente></Vente>
+            if(this.state.denieAccess){
+                this.setState({denieAccess:false})
+            }
+          }
+          else if(!this.state.denieAccess){
+            addAlert('danger', 'Erreur : Vous n\' avez pas les droits requis')
+            this.setState({denieAccess:true})
+        }
         }
         break;
       case 'Menu':
         if(sessionId!==null)
         {
+          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          || 
+          rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
+        )
+          {
           affichage = <MenuBody></MenuBody>
+            if(this.state.denieAccess){
+              this.setState({denieAccess:false})
+          }
+        }
+          else if(!this.state.denieAccess){
+            addAlert('danger', 'Erreur : Vous n\' avez pas les droits requis')
+            this.setState({denieAccess:true})
+        }
         }
         break;
 
       case 'Admin':
         if(sessionId!==null)
         {
+          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['ADMINRIGHT'])
+          || 
+          rightsList[0]!== undefined && checkRights(rightsList[0], ['ADMINRIGHT'])
+        )
+          {
           affichage = <AdminPanel></AdminPanel>
+            if(this.state.denieAccess){
+              this.setState({denieAccess:false})
+          }
+
+          }
+          else if(!this.state.denieAccess){
+            addAlert('danger', 'Erreur : Vous n\' avez pas les droits requis')
+            this.setState({denieAccess:true})
+        }
         }
       default:
         break;
@@ -103,6 +155,9 @@ class Header extends Component {
       login();
       redirectLogin();
     }
+
+    sessionId !== null && rightsList === null && getRights(sessionId)
+
 
     return (
 
@@ -165,7 +220,8 @@ let mapStateToProps = (state)=>{
     badgeuse : state.cas.badgeuse || false,
     username : state.cas.username || null,
     event_id : state.vente.event_id || null,
-    picked : state.vente.picked || false
+    picked : state.vente.picked || false,
+    rightsList : state.cas.rightsList || null
   };
 }
 
@@ -174,7 +230,9 @@ let mapDispatchToProps = (dispatch)=>{
     redirectLogin : ()=>dispatch(redirectLogin()),
     login : ()=>dispatch(login()),
     deleteAlert : ()=> dispatch(deleteAlert()),
-    restart : ()=> dispatch(restart())
+    restart : ()=> dispatch(restart()),
+    getRights : (sessionid)=>dispatch(getRights(sessionid)),
+    addAlert : (status, information)=>dispatch(addAlert(status, information))
   }
 }
 

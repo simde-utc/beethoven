@@ -13,7 +13,13 @@ class MenuBody extends Component {
   render() {
     const {sessionId, username} = this.props
     return (
-      <div className="MenuBody">
+      <div className="MenuBody"
+        style={{
+          backgroundColor : '#000223',
+          height : '200vh'
+        }}
+
+        >
         {sessionId !== null && username!==null ?
           <Container fluid>
             <Row>
