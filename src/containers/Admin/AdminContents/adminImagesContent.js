@@ -9,6 +9,9 @@ import {MdMessage} from 'react-icons/md'
 import {FaTrash} from 'react-icons/fa'
 
 import {getMessagesList, addMessage, deleteMessage} from '../../../actions'
+
+
+
 class AdminImagesContent extends Component {
   constructor(props)
   {
@@ -80,16 +83,14 @@ class AdminImagesContent extends Component {
               <Col xs={{size:12}} lg={{size:6, offset:3}}>
               <div className="previewComponent">
                 <form>
-
                 <input className="fileInput"
                 type="file"
                 onChange={(e)=>this._handleImageChange(e)} />
-
                 <Button
                   style={{marginRight : '5px'}}
                   onClick = {()=>{
 
-                    //addMessage(this.state.title, this.state.text)
+                    console.log(this.state.file);
 
                   }}
                   >
