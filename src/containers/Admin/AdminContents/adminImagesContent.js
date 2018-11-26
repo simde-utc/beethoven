@@ -25,19 +25,39 @@ class AdminImagesContent extends Component {
     getMessagesList();
 
   }
+
+
+
+   _handleImageChange(e) {
+     e.preventDefault();
+
+     let reader = new FileReader();
+     let file = e.target.files[0];
+
+     reader.onloadend = () => {
+       this.setState({
+         file: file,
+         imagePreviewUrl: reader.result
+       });
+     }
+
+     reader.readAsDataURL(file)
+   }
+
+
   render() {
     const {sessionId, username, messages} = this.props
-    const {addMessage, deleteMessage} = this.props
 
-    let messagesTab = []
-    messages.forEach((elt)=>{
-      messagesTab.push(
-        <tr>
-          <td>{elt.title}</td>
-          <td>{elt.text}</td>
-          <td><FaTrash onClick={()=>deleteMessage(elt.id)}></FaTrash></td>
-      </tr>)
-    })
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} />);
+    } else {
+      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+    }
+
+
+
     return(
       <div
         className ="AdminPanel"
@@ -54,49 +74,30 @@ class AdminImagesContent extends Component {
             </Row>
 
             <Row>
-              <Col xs={{size:12}} lg={{size:6, offset:3}}>
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend">Message</InputGroupAddon>
-                  <Input
-                    placeholder="Titre"
-                    style={{marginRight : '5px'}}
-                    onChange = {(e)=>this.setState({title:e.target.value})}
-                    />{' '}
-                    <Input
-                      placeholder="Texte"
-                      style={{marginRight : '5px'}}
-                      onChange = {(e)=>this.setState({text:e.target.value})}
-                      />{' '}
-                    <Button
-                      style={{marginRight : '5px'}}
-                      onClick = {()=>{
 
-                        addMessage(this.state.title, this.state.text)
-
-                      }}
-                      >
-                      Envoyer
-                    </Button>
-                </InputGroup>
-                <br></br>
-              </Col>
             </Row>
             <Row >
               <Col xs={{size:12}} lg={{size:6, offset:3}}>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Titre</th>
-                      <th>Message</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {messagesTab}
-                  </tbody>
-                </Table>
-              </Col>
+              <div className="previewComponent">
+                <form>
 
+                <input className="fileInput"
+                type="file"
+                onChange={(e)=>this._handleImageChange(e)} />
+
+                <Button
+                  style={{marginRight : '5px'}}
+                  onClick = {()=>{
+
+                    //addMessage(this.state.title, this.state.text)
+
+                  }}
+                  >
+                  Envoyer
+                </Button>
+                </form>
+              </div>
+              </Col>
             </Row>
         </Container>
           :""
