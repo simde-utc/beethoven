@@ -15,7 +15,7 @@ class AdminNav extends Component {
       {logo:"MdTv", nom : 'WebTVs'},
       {logo:'MdMessage', nom : 'Messages'},
       {logo:'MdPhoto', nom : 'Images'},
-      {logo: 'MdCardGiftcard', nom : 'Gestion Carte'}
+      {logo: 'MdCardGiftcard', nom : 'Gestion Carte'},
       {logo:'FaMedal', nom: 'Goodies'}
     ]
 
@@ -44,6 +44,7 @@ class AdminNav extends Component {
         dataToStore.push(
           <AdminNavRow index = {id+1} logo={<MdCardGiftcard size="2em"></MdCardGiftcard>} nom={elt.nom}></AdminNavRow>
         )
+        break;
         case 'FaMedal':
         dataToStore.push(
             <AdminNavRow index = {id+1} logo={<FaMedal size="2em"></FaMedal>} nom={elt.nom}></AdminNavRow>
