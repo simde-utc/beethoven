@@ -17,7 +17,8 @@ class ListeArticle extends Component {
     const { getChosenArticle } = this.props
     var styleButton = {background: 'none',
                        minWidth: '120px',
-                       minHeight: '120px'}
+                       minHeight: '120px',
+                      }
     var styleText = {color: 'black',
                       flex: 1,
                       justifyContent: 'center',
@@ -26,18 +27,23 @@ class ListeArticle extends Component {
                     }
     var styleDiv = {
       background: 'white',
-      minWidth: '100px',
-      minHeight: '100px',
+      minWidth: '90px',
+      minHeight: '90px',
+      maxWidth: '90px',
+      maxHeight: '90px',
       borderRadius: '10px',
       color: 'black',
+      margin: 'auto',
                         flex: 1,
                         justifyContent: 'center',
                         alignItems: 'center',
                         display: 'flex',
                         overflow: 'hidden'
-
     }
-    var styleImg = { borderRadius: '10px'}
+    var styleImg = { borderRadius: '10px',
+                     maxHeight: '90px',
+                     maxWidth: '90px'
+                    }
     var displayArticle = [];
     listArticles.forEach(function(element,i) {
       if(element.categorie_id==id_Categ){
@@ -46,7 +52,7 @@ class ListeArticle extends Component {
             displayArticle.push(
               <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
                 <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
-                  <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
+                  <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="80" height="80"></img>
                 </button>
               </div>
               )
