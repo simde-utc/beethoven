@@ -8,7 +8,7 @@ class WebSocketConnexion extends Component{
     const {badgeuseIsPresent, getUserUid, getClientUid} = this.props;
     const {setTransaction, getInformation} = this.props;
     const {badgeuse, connected} = this.props;
-    const {selectedArticles,sessionId, clientUid} = this.props
+    const {selectedArticles,sessionId, clientUid, activePanel} = this.props
     return(
       <Websocket
         url='ws://localhost:9191/events'
@@ -20,12 +20,15 @@ class WebSocketConnexion extends Component{
               getUserUid(data.substr(13,data.length))
             }
             else {
-              if(selectedArticles.length>0){
-                getClientUid(data.substr(13,data.length));
-                setTransaction(sessionId,selectedArticles,data.substr(13,data.length));
-              }else{
-                getClientUid(data.substr(13,data.length));
-                getInformation(sessionId,data.substr(13,data.length));
+              if(activePanel==='Vente')
+              {
+                if(selectedArticles.length>0){
+                  getClientUid(data.substr(13,data.length));
+                  setTransaction(sessionId,selectedArticles,data.substr(13,data.length));
+                }else{
+                  getClientUid(data.substr(13,data.length));
+                  getInformation(sessionId,data.substr(13,data.length));
+                }
               }
             }
           }
@@ -49,7 +52,8 @@ let mapStateToProps = (state)=>{
     connected : state.cas.connected || false,
     sessionId : state.cas.sessionId || null,
     selectedArticles : state.vente.selectedArticles || [],
-    clientUid : state.achats.clientUid || null
+    clientUid : state.achats.clientUid || null,
+    activePanel : state.general.activePanel || null
   };
 }
 
