@@ -7,7 +7,18 @@ import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
 import { Button } from 'reactstrap';
 
-import {login, redirectLogin, deleteError, restart, deleteAlert, getRights, addAlert} from './actions'
+import {FUND_ID} from './Utils/config'
+
+import {
+  login,
+  redirectLogin,
+  deleteError,
+  restart,
+  deleteAlert,
+  getRights,
+  addAlert,
+  changePanel
+} from './actions'
 import {printAlert} from './Utils/utils'
 import {CAS_LINK} from './Utils/config'
 import BadgeConnexion from './Utils/badgeConnexion'
@@ -36,13 +47,6 @@ class Header extends Component {
         curTime : new Date().toLocaleString().split(" ")[2]
       })
     },1000)
-
-    const {sessionId, getRights} = this.props
-
-
-
-
-
   }
 
   setMenuPage(){
@@ -82,14 +86,13 @@ class Header extends Component {
 
 
 
-
     let affichage=null;
-    switch(this.state.load){
+    switch(this.props.activePanel){
       case 'Vente':
         if(sessionId!==null && picked==true)
         {
 
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
           || 
           rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
         )
@@ -108,7 +111,7 @@ class Header extends Component {
       case 'Menu':
         if(sessionId!==null)
         {
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
           || 
           rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
         )
@@ -128,7 +131,7 @@ class Header extends Component {
       case 'Admin':
         if(sessionId!==null)
         {
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['ADMINRIGHT'])
+          if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['ADMINRIGHT'])
           || 
           rightsList[0]!== undefined && checkRights(rightsList[0], ['ADMINRIGHT'])
         )
@@ -165,7 +168,7 @@ class Header extends Component {
         <WebSocketConnexion></WebSocketConnexion>
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
 
-        {connected===true && picked===false && <TypeEvents></TypeEvents>}
+        {connected===true && picked===false && this.props.activePanel==='Vente' && <TypeEvents></TypeEvents>}
         <div className="Header">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="" onClick={()=> restart()}>Beethoven</a>
@@ -181,9 +184,9 @@ class Header extends Component {
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               </ul>
               <span style={{color:'black', marginRight:'20px'}}> {this.state.curTime}</span>
-              <Button outline color="secondary" onClick={this.setMenuPage}>Menu</Button>" "
-              <Button outline color="secondary" onClick={this.setVentePage}>Vente</Button>" "
-              <Button outline color="primary" onClick={this.setAdminPage}>Admin</Button>" "
+              <Button outline color="secondary" onClick={()=>this.props.changePanel('Menu')}>Menu</Button>" "
+              <Button outline color="secondary" onClick={()=>this.props.changePanel('Vente')}>Vente</Button>" "
+              <Button outline color="primary" onClick={()=>this.props.changePanel('Admin')}>Admin</Button>" "
               <Button color="danger" href="https://cas.utc.fr/cas/logout">Déconnexion</Button>
             </div>
           </nav>
@@ -221,7 +224,8 @@ let mapStateToProps = (state)=>{
     username : state.cas.username || null,
     event_id : state.vente.event_id || null,
     picked : state.vente.picked || false,
-    rightsList : state.cas.rightsList || null
+    rightsList : state.cas.rightsList || null,
+    activePanel : state.general.activePanel || null
   };
 }
 
@@ -232,7 +236,8 @@ let mapDispatchToProps = (dispatch)=>{
     deleteAlert : ()=> dispatch(deleteAlert()),
     restart : ()=> dispatch(restart()),
     getRights : (sessionid)=>dispatch(getRights(sessionid)),
-    addAlert : (status, information)=>dispatch(addAlert(status, information))
+    addAlert : (status, information)=>dispatch(addAlert(status, information)),
+    changePanel : (panel)=> dispatch(changePanel(panel))
   }
 }
 

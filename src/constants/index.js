@@ -181,6 +181,9 @@ export const GET_DEFAULT_URL_ERROR = "GET_DEFAULT_URL_ERROR"
 
 export const UPDATE_ADMIN_NAV = "UPDATE_ADMIN_NAV"
 
+//Changer le Panel Active
+export const CHANGE_PANEL = "CHANGE_PANEL"
+
 //reccupération des gagnants goodies
 export const GET_GOODIES_REQUEST = "GET_GOODIES_REQUEST"
 export const GET_GOODIES_SUCCESS = "GET_GOODIES_SUCCESS"

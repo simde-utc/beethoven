@@ -86,8 +86,26 @@ import { 
   GET_RIGHTS_ERROR,
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
-  GET_GOODIES_ERROR
+  GET_GOODIES_ERROR,
+  CHANGE_PANEL
 } from "../constants";
+
+
+function general(state={}, action)
+{
+  switch(action.type)
+  {
+    case CHANGE_PANEL:
+    state=Object.assign({}, state,
+    {
+      activePanel : action.activePanel
+    })
+
+    default:
+    return state;
+  }
+
+}
 
 function menus(state={}, action)
 {
@@ -809,6 +827,7 @@ function admin(state={}, action)
   }
 }
 export default combineReducers({
+  general,
   menus,
   alerts,
   cas,

@@ -85,7 +85,8 @@ import {
   UPDATE_ADMIN_NAV,
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
-  GET_GOODIES_ERROR
+  GET_GOODIES_ERROR,
+  CHANGE_PANEL
 } from "../constants"
 
 import {
@@ -1140,6 +1141,14 @@ export function updateAdminNav(AdminNav)
   return{
     type : UPDATE_ADMIN_NAV,
     AdminNav : AdminNav
+  }
+}
+
+export function changePanel(panel)
+{
+  return{
+    type:CHANGE_PANEL,
+    activePanel : panel
   }
 }
 

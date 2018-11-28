@@ -3,6 +3,9 @@ import beethoven from './reducers'
 import thunk from "redux-thunk";
 
 const initialStore = {
+  general:{
+    activePanel : null
+  },
   menus:{
     NavIndex : null,
     MenuList : [],
