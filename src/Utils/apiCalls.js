@@ -409,3 +409,19 @@ export const getGoodiesList = (dateDebut, dateFin, quantity, success, failure)=>
         }
       )
 }
+
+
+//Bloquer un user :
+export const blockUser = (sessionId,user_id, wallet,date_fin,success,failure)=>{
+  brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: 'Comportement Innacceptable', usr_id: user_id, wallet: wallet, date_fin: date_fin},sessionId)
+  .then(res => res.json())
+  .then(
+    (result) => {
+      console.log(result)
+      success(result);
+    },
+    (error) => {
+      failure(error);
+    }
+  ).catch((err)=>{failure(err)})
+}

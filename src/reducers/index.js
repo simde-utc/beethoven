@@ -86,7 +86,10 @@ import { 
   GET_RIGHTS_ERROR,
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
-  GET_GOODIES_ERROR
+  GET_GOODIES_ERROR,
+  BLOCK_USER_REQUEST,
+  BLOCK_USER_SUCCESS,
+  BLOCK_USER_ERROR
 } from "../constants";
 
 function menus(state={}, action)
@@ -393,7 +396,13 @@ function alerts(state = {}, action)
           })
           return state;
 
-
+      case BLOCK_USER_ERROR:
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
     default:
       return state
   }
@@ -802,6 +811,15 @@ function admin(state={}, action)
     state = Object.assign({}, state, {
       goodiesList: action.goodiesList
     })
+
+    case BLOCK_USER_REQUEST:
+    return state;
+
+    case BLOCK_USER_SUCCESS:
+    state = Object.assign({}, state, {
+      blocage: action.blocage
+    })
+    return state;
 
 
     default :

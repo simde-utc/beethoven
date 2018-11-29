@@ -85,7 +85,10 @@ import {
   UPDATE_ADMIN_NAV,
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
-  GET_GOODIES_ERROR
+  GET_GOODIES_ERROR,
+  BLOCK_USER_REQUEST,
+  BLOCK_USER_SUCCESS,
+  BLOCK_USER_ERROR
 } from "../constants"
 
 import {
@@ -110,8 +113,8 @@ import {
   changeStaff,
   getUsersRights,
   getUrls,
-  getGoodiesList
-
+  getGoodiesList,
+  blockUser
 } from '../Utils/apiCalls.js'
 
 
@@ -1178,6 +1181,45 @@ export function getGoodies(dateDebut, dateFin, quantite)
       },
       (err)=>{
         dispatch(getGoodiesError('Erreur : Reccupération des gagnants'))
+      }
+    )
+  }
+}
+
+
+export function blockUserRequest(sessionId)
+{
+  return{
+    type: BLOCK_USER_REQUEST,
+    sessionId : sessionId
+  }
+}
+
+export function blockUserSuccess(blocage)
+{
+  return{
+    type : BLOCK_USER_SUCCESS,
+    blocage : blocage
+  }
+}
+
+export function blockUserError(error){
+  return{
+    type: BLOCK_USER_ERROR,
+    error:error
+  }
+}
+
+export function blockAUser(sessionId, user_id,waller,date_fin)
+{
+  return (dispatch)=>{
+    dispatch(blockUserRequest(sessionId));
+    blockUser(sessionId,user_id,waller,date_fin,
+      (data)=>{
+        dispatch(blockUserSuccess(data))
+      },
+      (err)=>{
+        dispatch(blockUserError('Erreur : Bloquage non effectif'))
       }
     )
   }
