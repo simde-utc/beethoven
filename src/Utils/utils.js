@@ -20,6 +20,25 @@ export const printAlert = (type, message)=>{
 }
 
 
+//reccupération du ticket cas présent dans l'URL
+export const getTicketCas = ()=>{
+  let ticketCas;
+  let ticketRegex = /(\?|&)ticket=([^&=]+)/;
+  if(ticketRegex.test(window.location.href)){
+    let match = ticketRegex.exec(window.location.href);
+    ticketCas = match[2];
+   }
+   return ticketCas;
+}
+
+//suppression des cookies de connexion CAS
+export const deleteCookies =(name)=>
+{
+console.log(document.cookie)
+document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+
 //checkRight(['a','b','c'], ['a', 'z'])
 //return boolean
 export const checkRights = (list, rights)=>{

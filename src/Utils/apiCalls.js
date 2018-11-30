@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL, PERSONNAL_URL} from './config'
+import {WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL, PERSONNAL_URL, GINGER_URL, GINGER_KEY } from './config'
+import {getTicketCas} from './utils'
 import brequest from './brequest'
 
 
@@ -98,13 +99,8 @@ export const loginBadge2 = (userUid, userPin, success, error)=>{
 
 //login par Cas
 export const loginCas = (success, failure)=>{
-  let ticketCas;
+  let ticketCas = getTicketCas();
   let serviceurl = SERVICE_URL
-  let ticketRegex = /(\?|&)ticket=([^&=]+)/;
-  if(ticketRegex.test(window.location.href)){
-    let match = ticketRegex.exec(window.location.href);
-    ticketCas = match[2];
-   }
   brequest('apiRequest', 'POST', 'MYACCOUNT', 'loginCas2', {ticket:ticketCas, service:serviceurl}, null)
   .then(res1 => res1.json())
   .then(
@@ -116,6 +112,7 @@ export const loginCas = (success, failure)=>{
     }
   ).catch((err)=>{failure(err)})
 }
+
 
 
 export const getLocations = (sessionid, success, failure)=>{
@@ -409,3 +406,23 @@ export const getGoodiesList = (dateDebut, dateFin, quantity, success, failure)=>
         }
       )
 }
+//https://assos.utc.fr/ginger/v1/qrichard?key=NmQ6Ld7qT3Hrq939S7W2PNf2376k75Jp
+export const gingerApiRequest = (login, success, failure)=>{
+  console.log(PERSONNAL_URL+'ginger/'+login)
+    fetch(PERSONNAL_URL+'ginger/'+login+'/'+GINGER_KEY,
+    {
+      method : 'GET',
+      headers:{
+        'Content-Type':'application/json'
+      }
+    }
+  )
+  .then(res=>res.json())
+    .then((result)=>{
+      success(result)
+    },
+    (err)=>{
+      failure(err)
+    }
+  ).catch((err)=>{failure(err)})
+  }

@@ -17,31 +17,32 @@ import {
   deleteAlert,
   getRights,
   addAlert,
-  changePanel
+  changePanel,
+  disconnect,
+  ginger
 } from './actions'
 import {printAlert} from './Utils/utils'
 import {CAS_LINK} from './Utils/config'
-import BadgeConnexion from './Utils/badgeConnexion'
+import BadgeConnexion  from './Utils/badgeConnexion'
+import SimpleConnexion from './Utils/simpleConnexion'
 import WebSocketConnexion from './Utils/websocket'
 import TypeEvents from './Utils/typeEvents.js'
-import {checkRights} from './Utils/utils'
+import {checkRights, deleteCookies} from './Utils/utils'
 
 
-
+import {gingerApiRequest} from './Utils/apiCalls'
 class Header extends Component {
 
   constructor(props){
     super(props)
     this.state = {
-      load : 'Vente',
       denieAccess : false
     }
-    this.setMenuPage = this.setMenuPage.bind(this)
-    this.setVentePage = this.setVentePage.bind(this)
-    this.setAdminPage = this.setAdminPage.bind(this)
   }
 
   componentDidMount() {
+
+
     setInterval( () => {
       this.setState({
         curTime : new Date().toLocaleString().split(" ")[2]
@@ -49,23 +50,6 @@ class Header extends Component {
     },1000)
   }
 
-  setMenuPage(){
-    this.setState({
-      load:'Menu'
-    })
-  }
-
-  setVentePage(){
-    this.setState({
-      load:'Vente'
-    })
-  }
-
-  setAdminPage(){
-    this.setState({
-      load:'Admin'
-    })
-  }
 
 
   render() {
@@ -73,6 +57,7 @@ class Header extends Component {
     const {deleteError, redirectLogin, login, restart, getRights, addAlert} = this.props;
     const{sessionId, connected, username} = this.props;
     const {event_id, picked} = this.props
+
 
     //affichage de l'ensemble des erreurs du programme
     let ListAlerts = []
@@ -89,7 +74,7 @@ class Header extends Component {
     let affichage=null;
     switch(this.props.activePanel){
       case 'Vente':
-        if(sessionId!==null && picked==true)
+        if(sessionId!==null && picked==true && rightsList!==null)
         {
 
           if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
@@ -109,7 +94,7 @@ class Header extends Component {
         }
         break;
       case 'Menu':
-        if(sessionId!==null)
+        if(sessionId!==null && rightsList!==null)
         {
           if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
           || 
@@ -129,7 +114,7 @@ class Header extends Component {
         break;
 
       case 'Admin':
-        if(sessionId!==null)
+        if(sessionId!==null && rightsList!==null)
         {
           if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['ADMINRIGHT'])
           || 
@@ -167,27 +152,34 @@ class Header extends Component {
       <div>
         <WebSocketConnexion></WebSocketConnexion>
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
+        {badgeuse===false && connected===false &&<SimpleConnexion></SimpleConnexion>}
 
         {connected===true && picked===false && this.props.activePanel==='Vente' && <TypeEvents></TypeEvents>}
         <div className="Header">
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="" onClick={()=> restart()}>Beethoven</a>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <span className="navbar-brand" onClick={()=> restart()}>Beethoven</span>
               <span className="input-group-btn">
-                {username===null ?<a href={CAS_LINK}>Click to login</a> :
-
+                {username===null ?'' :
                   <span style={{color:'black'}}> {username}</span>}
               </span>" "
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               </ul>
               <span style={{color:'black', marginRight:'20px'}}> {this.state.curTime}</span>
               <Button outline color="secondary" onClick={()=>this.props.changePanel('Menu')}>Menu</Button>" "
               <Button outline color="secondary" onClick={()=>this.props.changePanel('Vente')}>Vente</Button>" "
-              <Button outline color="primary" onClick={()=>this.props.changePanel('Admin')}>Admin</Button>" "
-              <Button color="danger" href="https://cas.utc.fr/cas/logout">Déconnexion</Button>
+              <Button outline color="primary" onClick={
+
+                  ()=>{
+                    this.props.disconnect()
+                    this.props.changePanel('Admin')
+                  }}>Admin</Button>" "
+              <Button color="danger" onClick={()=>{
+                  this.props.ginger(this.props.username)
+                }}>Déconnexion</Button>
             </div>
           </nav>
         </div>
@@ -225,7 +217,8 @@ let mapStateToProps = (state)=>{
     event_id : state.vente.event_id || null,
     picked : state.vente.picked || false,
     rightsList : state.cas.rightsList || null,
-    activePanel : state.general.activePanel || null
+    activePanel : state.general.activePanel || null,
+    userInfo : state.general.userInfo || []
   };
 }
 
@@ -237,7 +230,9 @@ let mapDispatchToProps = (dispatch)=>{
     restart : ()=> dispatch(restart()),
     getRights : (sessionid)=>dispatch(getRights(sessionid)),
     addAlert : (status, information)=>dispatch(addAlert(status, information)),
-    changePanel : (panel)=> dispatch(changePanel(panel))
+    changePanel : (panel)=> dispatch(changePanel(panel)),
+    disconnect :()=>dispatch(disconnect()),
+    ginger : (login)=>dispatch(ginger(login))
   }
 }
 

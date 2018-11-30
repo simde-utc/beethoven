@@ -51,11 +51,7 @@ class BadgeConnexion extends Component{
 
   }
 
-  redirectCas(){
-    const {redirectLogin, login} = this.props;
-    redirectLogin()
-    window.location=CAS_LINK
-  }
+
 
   pinForm()
   {
@@ -140,15 +136,7 @@ class BadgeConnexion extends Component{
             >Effacer Pin</Button> : ''}
 
         </ModalBody>
-        <ModalFooter>
-                    <a
-                      href={CAS_LINK}
-                      onClick = {()=>{
-                        login()
-                        redirectLogin()
-                      }}
-                      >Click to login</a>
-        </ModalFooter>
+
 
       </Modal>
     )

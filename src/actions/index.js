@@ -86,7 +86,10 @@ import {
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
   GET_GOODIES_ERROR,
-  CHANGE_PANEL
+  CHANGE_PANEL,
+  GINGER_REQUEST,
+  GINGER_SUCCESS,
+  GINGER_ERROR
 } from "../constants"
 
 import {
@@ -111,8 +114,8 @@ import {
   changeStaff,
   getUsersRights,
   getUrls,
-  getGoodiesList
-
+  getGoodiesList,
+  gingerApiRequest
 } from '../Utils/apiCalls.js'
 
 
@@ -673,6 +676,8 @@ export function login()
         loginCas(
           (data)=>{
             dispatch(loginSuccess(data))
+
+
           },
           (err)=>{
             dispatch(loginError('Erreur :Connexion CAS'))
@@ -680,6 +685,8 @@ export function login()
         )
     }
 }
+
+
 
 export function disconnect()
 {
@@ -1173,6 +1180,47 @@ export function getGoodiesError(error){
   return{
     type: GET_GOODIES_ERROR,
     error:error
+  }
+}
+
+export function gingerRequest()
+{
+  return{
+    type : GINGER_REQUEST
+  }
+}
+
+export function gingerSuccess(userInfo)
+{
+  console.log(userInfo)
+  return{
+    type : GINGER_SUCCESS,
+    userInfo : userInfo
+  }
+}
+
+export function gingerError(error)
+{
+  return{
+    type : GINGER_ERROR,
+    error : error
+  }
+}
+
+export function ginger(login)
+{
+  return (dispatch)=>
+  {
+    dispatch(gingerRequest())
+    gingerApiRequest(
+      login,
+      (data)=>{
+        dispatch(gingerSuccess(data))
+      },
+      (err)=>{
+        dispatch(gingerError('Erreur : Connexion Ginger'))
+      }
+    )
   }
 }
 

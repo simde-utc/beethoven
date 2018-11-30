@@ -87,7 +87,10 @@ import { 
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
   GET_GOODIES_ERROR,
-  CHANGE_PANEL
+  CHANGE_PANEL,
+  GINGER_REQUEST,
+  GINGER_SUCCESS,
+  GINGER_ERROR
 } from "../constants";
 
 
@@ -100,6 +103,8 @@ function general(state={}, action)
     {
       activePanel : action.activePanel
     })
+    return state;
+
 
     default:
     return state;
@@ -384,6 +389,14 @@ function alerts(state = {}, action)
       })
       return state;
 
+      case GINGER_ERROR:
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
 
       case SET_TVLINK_SUCCESS:
       alertList = state.alertList.slice()
@@ -431,6 +444,12 @@ function cas(state={}, action)
     case SET_USER_CONNECTED:
     state = Object.assign({}, state, {
       connected : true
+    })
+    return state;
+
+    case GINGER_SUCCESS:
+    state = Object.assign({}, state,{
+      userUid : action.userInfo.badge_uid
     })
     return state;
 
@@ -497,9 +516,11 @@ function cas(state={}, action)
       userPin : null,
       connected : false,
       sessionId : null,
-      username : null
+      username : null,
+      rightsList : null
     })
     return state;
+
 
 
     case GET_RIGHTS_REQUEST :
@@ -820,8 +841,6 @@ function admin(state={}, action)
     state = Object.assign({}, state, {
       goodiesList: action.goodiesList
     })
-
-
     default :
     return state;
   }

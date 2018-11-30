@@ -105,7 +105,7 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 
-//deconnexion
+//deconnexion - reinitialise toutes les variables de connexion
 export const DISCONNECT = "DISCONNECT"
 //Restart applicatio
 export const RESTART = "RESTART"
@@ -188,3 +188,9 @@ export const CHANGE_PANEL = "CHANGE_PANEL"
 export const GET_GOODIES_REQUEST = "GET_GOODIES_REQUEST"
 export const GET_GOODIES_SUCCESS = "GET_GOODIES_SUCCESS"
 export const GET_GOODIES_ERROR = "GET_GOODIES_ERROR"
+
+
+//reccupération des informations ginger
+export const GINGER_REQUEST = "GINGER_REQUEST"
+export const GINGER_SUCCESS = "GINGER_SUCCESS"
+export const GINGER_ERROR = "GINGER_ERROR"
