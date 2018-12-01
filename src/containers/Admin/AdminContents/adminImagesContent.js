@@ -29,8 +29,6 @@ class AdminImagesContent extends Component {
 
   }
 
-
-
    _handleImageChange(e) {
      e.preventDefault();
 
@@ -74,10 +72,6 @@ class AdminImagesContent extends Component {
                 <h2>Interface Admin - Gestion des Images</h2>
                 <br></br>
               </Col>
-            </Row>
-
-            <Row>
-
             </Row>
             <Row >
               <Col xs={{size:12}} lg={{size:6, offset:3}}>
