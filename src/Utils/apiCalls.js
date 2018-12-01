@@ -143,6 +143,8 @@ export const getCategories = (sessionid,location , success, failure)=>{
             for (let i = 0; i < id_Categ.length; i++) {
                 if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]))
             }
+            categ.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+            console.log(categ);
             success(categ);
           },
           (erro) => {
