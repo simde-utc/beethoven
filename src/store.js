@@ -3,6 +3,9 @@ import beethoven from './reducers'
 import thunk from "redux-thunk";
 
 const initialStore = {
+  general:{
+    activePanel : null,
+  },
   menus:{
     NavIndex : null,
     MenuList : [],
@@ -53,7 +56,7 @@ const initialStore = {
     webTv1Messages : false,
     webTv2Messages : false,
     urls : [],
-    goodiesList : []
+    goodiesList : [],
   }
 }
 
