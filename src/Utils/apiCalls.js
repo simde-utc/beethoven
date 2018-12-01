@@ -73,6 +73,7 @@ export const fetchMenuList = (idMenu, success, failure) => {
 };
 
 
+
 // connexion via badge
 export const loginBadge2 = (userUid, userPin, success, error) => {
   brequest('apiRequest', 'POST', 'POSS3', 'loginBadge2', { badge_id: userUid.toString(), pin: userPin.toString() }, null)
