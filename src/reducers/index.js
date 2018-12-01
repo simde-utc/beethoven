@@ -84,6 +84,9 @@ import { 
   GET_RIGHTS_SUCCESS,
   GET_RIGHTS_REQUEST,
   GET_RIGHTS_ERROR,
+  GET_GOODIES_REQUEST,
+  GET_GOODIES_SUCCESS,
+  GET_GOODIES_ERROR
 } from "../constants";
 
 function menus(state={}, action)
@@ -355,8 +358,24 @@ function alerts(state = {}, action)
       })
       return state;
 
+      case GET_GOODIES_ERROR:
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
 
       case SET_TVLINK_SUCCESS:
+      alertList = state.alertList.slice()
+      alertList.push({type:'success', message:action.message});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
+
+      case GET_GOODIES_REQUEST:
       alertList = state.alertList.slice()
       alertList.push({type:'success', message:action.message});
       state = Object.assign({}, state, {
@@ -774,6 +793,14 @@ function admin(state={}, action)
     case GET_DEFAULT_URL_SUCCESS:
     state = Object.assign({}, state, {
       urls: action.urls
+    })
+
+    case GET_GOODIES_REQUEST:
+    return state;
+
+    case GET_GOODIES_SUCCESS:
+    state = Object.assign({}, state, {
+      goodiesList: action.goodiesList
     })
 
 

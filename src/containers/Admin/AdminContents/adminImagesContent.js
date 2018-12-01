@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
+import axios from 'axios'
+
+import {SERVICE_URL} from '../../../Utils/config'
 
 import {InputGroup, InputGroupAddon, InputGroupText, Input, Button, Label} from 'reactstrap'
 import { Container, Col, Row, Table } from 'reactstrap';
@@ -46,6 +49,35 @@ class AdminImagesContent extends Component {
    }
 
 
+   fileChangedHandler = (event) => {
+     const file = event.target.files[0]
+   }
+
+   state = {selectedFile: null}
+
+   fileChangedHandler = (event) => {
+    this.setState({selectedFile: event.target.files[0]})
+  }
+
+  uploadHandler = () => {
+    console.log(this.state.selectedFile);
+    axios.post('my-domain.com/file-upload', this.state.selectedFile)
+    }
+
+
+
+   // uploadHandler (){
+   //   let url = SERVICE_URL;
+   //   //console.log("césarbatard");
+   //   axios.post( url + '/src/images', this.state.file).then(function (response) {
+   //  console.log(response);
+   //  })
+   //    .catch(function (error) {
+   //      console.log(error);
+   //    });;
+   // }
+
+
   render() {
     const {sessionId, username, messages} = this.props
 
@@ -76,21 +108,8 @@ class AdminImagesContent extends Component {
             <Row >
               <Col xs={{size:12}} lg={{size:6, offset:3}}>
               <div className="previewComponent">
-                <form>
-                <input className="fileInput"
-                type="file"
-                onChange={(e)=>this._handleImageChange(e)} />
-                <Button
-                  style={{marginRight : '5px'}}
-                  onClick = {()=>{
-
-                    console.log(this.state.file);
-
-                  }}
-                  >
-                  Envoyer
-                </Button>
-                </form>
+                <input type="file" onChange={this.fileChangedHandler}></input>
+                <button onClick={this.uploadHandler}>Upload!</button>
               </div>
               </Col>
             </Row>

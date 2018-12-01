@@ -7,7 +7,7 @@ const initialStore = {
     NavIndex : null,
     MenuList : [],
     ListSales : [],
-    loading : null
+    loading : false
   },
   alerts:{
     alertList : []
@@ -52,8 +52,8 @@ const initialStore = {
     webTv2Url : null,
     webTv1Messages : false,
     webTv2Messages : false,
-    images : [],
-    urls : []
+    urls : [],
+    goodiesList : []
   }
 }
 
