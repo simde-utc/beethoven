@@ -28,6 +28,9 @@ class WebSocketConnexion extends Component {
                 getClientUid(data.substr(13, data.length));
                 getInformation(sessionId, data.substr(13, data.length));
               }
+            }else if (activePanel === "Admin") {
+              getClientUid(data.substr(13, data.length));
+              getInformation(sessionId, data.substr(13, data.length));
             }
           }
         }}
