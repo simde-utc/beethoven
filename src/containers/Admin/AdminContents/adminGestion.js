@@ -73,7 +73,8 @@ class AdminGestion extends Component {
                                 </Container>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setBloquageState('listen')}>Fermer</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => {setBloquageState('listen');
+                                                                                                                    setClientState()}}>Fermer</button>
                               </div>
                             </div>
                           </div>
