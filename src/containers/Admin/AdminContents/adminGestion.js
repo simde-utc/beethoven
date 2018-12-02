@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
 
-import {InputGroup, InputGroupAddon, InputGroupText, Jumbotron, Button,ButtonGroup, Label} from 'reactstrap'
+import {InputGroup, InputGroupAddon, InputGroupText, Jumbotron, Button,ButtonGroup, Label, Table} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
-import {setBloquageState, blockAUser, setClientState } from "../../../actions"
+import {setBloquageState, blockAUser, setClientState, getBlockedUsers } from "../../../actions"
 
 
 class AdminGestion extends Component {
@@ -15,13 +15,32 @@ class AdminGestion extends Component {
       init : false
     }
   }
+  componentDidMount(){
+    const {getBlockedUsers, sessionId} = this.props
+    getBlockedUsers(sessionId);
+  }
 
   render() {
-    const {sessionId, username, info_client, setBloquageState, blockAUser, blocage, blocked, setClientState, clientUid} = this.props
+    const {sessionId, username, info_client, setBloquageState, blockAUser, blocage, blocked, setClientState, clientUid,getBlockedUsers, list_blockedUsers} = this.props
     let info;
     let today = new Date();
     today.setMonth(today.getMonth()+6);
     var date_blocked = today.toISOString();
+
+    var list_blocked = [];
+    var tab = Object.keys(list_blockedUsers);
+    tab.forEach(function(prop) {
+      list_blocked.push(
+            <tr>
+              <th> {list_blockedUsers[prop].usr_lastname} </th>
+              <th> {list_blockedUsers[prop].usr_firstname}</th>
+              <th> {list_blockedUsers[prop].blo_raison} </th>
+              <th> {list_blockedUsers[prop].blo_removed} </th>
+            </tr>
+      );
+    });
+
+
     if(info_client){
       if(blocked=='listen'){
         info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
@@ -83,6 +102,8 @@ class AdminGestion extends Component {
       }
     }else{info = (<div></div>)}
 
+
+
     return(
       <div
         className ="AdminPanel"
@@ -103,6 +124,22 @@ class AdminGestion extends Component {
                   <h2 style={{color:'white'}}>Veuillez passer la carte</h2>
                   {info}
                 </Jumbotron>
+                <h3>Personnes bloquées</h3>
+                <Table>
+                  <thead>
+                    <tr style={{
+                        fontSize : '1.5em'
+                      }}>
+                      <th> Nom </th>
+                      <th> Prénom </th>
+                      <th> Raison </th>
+                      <th> Date de fin </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {list_blocked}
+                  </tbody>
+                </Table>
               </Col>
             </Row>
         </Container>
@@ -123,6 +160,7 @@ let mapStateToProps = (state)=>{
     blocked: state.admin.blocked || 'listen',
     blocage: state.admin.blocage || [],
     clientUid: state.achats.clientUid || null,
+    list_blockedUsers: state.admin.list_blockedUsers || [],
   };
 }
 
@@ -131,7 +169,8 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     setClientState : ()=> dispatch(setClientState()),
     setBloquageState : (a)=> dispatch(setBloquageState(a)),
-    blockAUser : (sessionId,username,date_fin)=> dispatch(blockAUser(sessionId,username,date_fin))
+    blockAUser : (sessionId,username,date_fin)=> dispatch(blockAUser(sessionId,username,date_fin)),
+    getBlockedUsers : (sess)=> dispatch(getBlockedUsers(sess)),
   }
 }
 

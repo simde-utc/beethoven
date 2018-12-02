@@ -95,6 +95,9 @@ import {
   GINGER_REQUEST,
   GINGER_SUCCESS,
   GINGER_ERROR,
+  GET_BLOCKED_USERS_SUCCESS,
+  GET_BLOCKED_USERS_ERROR,
+  GET_BLOCKED_USERS_REQUEST
 } from '../constants';
 
 function general(state = {}, action) {
@@ -422,6 +425,14 @@ function alerts(state = {}, action) {
         alertList : alertList
       })
       return state;
+
+      case GET_BLOCKED_USERS_ERROR:
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
+        state = Object.assign({}, state, {
+          alertList : alertList
+        })
+        return state;
     default:
       return state;
   }
@@ -853,6 +864,14 @@ function admin(state = {}, action) {
     case SET_BLOCKED_STATE:
       state = Object.assign({}, state,{
         blocked : action.blocked
+      })
+      return state;
+
+    case GET_BLOCKED_USERS_REQUEST:
+      return state;
+    case GET_BLOCKED_USERS_SUCCESS:
+      state = Object.assign({}, state, {
+        list_blockedUsers : action.list_blockedUsers
       })
       return state;
     default :

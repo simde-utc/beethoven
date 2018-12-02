@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 
 const initialStore = {
   general:{
-    activePanel : null,
+    activePanel : 'Vente',
   },
   menus:{
     NavIndex : null,
@@ -60,7 +60,8 @@ const initialStore = {
     urls : [],
     goodiesList : [],
     blocage: [],
-    blocked: 'listen'
+    blocked: 'listen',
+    list_blockedUsers: [],
   }
 }
 

@@ -136,6 +136,7 @@ export const getCategories = (sessionid, location, success, failure) => {
               for (let i = 0; i < id_Categ.length; i++) {
                 if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]));
               }
+              categ.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
               success(categ);
             },
             (erro) => {
@@ -409,18 +410,31 @@ export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
   .then(res =>res.json())
   .then(
       (resultWallet) =>{
-        console.log(resultWallet);
         brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
         .then(res => res.json())
         .then(
           (result) => {
-            console.log(result)
             success(result);
           },
           (error) => {
             failure(error);
           }
         ).catch((err)=>{failure(err)})
+      },
+      (error) => {
+        failure(error);
+      }
+  ).catch((err)=>{failure(err)})
+}
+
+//Recupération de tous les user bloqués :
+export const getAllBlockedUsers = (sessionId,success,failure)=>{
+  brequest('apiRequest','POST','BLOCKED','getAll', {fun_id: FUND_ID}, sessionId)
+  .then(res =>res.json())
+  .then(
+      (result) =>{
+        console.log(result)
+        success(result);
       },
       (error) => {
         failure(error);

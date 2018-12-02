@@ -94,6 +94,9 @@ import {
   GINGER_REQUEST,
   GINGER_SUCCESS,
   GINGER_ERROR,
+  GET_BLOCKED_USERS_SUCCESS,
+  GET_BLOCKED_USERS_ERROR,
+  GET_BLOCKED_USERS_REQUEST
 } from '../constants';
 
 import {
@@ -121,6 +124,7 @@ import {
   getGoodiesList,
   blockUser,
   gingerApiRequest,
+  getAllBlockedUsers,
 } from '../Utils/apiCalls.js';
 
 // **************************************************************************
@@ -1216,5 +1220,43 @@ export function setBloquageState(blocked){
   return{
     type: SET_BLOCKED_STATE,
     blocked : blocked
+  }
+}
+
+//get all users BLOCKED
+export function getAllBlockedUsersRequest()
+{
+  return{
+    type : GET_BLOCKED_USERS_REQUEST
+  }
+}
+
+export function getAllBlockedUsersSuccess(list_blockedUsers)
+{
+  return{
+    type: GET_BLOCKED_USERS_SUCCESS,
+    list_blockedUsers : list_blockedUsers
+  }
+}
+
+export function getAllBlockedUsersError()
+{
+  return{
+    type : GET_BLOCKED_USERS_ERROR
+  }
+}
+
+export function getBlockedUsers(sessionId)
+{
+  return (dispatch)=>{
+    dispatch(getAllBlockedUsersRequest());
+    getAllBlockedUsers(sessionId,
+      (data)=>{
+        dispatch(getAllBlockedUsersSuccess(data))
+      },
+      (err)=>{
+        dispatch(blockUserError('Erreur : Impossible de récuperer les users boqués'))
+      }
+    )
   }
 }
