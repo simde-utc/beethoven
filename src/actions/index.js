@@ -1213,11 +1213,11 @@ export function blockUserError(error){
   }
 }
 
-export function blockAUser(sessionId,username,date_fin)
+export function blockAUser(sessionId,clientUid,date_fin)
 {
   return (dispatch)=>{
     dispatch(blockUserRequest(sessionId));
-    blockUser(sessionId,username,date_fin,
+    blockUser(sessionId,clientUid,date_fin,
       (data)=>{
         dispatch(blockUserSuccess(data))
       },

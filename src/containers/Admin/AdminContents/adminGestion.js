@@ -14,21 +14,14 @@ class AdminGestion extends Component {
     this.state = {
       init : false
     }
-
   }
-  componentWillMount()
-  {
-  }
-
-
 
   render() {
-    const {sessionId, username, info_client, setBlockedState, blockAUser, blocage, blocked, setClientState} = this.props
-
+    const {sessionId, username, info_client, setBloquageState, blockAUser, blocage, blocked, setClientState, clientUid} = this.props
     let info;
     let today = new Date();
-    var blockedTime  = today.setMonth(today.getMonth()+6);
-    var date_blocked = JSON.stringify(blockedTime);
+    today.setMonth(today.getMonth()+6);
+    var date_blocked = today.toISOString();
     if(info_client){
       if(blocked=='listen'){
         info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
@@ -41,7 +34,7 @@ class AdminGestion extends Component {
                               <Container fluid>
                                 <Row style = {{marginBottom : '5vh'}}>
                                   <Col sm = '12' md='12'>
-                                    <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,info_client.username,blockedTime)}>Bloquer l'utilisateur</button>
+                                    <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
                                   </Col>
                                 </Row>
                                 <Row style = {{marginTop : '2vh'}}>
@@ -89,9 +82,6 @@ class AdminGestion extends Component {
       }
     }else{info = (<div></div>)}
 
-    let test = (<button onClick={()=>blockAUser(sessionId,'qrichard',blockedTime)}>TEST</button>)
-
-
     return(
       <div
         className ="AdminPanel"
@@ -111,7 +101,6 @@ class AdminGestion extends Component {
                 <Jumbotron style={{backgroundColor : '#dc3545'}}>
                   <h2 style={{color:'white'}}>Veuillez passer la carte</h2>
                   {info}
-                  {test}
                 </Jumbotron>
               </Col>
             </Row>
@@ -132,7 +121,7 @@ let mapStateToProps = (state)=>{
     info_client : state.achats.info_client || null,
     blocked: state.admin.blocked || 'listen',
     blocage: state.admin.blocage || [],
-
+    clientUid: state.achats.clientUid || null,
   };
 }
 

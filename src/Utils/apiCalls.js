@@ -410,15 +410,14 @@ export const getGoodiesList = (dateDebut, dateFin, quantity, success, failure)=>
       )
 }
 
-
 //Bloquer un user :
-export const blockUser = (sessionId,username,date_fin,success,failure)=>{
-  brequest('apiRequest','POST','GESUSERS','walletAutocomplete', {queryString: username, wallet_config: '1'}, sessionId)
+export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
+  brequest('apiRequest','POST','BLOCKED','walletAutocomplete', {queryString: clientUid, "lookup_only": "tag"}, sessionId)
   .then(res =>res.json())
   .then(
       (resultWallet) =>{
-        console.log(resultWallet)
-        brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: 'Comportement Innacceptable', usr_id: resultWallet.user_id , wallet: resultWallet.id, date_fin: date_fin},sessionId)
+        console.log(resultWallet);
+        brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
         .then(res => res.json())
         .then(
           (result) => {
@@ -435,18 +434,3 @@ export const blockUser = (sessionId,username,date_fin,success,failure)=>{
       }
   ).catch((err)=>{failure(err)})
 }
-
-//ddd
-/*export const blockUser = (sessionId,user_id, wallet,date_fin,success,failure)=>{
-  brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: 'Comportement Innacceptable', usr_id: user_id, wallet: wallet, date_fin: date_fin},sessionId)
-  .then(res => res.json())
-  .then(
-    (result) => {
-      console.log(result)
-      success(result);
-    },
-    (error) => {
-      failure(error);
-    }
-  ).catch((err)=>{failure(err)})
-}*/
