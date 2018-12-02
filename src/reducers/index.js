@@ -87,12 +87,15 @@ import {
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
   GET_GOODIES_ERROR,
+  BLOCK_USER_REQUEST,
+  BLOCK_USER_SUCCESS,
+  BLOCK_USER_ERROR,
+  SET_BLOCKED_STATE,
   CHANGE_PANEL,
   GINGER_REQUEST,
   GINGER_SUCCESS,
   GINGER_ERROR,
 } from '../constants';
-
 
 function general(state = {}, action) {
   switch (action.type) {
@@ -412,7 +415,13 @@ function alerts(state = {}, action) {
       });
       return state;
 
-
+      case BLOCK_USER_ERROR:
+      alertList = state.alertList.slice()
+      alertList.push({type:'danger', message:action.error});
+      state = Object.assign({}, state, {
+        alertList : alertList
+      })
+      return state;
     default:
       return state;
   }
@@ -711,6 +720,9 @@ function achats(state = {}, action) {
       });
       return state;
     case SET_TRANSACTION_REQUEST:
+      state = Object.assign({}, state,{
+        state_transaction : 'loading'
+      });
       return state;
     case SET_TRANSACTION_SUCCESS:
       if (!action.info_transaction.error) {
@@ -740,8 +752,21 @@ function achats(state = {}, action) {
     case CANCEL_ARTICLE_REQUEST:
       return state;
     case CANCEL_ARTICLE_SUCCESS:
-      state = Object.assign({}, state, {
-        cancel: action.cancel,
+      const tab = state.info_client.last_purchases;
+      const deletedActualized = tab.filter(function (t) {
+        return t.pur_id != action.deleted_id;
+      });
+      return {
+        ...state,
+        cancel : action.cancel,
+        deleted_id : action.deleted_id,
+        info_client: {
+          ...state.info_client,
+          last_purchases: deletedActualized
+        }
+      }
+      state = Object.assign({}, state,{
+        cancel : action.cancel
       });
       return state;
     case DELETE_ARTICLE_CANCELED:
@@ -812,11 +837,26 @@ function admin(state = {}, action) {
       return state;
 
     case GET_GOODIES_SUCCESS:
-      state = Object.assign({}, state, {
-        goodiesList: action.goodiesList,
-      });
-    default:
+    state = Object.assign({}, state, {
+      goodiesList: action.goodiesList
+    })
+
+    case BLOCK_USER_REQUEST:
+    return state;
+
+    case BLOCK_USER_SUCCESS:
+    state = Object.assign({}, state, {
+      blocage: action.blocage,
+      blocked: 'effective'
+    })
+    return state;
+    case SET_BLOCKED_STATE:
+      state = Object.assign({}, state,{
+        blocked : action.blocked
+      })
       return state;
+    default :
+    return state;
   }
 }
 export default combineReducers({

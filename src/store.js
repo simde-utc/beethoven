@@ -40,7 +40,9 @@ const initialStore = {
   achats: {
     clientUid : null,
     state_transaction : 'listen',
-    info_client : null
+    info_client : null,
+    deleted_id: null,
+    cancel: []
   },
 
   webTV: {
@@ -57,6 +59,8 @@ const initialStore = {
     webTv2Messages : false,
     urls : [],
     goodiesList : [],
+    blocage: [],
+    blocked: 'listen'
   }
 }
 

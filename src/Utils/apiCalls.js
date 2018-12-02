@@ -402,6 +402,32 @@ export const getGoodiesList = (dateDebut, dateFin, quantity, success, failure) =
       },
     );
 };
+
+//Bloquer un user :
+export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
+  brequest('apiRequest','POST','BLOCKED','walletAutocomplete', {queryString: clientUid, "lookup_only": "tag"}, sessionId)
+  .then(res =>res.json())
+  .then(
+      (resultWallet) =>{
+        console.log(resultWallet);
+        brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            console.log(result)
+            success(result);
+          },
+          (error) => {
+            failure(error);
+          }
+        ).catch((err)=>{failure(err)})
+      },
+      (error) => {
+        failure(error);
+      }
+  ).catch((err)=>{failure(err)})
+}
+
 // https://assos.utc.fr/ginger/v1/qrichard?key=NmQ6Ld7qT3Hrq939S7W2PNf2376k75Jp
 export const gingerApiRequest = (login, success, failure) => {
   console.log(`${PERSONNAL_URL}ginger/${login}`);

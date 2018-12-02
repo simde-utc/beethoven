@@ -18,6 +18,9 @@ class ListeArticle extends Component {
     var styleButton = {background: 'none',
                        minWidth: '120px',
                        minHeight: '120px',
+                       outlineStyle: 'none',
+                       pointerEvents: 'none',
+                       outline: 'none'
                       }
     var styleText = {color: 'black',
                       flex: 1,
@@ -50,8 +53,8 @@ class ListeArticle extends Component {
         if(i==0){
           if(element.image_url){
             displayArticle.push(
-              <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
-                <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
+              <div class="col-md-5ths col-xs-6 p-0" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                <button type="button" class="btn btn-lg btn-block p-0" style={styleButton}>
                   <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="80" height="80"></img>
                 </button>
               </div>
@@ -59,7 +62,7 @@ class ListeArticle extends Component {
             }
             else{
               displayArticle.push(
-                <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+                <div class="col-md-5ths col-xs-6 p-0" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
                   <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
                       <div class="card-img-top" style={styleDiv}>{element.name}</div>
                   </button>
@@ -69,7 +72,7 @@ class ListeArticle extends Component {
         }
         if(element.image_url){
           displayArticle.push(
-            <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+            <div class="col-md-5ths col-xs-6 p-0" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
               <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
                 <img class="card-img-top" draggable="false" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
               </button>
@@ -78,7 +81,7 @@ class ListeArticle extends Component {
           }
           else{
             displayArticle.push(
-              <div class="col-md-5ths col-xs-6" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
+              <div class="col-md-5ths col-xs-6 p-0" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
                 <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
                     <div class="card-img-top" style={styleDiv}>{element.name}</div>
                 </button>

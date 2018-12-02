@@ -23,7 +23,11 @@ class Vente extends Component {
                                   </div>)
 
     let stateTrans;
-    if(state_transaction=='success'){
+    if(state_transaction=='loading'){
+      stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
+                    Transaction en cours.... !
+                  </div>);
+    }else if(state_transaction=='success'){
       stateTrans = (<div class="alert ml-2 w-100 bg-success" role="alert">
                     Transaction effectuée, ton nouveau solde Payutc est de {info_transaction.solde/100} € !
                   </div>);

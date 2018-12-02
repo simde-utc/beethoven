@@ -186,6 +186,11 @@ export const GET_GOODIES_REQUEST = 'GET_GOODIES_REQUEST';
 export const GET_GOODIES_SUCCESS = 'GET_GOODIES_SUCCESS';
 export const GET_GOODIES_ERROR = 'GET_GOODIES_ERROR';
 
+//Bloquer un utilisateur
+export const BLOCK_USER_REQUEST = "BLOCK_USER_REQUEST"
+export const BLOCK_USER_SUCCESS = "BLOCK_USER_SUCCESS"
+export const BLOCK_USER_ERROR = "BLOCK_USER_ERROR"
+export const SET_BLOCKED_STATE = "SET_BLOCKED_STATE"
 
 // reccupération des informations ginger
 export const GINGER_REQUEST = 'GINGER_REQUEST';

@@ -86,6 +86,10 @@ import {
   GET_GOODIES_REQUEST,
   GET_GOODIES_SUCCESS,
   GET_GOODIES_ERROR,
+  BLOCK_USER_REQUEST,
+  BLOCK_USER_SUCCESS,
+  BLOCK_USER_ERROR,
+  SET_BLOCKED_STATE,
   CHANGE_PANEL,
   GINGER_REQUEST,
   GINGER_SUCCESS,
@@ -115,9 +119,9 @@ import {
   getUsersRights,
   getUrls,
   getGoodiesList,
+  blockUser,
   gingerApiRequest,
 } from '../Utils/apiCalls.js';
-
 
 // **************************************************************************
 // Gestion Menus
@@ -718,9 +722,9 @@ export function getRights(sessionid) {
 export function setTransactionRequest(sessionId, selectedArticles) {
   return {
     type: SET_TRANSACTION_REQUEST,
-    sessionId,
-    selectedArticles,
-  };
+    sessionId : sessionId,
+    state_transaction : 'loading'
+  }
 }
 
 export function setTransactionSuccess(data) {
@@ -1035,11 +1039,13 @@ export function cancelTransactionRequest(sessionId) {
   };
 }
 
-export function cancelTransactionSuccess(cancel) {
-  return {
+export function cancelTransactionSuccess(cancel,pur_id)
+{
+  return{
     type: CANCEL_ARTICLE_SUCCESS,
-    cancel,
-  };
+    cancel : cancel,
+    deleted_id: pur_id
+  }
 }
 
 export function cancelTransactionError(error) {
@@ -1055,8 +1061,8 @@ export function cancelTransaction(sessionId, pur_id) {
     cancelUserTransaction(
       sessionId,
       pur_id,
-      (data) => {
-        dispatch(cancelTransactionSuccess(data));
+      (data)=> {
+        dispatch(cancelTransactionSuccess(data,pur_id))
       },
       (err) => {
         dispatch(cancelTransactionError('Erreur : Impossible de cancel la transaction'));
@@ -1164,4 +1170,51 @@ export function getGoodies(dateDebut, dateFin, quantite) {
         dispatch(getGoodiesError('Erreur : Reccupération des gagnants'));
       });
   };
+}
+
+
+export function blockUserRequest(sessionId)
+{
+  return{
+    type: BLOCK_USER_REQUEST,
+    sessionId : sessionId
+  }
+}
+
+export function blockUserSuccess(blocage)
+{
+  return{
+    type : BLOCK_USER_SUCCESS,
+    blocage : blocage,
+    blocked: 'effective'
+  }
+}
+
+export function blockUserError(error){
+  return{
+    type: BLOCK_USER_ERROR,
+    error:error
+  }
+}
+
+export function blockAUser(sessionId,clientUid,date_fin)
+{
+  return (dispatch)=>{
+    dispatch(blockUserRequest(sessionId));
+    blockUser(sessionId,clientUid,date_fin,
+      (data)=>{
+        dispatch(blockUserSuccess(data))
+      },
+      (err)=>{
+        dispatch(blockUserError('Erreur : Bloquage non effectif'))
+      }
+    )
+  }
+}
+
+export function setBloquageState(blocked){
+  return{
+    type: SET_BLOCKED_STATE,
+    blocked : blocked
+  }
 }
