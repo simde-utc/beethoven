@@ -88,7 +88,8 @@ import {
   GET_GOODIES_ERROR,
   BLOCK_USER_REQUEST,
   BLOCK_USER_SUCCESS,
-  BLOCK_USER_ERROR
+  BLOCK_USER_ERROR,
+  SET_BLOCKED_STATE
 } from "../constants"
 
 import {
@@ -739,7 +740,7 @@ export function setTransactionRequest(sessionId,selectedArticles){
   return{
     type: SET_TRANSACTION_REQUEST,
     sessionId : sessionId,
-    selectedArticles
+    state_transaction : 'loading'
   }
 }
 
@@ -1089,11 +1090,12 @@ export function cancelTransactionRequest(sessionId){
   }
 }
 
-export function cancelTransactionSuccess(cancel)
+export function cancelTransactionSuccess(cancel,pur_id)
 {
   return{
     type: CANCEL_ARTICLE_SUCCESS,
-    cancel : cancel
+    cancel : cancel,
+    deleted_id: pur_id
   }
 }
 
@@ -1113,7 +1115,7 @@ export function cancelTransaction(sessionId,pur_id)
       sessionId,
       pur_id,
       (data)=> {
-        dispatch(cancelTransactionSuccess(data))
+        dispatch(cancelTransactionSuccess(data,pur_id))
       },
       (err)=>{
         dispatch(cancelTransactionError('Erreur : Impossible de cancel la transaction'))
@@ -1199,7 +1201,8 @@ export function blockUserSuccess(blocage)
 {
   return{
     type : BLOCK_USER_SUCCESS,
-    blocage : blocage
+    blocage : blocage,
+    blocked: 'effective'
   }
 }
 
@@ -1210,11 +1213,11 @@ export function blockUserError(error){
   }
 }
 
-export function blockAUser(sessionId, user_id,waller,date_fin)
+export function blockAUser(sessionId,username,date_fin)
 {
   return (dispatch)=>{
     dispatch(blockUserRequest(sessionId));
-    blockUser(sessionId,user_id,waller,date_fin,
+    blockUser(sessionId,username,date_fin,
       (data)=>{
         dispatch(blockUserSuccess(data))
       },
@@ -1222,5 +1225,12 @@ export function blockAUser(sessionId, user_id,waller,date_fin)
         dispatch(blockUserError('Erreur : Bloquage non effectif'))
       }
     )
+  }
+}
+
+export function setBloquageState(blocked){
+  return{
+    type: SET_BLOCKED_STATE,
+    blocked : blocked
   }
 }

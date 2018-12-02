@@ -89,7 +89,8 @@ import { 
   GET_GOODIES_ERROR,
   BLOCK_USER_REQUEST,
   BLOCK_USER_SUCCESS,
-  BLOCK_USER_ERROR
+  BLOCK_USER_ERROR,
+  SET_BLOCKED_STATE
 } from "../constants";
 
 function menus(state={}, action)
@@ -703,6 +704,9 @@ function achats(state={}, action)
       })
       return state;
     case SET_TRANSACTION_REQUEST:
+      state = Object.assign({}, state,{
+        state_transaction : 'loading'
+      });
       return state;
     case SET_TRANSACTION_SUCCESS:
       if(!action.info_transaction.error){
@@ -732,6 +736,24 @@ function achats(state={}, action)
     case CANCEL_ARTICLE_REQUEST:
       return state;
     case CANCEL_ARTICLE_SUCCESS:
+      const tab = state.info_client.last_purchases;
+      const deletedActualized = tab.filter(function (t) {
+        return t.pur_id != action.deleted_id;
+      });
+
+
+
+      return {
+        ...state,
+        cancel : action.cancel,
+        deleted_id : action.deleted_id,
+        info_client: {
+          ...state.info_client,
+          last_purchases: deletedActualized
+        }
+      }
+
+
       state = Object.assign({}, state,{
         cancel : action.cancel
       });
@@ -817,11 +839,15 @@ function admin(state={}, action)
 
     case BLOCK_USER_SUCCESS:
     state = Object.assign({}, state, {
-      blocage: action.blocage
+      blocage: action.blocage,
+      blocked: 'effective'
     })
     return state;
-
-
+    case SET_BLOCKED_STATE:
+      state = Object.assign({}, state,{
+        blocked : action.blocked
+      })
+      return state;
     default :
     return state;
   }

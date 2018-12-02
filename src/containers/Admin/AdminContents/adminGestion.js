@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import {InputGroup, InputGroupAddon, InputGroupText, Jumbotron, Button,ButtonGroup, Label} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
-import {setClientState, blockAUser } from "../../../actions"
+import {setBloquageState, blockAUser, setClientState } from "../../../actions"
 
 
 class AdminGestion extends Component {
@@ -23,26 +23,30 @@ class AdminGestion extends Component {
 
 
   render() {
-    const {sessionId, username, info_client, setClientState} = this.props
+    const {sessionId, username, info_client, setBlockedState, blockAUser, blocage, blocked, setClientState} = this.props
 
     let info;
+    let today = new Date();
+    var blockedTime  = today.setMonth(today.getMonth()+6);
+    var date_blocked = JSON.stringify(blockedTime);
     if(info_client){
-      info = (<div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
+      if(blocked=='listen'){
+        info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}v</h5>
+                              <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}</h5>
                             </div>
                             <div class="modal-body text-info">
                               <Container fluid>
                                 <Row style = {{marginBottom : '5vh'}}>
                                   <Col sm = '12' md='12'>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onClick={()=>blockAUser(sessionId)}>Bloquer l'utilisateur</button>
+                                    <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,info_client.username,blockedTime)}>Bloquer l'utilisateur</button>
                                   </Col>
                                 </Row>
                                 <Row style = {{marginTop : '2vh'}}>
                                   <Col sm = '12' md='12'>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Carte perdue : Envoyer un mail</button>
+                                    <button type="button" class="btn btn-primary">Carte perdue : Envoyer un mail</button>
                                   </Col>
                                 </Row>
                               </Container>
@@ -53,9 +57,39 @@ class AdminGestion extends Component {
                           </div>
                         </div>
                       </div>)
+      }else{
+        info = (
+          <div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}v</h5>
+                              </div>
+                              <div class="modal-body text-info">
+                                <Container fluid>
+                                  <Row style = {{marginBottom : '5vh'}}>
+                                    <Col sm = '12' md='12'>
+                                      <button type="button" class="btn btn-warning" data-dismiss="modal">Utilisateur bloqué</button>
+                                    </Col>
+                                  </Row>
+                                  <Row style = {{marginTop : '2vh'}}>
+                                    <Col sm = '12' md='12'>
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Carte perdue : Envoyer un mail</button>
+                                    </Col>
+                                  </Row>
+                                </Container>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setBloquageState('listen')}>Fermer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+        )
+      }
     }else{info = (<div></div>)}
 
-
+    let test = (<button onClick={()=>blockAUser(sessionId,'qrichard',blockedTime)}>TEST</button>)
 
 
     return(
@@ -77,6 +111,7 @@ class AdminGestion extends Component {
                 <Jumbotron style={{backgroundColor : '#dc3545'}}>
                   <h2 style={{color:'white'}}>Veuillez passer la carte</h2>
                   {info}
+                  {test}
                 </Jumbotron>
               </Col>
             </Row>
@@ -95,6 +130,8 @@ let mapStateToProps = (state)=>{
     sessionId : state.cas.sessionId || null,
     username : state.cas.username || null,
     info_client : state.achats.info_client || null,
+    blocked: state.admin.blocked || 'listen',
+    blocage: state.admin.blocage || [],
 
   };
 }
@@ -103,7 +140,8 @@ let mapStateToProps = (state)=>{
 let mapDispatchToProps = (dispatch)=>{
   return{
     setClientState : ()=> dispatch(setClientState()),
-    blockAUser : (sessionId,user_id, wallet,date_fin)=> dispatch(setClientState(sessionId,user_id, wallet,date_fin))
+    setBloquageState : (a)=> dispatch(setBloquageState(a)),
+    blockAUser : (sessionId,username,date_fin)=> dispatch(blockAUser(sessionId,username,date_fin))
   }
 }
 
