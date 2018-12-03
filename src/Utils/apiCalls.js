@@ -475,7 +475,7 @@ export const sendLostCard = (login,success,failure) => {
     .then(res => res.json())
     .then((result) => {
       var mail = result.mail
-      fetch(`http://localhost:8000/sendLostCard`, {
+      fetch(`${PICSOUS_URL}sendLostCard`, {
         method: 'POST',
         body: JSON.stringify({
           mail
