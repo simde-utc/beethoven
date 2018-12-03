@@ -201,3 +201,9 @@ export const GET_BLOCKED_USERS_ERROR = "GET_BLOCKED_USERS_ERROR"
 export const GINGER_REQUEST = 'GINGER_REQUEST';
 export const GINGER_SUCCESS = 'GINGER_SUCCESS';
 export const GINGER_ERROR = 'GINGER_ERROR';
+
+//Envoie message carte etu perdue
+export const SEND_LOST_REQUEST = 'SEND_LOST_REQUEST';
+export const SEND_LOST_ERROR = 'SEND_LOST_ERROR';
+export const SEND_LOST_SUCCESS = 'SEND_LOST_SUCCESS';
+export const RESET_LOST = "RESET_LOST"

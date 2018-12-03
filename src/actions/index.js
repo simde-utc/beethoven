@@ -96,7 +96,11 @@ import {
   GINGER_ERROR,
   GET_BLOCKED_USERS_SUCCESS,
   GET_BLOCKED_USERS_ERROR,
-  GET_BLOCKED_USERS_REQUEST
+  GET_BLOCKED_USERS_REQUEST,
+  SEND_LOST_REQUEST,
+  SEND_LOST_SUCCESS,
+  SEND_LOST_ERROR,
+  RESET_LOST
 } from '../constants';
 
 import {
@@ -125,6 +129,7 @@ import {
   blockUser,
   gingerApiRequest,
   getAllBlockedUsers,
+  sendLostCard,
 } from '../Utils/apiCalls.js';
 
 // **************************************************************************
@@ -1259,4 +1264,50 @@ export function getBlockedUsers(sessionId)
       }
     )
   }
+}
+
+//Envoie carte etu perdu mail
+export function sendMailRequest()
+{
+  return{
+    type : SEND_LOST_REQUEST
+  }
+}
+
+export function sendMailSuccess(sended)
+{
+  return{
+    type: SEND_LOST_SUCCESS,
+    sended : 'sended'
+  }
+}
+
+export function sendMailError(sended)
+{
+  return{
+    type : SEND_LOST_ERROR,
+    sended: sended
+  }
+}
+
+export function sendMail(login)
+{
+  return (dispatch)=>{
+    dispatch(sendMailRequest());
+    sendLostCard(login,
+      (data)=>{
+        dispatch(sendMailSuccess(data))
+      },
+      (err)=>{
+        dispatch(sendMailError('Erreur : Envoie du mail a échoué'))
+      }
+    )
+  }
+}
+
+export function setMailState() {
+  return {
+    type: RESET_LOST,
+    sended: 'listen',
+  };
 }

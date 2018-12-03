@@ -410,6 +410,7 @@ export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
   .then(res =>res.json())
   .then(
       (resultWallet) =>{
+        console.log(resultWallet);
         brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
         .then(res => res.json())
         .then(
@@ -454,7 +455,44 @@ export const gingerApiRequest = (login, success, failure) => {
     })
     .then(res => res.json())
     .then((result) => {
+      console.log(result);
       success(result);
+    },
+    (err) => {
+      failure(err);
+    }).catch((err) => { failure(err); });
+};
+
+//send email lost card
+export const sendLostCard = (login,success,failure) => {
+  fetch(`${PERSONNAL_URL}ginger/${login}/${GINGER_KEY}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => res.json())
+    .then((result) => {
+      var mail = result.mail
+      fetch(`http://localhost:8000/sendLostCard`, {
+        method: 'POST',
+        body: JSON.stringify({
+          mail
+        }),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+      })
+        .then(res => res.json())
+        .then(
+          (result2) => {
+            success(result2);
+          },
+          (error2) => {
+            failure(error2);
+          },
+        ).catch((err) => { failure(err); });
     },
     (err) => {
       failure(err);

@@ -24,7 +24,8 @@ const initialStore = {
     sessionId : null,
     username : null, //default : null
     redirected : false,
-    rightsList : null
+    rightsList : null,
+    userMail : null
   },
 
   vente: {
@@ -62,6 +63,7 @@ const initialStore = {
     blocage: [],
     blocked: 'listen',
     list_blockedUsers: [],
+    sended: null
   }
 }
 
