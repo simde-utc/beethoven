@@ -136,6 +136,7 @@ export const getCategories = (sessionid, location, success, failure) => {
               for (let i = 0; i < id_Categ.length; i++) {
                 if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]));
               }
+              categ.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
               success(categ);
             },
             (erro) => {
@@ -414,13 +415,27 @@ export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
         .then(res => res.json())
         .then(
           (result) => {
-            console.log(result)
             success(result);
           },
           (error) => {
             failure(error);
           }
         ).catch((err)=>{failure(err)})
+      },
+      (error) => {
+        failure(error);
+      }
+  ).catch((err)=>{failure(err)})
+}
+
+//Recupération de tous les user bloqués :
+export const getAllBlockedUsers = (sessionId,success,failure)=>{
+  brequest('apiRequest','POST','BLOCKED','getAll', {fun_id: FUND_ID}, sessionId)
+  .then(res =>res.json())
+  .then(
+      (result) =>{
+        console.log(result)
+        success(result);
       },
       (error) => {
         failure(error);
@@ -440,7 +455,44 @@ export const gingerApiRequest = (login, success, failure) => {
     })
     .then(res => res.json())
     .then((result) => {
+      console.log(result);
       success(result);
+    },
+    (err) => {
+      failure(err);
+    }).catch((err) => { failure(err); });
+};
+
+//send email lost card
+export const sendLostCard = (login,success,failure) => {
+  fetch(`${PERSONNAL_URL}ginger/${login}/${GINGER_KEY}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => res.json())
+    .then((result) => {
+      var mail = result.mail
+      fetch(`${PICSOUS_URL}sendLostCard`, {
+        method: 'POST',
+        body: JSON.stringify({
+          mail
+        }),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+      })
+        .then(res => res.json())
+        .then(
+          (result2) => {
+            success(result2);
+          },
+          (error2) => {
+            failure(error2);
+          },
+        ).catch((err) => { failure(err); });
     },
     (err) => {
       failure(err);

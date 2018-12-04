@@ -95,6 +95,13 @@ import {
   GINGER_REQUEST,
   GINGER_SUCCESS,
   GINGER_ERROR,
+  GET_BLOCKED_USERS_SUCCESS,
+  GET_BLOCKED_USERS_ERROR,
+  GET_BLOCKED_USERS_REQUEST,
+  SEND_LOST_ERROR,
+  SEND_LOST_REQUEST,
+  SEND_LOST_SUCCESS,
+  RESET_LOST
 } from '../constants';
 
 function general(state = {}, action) {
@@ -422,6 +429,21 @@ function alerts(state = {}, action) {
         alertList : alertList
       })
       return state;
+
+      case GET_BLOCKED_USERS_ERROR:
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
+        state = Object.assign({}, state, {
+          alertList : alertList
+        })
+        return state;
+      case SEND_LOST_ERROR:
+        alertList = state.alertList.slice()
+        alertList.push({type:'danger', message:action.error});
+        state = Object.assign({}, state, {
+          alertList : alertList
+        })
+        return state;
     default:
       return state;
   }
@@ -445,6 +467,7 @@ function cas(state = {}, action) {
     case GINGER_SUCCESS:
       state = Object.assign({}, state, {
         userUid: action.userInfo.badge_uid,
+        userMail: action.userInfo.mail,
       });
       return state;
 
@@ -853,6 +876,26 @@ function admin(state = {}, action) {
     case SET_BLOCKED_STATE:
       state = Object.assign({}, state,{
         blocked : action.blocked
+      })
+      return state;
+
+    case GET_BLOCKED_USERS_REQUEST:
+      return state;
+    case GET_BLOCKED_USERS_SUCCESS:
+      state = Object.assign({}, state, {
+        list_blockedUsers : action.list_blockedUsers
+      })
+      return state;
+    case SEND_LOST_REQUEST:
+      return state;
+    case SEND_LOST_SUCCESS:
+      state = Object.assign({}, state, {
+        sended : action.sended
+      })
+      return state;
+    case RESET_LOST:
+      state = Object.assign({}, state, {
+        sended : 'listen'
       })
       return state;
     default :

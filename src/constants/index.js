@@ -192,7 +192,18 @@ export const BLOCK_USER_SUCCESS = "BLOCK_USER_SUCCESS"
 export const BLOCK_USER_ERROR = "BLOCK_USER_ERROR"
 export const SET_BLOCKED_STATE = "SET_BLOCKED_STATE"
 
+//Recup des users bloqués
+export const GET_BLOCKED_USERS_SUCCESS = "GET_BLOCKED_USERS_SUCCESS"
+export const GET_BLOCKED_USERS_REQUEST = "GET_BLOCKED_USERS_REQUEST"
+export const GET_BLOCKED_USERS_ERROR = "GET_BLOCKED_USERS_ERROR"
+
 // reccupération des informations ginger
 export const GINGER_REQUEST = 'GINGER_REQUEST';
 export const GINGER_SUCCESS = 'GINGER_SUCCESS';
 export const GINGER_ERROR = 'GINGER_ERROR';
+
+//Envoie message carte etu perdue
+export const SEND_LOST_REQUEST = 'SEND_LOST_REQUEST';
+export const SEND_LOST_ERROR = 'SEND_LOST_ERROR';
+export const SEND_LOST_SUCCESS = 'SEND_LOST_SUCCESS';
+export const RESET_LOST = "RESET_LOST"
