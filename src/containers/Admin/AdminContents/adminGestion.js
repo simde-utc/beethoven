@@ -42,93 +42,111 @@ class AdminGestion extends Component {
 
 
     if(info_client){
-      if(blocked=='listen'){
-        if(sended!='sended'){
-          info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}</h5>
-                              </div>
-                              <div class="modal-body text-info">
-                                <Container fluid>
-                                  <Row style = {{marginBottom : '5vh'}}>
-                                    <Col sm = '12' md='12'>
-                                      <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
-                                    </Col>
-                                  </Row>
-                                  <Row style = {{marginTop : '2vh'}}>
-                                    <Col sm = '12' md='12'>
-                                      <button type="button" class="btn btn-primary" onClick={()=> sendMail(info_client.username)}>Carte perdue : Envoyer un mail</button>
-                                    </Col>
-                                  </Row>
-                                </Container>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
-                              </div>
+      if(info_client.error){
+        info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title text-info" >Cette carte n'est invalide</h5>
                             </div>
-                          </div>
-                        </div>)
-            }else{
-              info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}</h5>
-                                  </div>
-                                  <div class="modal-body text-info">
-                                    <Container fluid>
-                                      <Row style = {{marginBottom : '5vh'}}>
-                                        <Col sm = '12' md='12'>
-                                          <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
-                                        </Col>
-                                      </Row>
-                                      <Row style = {{marginTop : '2vh'}}>
-                                        <Col sm = '12' md='12'>
-                                          <button type="button" class="btn btn-success">E-mail envoyé avec succès !</button>
-                                        </Col>
-                                      </Row>
-                                    </Container>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>)
-               setTimeout(function(){setMailState()}, 3000)
-            }
-      }else{
-        info = (
-          <div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}v</h5>
-                              </div>
-                              <div class="modal-body text-info">
-                                <Container fluid>
-                                  <Row style = {{marginBottom : '5vh'}}>
-                                    <Col sm = '12' md='12'>
-                                      <button type="button" class="btn btn-warning" data-dismiss="modal">Utilisateur bloqué</button>
-                                    </Col>
-                                  </Row>
-                                  <Row style = {{marginTop : '2vh'}}>
-                                    <Col sm = '12' md='12'>
-                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Carte perdue : Envoyer un mail</button>
-                                    </Col>
-                                  </Row>
-                                </Container>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => {setBloquageState('listen');
-                                                                                                                    setClientState()}}>Fermer</button>
-                              </div>
+                            <div class="modal-body text-info">
+                              L'utilisateur a soit été bloqué, soit il a changé de carte étudiante
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
                             </div>
                           </div>
                         </div>
-        )
+                      </div>)
+      }else{
+        if(blocked=='listen'){
+          if(sended!='sended'){
+            info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}</h5>
+                                </div>
+                                <div class="modal-body text-info">
+                                  <Container fluid>
+                                    <Row style = {{marginBottom : '5vh'}}>
+                                      <Col sm = '12' md='12'>
+                                        <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
+                                      </Col>
+                                    </Row>
+                                    <Row style = {{marginTop : '2vh'}}>
+                                      <Col sm = '12' md='12'>
+                                        <button type="button" class="btn btn-primary" onClick={()=> sendMail(info_client.username)}>Carte perdue : Envoyer un mail</button>
+                                      </Col>
+                                    </Row>
+                                  </Container>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>)
+              }else{
+                info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}</h5>
+                                    </div>
+                                    <div class="modal-body text-info">
+                                      <Container fluid>
+                                        <Row style = {{marginBottom : '5vh'}}>
+                                          <Col sm = '12' md='12'>
+                                            <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
+                                          </Col>
+                                        </Row>
+                                        <Row style = {{marginTop : '2vh'}}>
+                                          <Col sm = '12' md='12'>
+                                            <button type="button" class="btn btn-success">E-mail envoyé avec succès !</button>
+                                          </Col>
+                                        </Row>
+                                      </Container>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>)
+                 setTimeout(function(){setMailState()}, 3000)
+              }
+        }else{
+          info = (
+            <div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}v</h5>
+                                </div>
+                                <div class="modal-body text-info">
+                                  <Container fluid>
+                                    <Row style = {{marginBottom : '5vh'}}>
+                                      <Col sm = '12' md='12'>
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Utilisateur bloqué</button>
+                                      </Col>
+                                    </Row>
+                                    <Row style = {{marginTop : '2vh'}}>
+                                      <Col sm = '12' md='12'>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Carte perdue : Envoyer un mail</button>
+                                      </Col>
+                                    </Row>
+                                  </Container>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => {setBloquageState('listen');
+                                                                                                                      setClientState()}}>Fermer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+          )
+        }
       }
     }else{info = (<div></div>)}
 
