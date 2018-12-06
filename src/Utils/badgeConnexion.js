@@ -29,16 +29,17 @@ class BadgeConnexion extends Component {
 
   updatePin(pin, number) {
     const { getUserPin } = this.props;
+    console.log(pin)
 
-    const newPin = pin !== null ? pin + number : number;
+    const newPin = pin !== null ? pin.toString() + number.toString() : number.toString();
     let Masked = null;
     for (let i = 0; i < newPin.length - 1; i++) {
       Masked = Masked !== null ? `${Masked}*` : '*';
     }
-    Masked = Masked !== null ? Masked + number : number;
+    Masked = Masked !== null ? Masked + number.toString() : number.toString();
 
     if (newPin.length === 4) {
-      getUserPin(newPin);
+      getUserPin(newPin)
     }
 
     this.setState({
@@ -49,49 +50,28 @@ class BadgeConnexion extends Component {
 
 
   pinForm() {
+    const pinButtons = [[1,4,7,'#'],[2,5,8,0], [3,6,9,'*']];
+
     return (
       <ButtonToolbar>
-        <ButtonGroup
-          style={
-            {
-              margin: '0 auto',
-            }
+        <ButtonGroup style={
+          {
+            margin: '0 auto',
           }
+
+        }
         >
-          <ButtonGroup vertical>
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '1')}>1</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '4')}>4</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '7')}>7</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '#')}>#</Button>
-            {' '}
+        {
+          pinButtons.map(buttons => (<ButtonGroup vertical>
 
-          </ButtonGroup>
-          <ButtonGroup vertical>
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '2')}>2</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '5')}>5</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '8')}>8</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '0')}>0</Button>
-            {' '}
+    {
 
-          </ButtonGroup>
-          <ButtonGroup vertical>
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '3')}>3</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '6')}>6</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '9')}>9</Button>
-            {' '}
-            <Button size="lg" onClick={() => this.updatePin(this.state.ActualPin, '*')}>*</Button>
-            {' '}
+      buttons.map(button => <Button size="lg" onClick={() => {this.updatePin(this.state.ActualPin, button)}}>{ button }</Button>)
+    }
 
-          </ButtonGroup>
-        </ButtonGroup>
+  </ButtonGroup>))
+        }
+      </ButtonGroup>
 
 
       </ButtonToolbar>
@@ -108,7 +88,6 @@ class BadgeConnexion extends Component {
     return (
       <Modal
         isOpen={this.state.modal}
-        toggle={this.toggle}
       >
 
         <ModalBody

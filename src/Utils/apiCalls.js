@@ -436,7 +436,6 @@ export const getAllBlockedUsers = (sessionId,success,failure)=>{
   ).catch((err)=>{failure(err)})
 }
 
-// https://assos.utc.fr/ginger/v1/qrichard?key=NmQ6Ld7qT3Hrq939S7W2PNf2376k75Jp
 export const gingerApiRequest = (login, success, failure) => {
   fetch(`${PERSONNAL_URL}ginger/${login}/${GINGER_KEY}`,
     {
