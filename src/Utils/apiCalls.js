@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
 import '../App.css';
 import {
-  WEEZEVENT_APP_KEY, SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL, PERSONNAL_URL, GINGER_URL, GINGER_KEY,
+  SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL, PERSONNAL_URL, GINGER_KEY,
 } from './config';
 import { getTicketCas } from './utils';
 import brequest from './brequest';
@@ -134,7 +133,7 @@ export const getCategories = (sessionid, location, success, failure) => {
             (result) => {
               const categ = [];
               for (let i = 0; i < id_Categ.length; i++) {
-                if (result.find(o => o.id == id_Categ[i])) categ.push(result.find(o => o.id == id_Categ[i]));
+                if (result.find(o => o.id === id_Categ[i])) categ.push(result.find(o => o.id === id_Categ[i]));
               }
               categ.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
               success(categ);
@@ -177,7 +176,6 @@ export const setUserTransaction = (sessionid, badge, list_achats, success, failu
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result);
         success(result);
       },
       (error) => {
@@ -192,7 +190,6 @@ export const getUserInformation = (sessionId, badge, success, failure) => {
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result);
         success(result);
       },
       (error) => {
@@ -222,7 +219,6 @@ export const cancelUserTransaction = (sessionId, pur_id, success, failure) => {
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result);
         success(result);
       },
       (error) => {
@@ -329,7 +325,6 @@ export const getUrls = (success, failure) => {
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result);
         success(result);
       },
       (error) => {
@@ -410,7 +405,6 @@ export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
   .then(res =>res.json())
   .then(
       (resultWallet) =>{
-        console.log(resultWallet);
         brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
         .then(res => res.json())
         .then(
@@ -434,7 +428,6 @@ export const getAllBlockedUsers = (sessionId,success,failure)=>{
   .then(res =>res.json())
   .then(
       (result) =>{
-        console.log(result)
         success(result);
       },
       (error) => {
@@ -445,7 +438,6 @@ export const getAllBlockedUsers = (sessionId,success,failure)=>{
 
 // https://assos.utc.fr/ginger/v1/qrichard?key=NmQ6Ld7qT3Hrq939S7W2PNf2376k75Jp
 export const gingerApiRequest = (login, success, failure) => {
-  console.log(`${PERSONNAL_URL}ginger/${login}`);
   fetch(`${PERSONNAL_URL}ginger/${login}/${GINGER_KEY}`,
     {
       method: 'GET',
@@ -455,7 +447,6 @@ export const gingerApiRequest = (login, success, failure) => {
     })
     .then(res => res.json())
     .then((result) => {
-      console.log(result);
       success(result);
     },
     (err) => {

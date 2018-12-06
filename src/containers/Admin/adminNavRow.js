@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import '../../App.css';
 import {connect} from 'react-redux'
 
-import {MdTv} from 'react-icons/md'
-import {NavItem, NavLink} from 'reactstrap'
 
-import { Container, Col, Row } from 'reactstrap';
+import {Col, Row } from 'reactstrap';
 
 import {updateAdminNav, setTvLink} from '../../actions'
 import Hidden from '@material-ui/core/Hidden'
 class AdminNavRow extends Component {
   render() {
     const {AdminNav} = this.props
-    const {updateAdminNav, setTvLink} = this.props
+    const {updateAdminNav} = this.props
     return(
       <div
         className ="AdminNavRow"
@@ -45,7 +43,6 @@ class AdminNavRow extends Component {
 
           active = {this.props.index   === AdminNav}
           onClick = {()=>{
-            console.log(this.props.index)
             updateAdminNav(this.props.index)
 //            setTvLink(1, "http://assos.utc.fr/", true)
 //            setTvLink(2, "http://beethoven.picasso-utc.fr/NextMenus", true)
@@ -87,5 +84,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(AdminNavRow);
+)(AdminNavRow);

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-
 import {connect} from 'react-redux';
 
 import '../../App.css';
-import {Nav, NavItem, NavLink} from 'reactstrap';
-import { Container, Col, Row } from 'reactstrap';
-import {Table, Button } from 'reactstrap';
+import {NavItem} from 'reactstrap';
+import {Button } from 'reactstrap';
 import {FaTrash} from 'react-icons/fa';
 import {deleteMenus, getMenus, getList, updateNavIndex} from '../../actions'
 import ModalDelete from './modalDelete'
@@ -19,7 +17,7 @@ class MenuNavButton extends Component{
   }
   render(){
     const {NavIndex} = this.props;
-    const {deleteMenus, updateNavIndex, getMenus, getList} = this.props;
+    const { updateNavIndex, getList} = this.props;
     return(
       <tr style = {
         this.props.index === NavIndex ?
@@ -48,7 +46,6 @@ class MenuNavButton extends Component{
         <td><Button
           size="sm"
           onClick = {()=>{
-            console.log(this.state.modal)
             if(this.state.modal === true) this.setState({modal : !this.state.modal})
             this.setState({modal : !this.state.modal})
 
@@ -86,5 +83,4 @@ let mapDispatchToProps = (dispatch)=>{
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)
-  (MenuNavButton);
+  mapDispatchToProps)(MenuNavButton);

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Modal, ModalHeader, ModalBody, ModalFooter,
+  Modal, ModalBody, ModalFooter,
 } from 'reactstrap';
-import { Button, ButtonGroup, ButtonToolbar } from 'reactstrap';
-import { CAS_LINK } from './config';
+import { Button} from 'reactstrap';
 import { getEventArticles, getSalesLocations } from '../actions';
 
 
@@ -32,13 +31,13 @@ class TypeEvents extends Component {
 
   render() {
     const {
-      getEventArticles, event_id, picked, listLocation,
+      getEventArticles, listLocation,
     } = this.props;
 
     const location = [];
     if (listLocation) {
       listLocation.forEach((element, i) => {
-        if (i == 0) {
+        if (i === 0) {
           location.push(
             <Button
               color="primary"

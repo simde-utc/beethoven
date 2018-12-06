@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Modal, ModalHeader, ModalBody, ModalFooter,
+  Modal, ModalBody,
 } from 'reactstrap';
 import { Button, ButtonGroup, ButtonToolbar } from 'reactstrap';
-import { CAS_LINK } from './config';
 import {
-  getUserPin, getUserUid, setUserConnected, loginBadge, redirectLogin, login,
+  getUserPin, getUserUid, loginBadge, redirectLogin, login,
 } from '../actions';
 
 class BadgeConnexion extends Component {
@@ -30,7 +29,6 @@ class BadgeConnexion extends Component {
 
   updatePin(pin, number) {
     const { getUserPin } = this.props;
-    const { userUid, userPin } = this.props;
 
     const newPin = pin !== null ? pin + number : number;
     let Masked = null;
@@ -102,7 +100,7 @@ class BadgeConnexion extends Component {
 
   render() {
     const { userUid, userPin } = this.props;
-    const { loginBadge, redirectLogin } = this.props;
+    const { loginBadge} = this.props;
 
     if (userUid !== null && userPin !== null) {
       loginBadge(userUid, userPin);

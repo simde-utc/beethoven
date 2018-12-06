@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
 
-import {InputGroup, InputGroupAddon, InputGroupText, Jumbotron, Button,ButtonGroup, Label, Table} from 'reactstrap'
+import {Jumbotron, Table} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
 import {setBloquageState, blockAUser, setClientState, getBlockedUsers, sendMail, setMailState } from "../../../actions"
 
@@ -20,8 +20,8 @@ class AdminGestion extends Component {
   }
 
   render() {
-    const {sessionId, username, info_client, blocage, blocked,clientUid,list_blockedUsers, sended} = this.props
-    const {sendMail,setBloquageState, blockAUser, setClientState,getBlockedUsers, setMailState} = this.props
+    const {sessionId, username, info_client, blocked,clientUid,list_blockedUsers, sended} = this.props
+    const {sendMail,setBloquageState, blockAUser, setClientState, setMailState} = this.props
     let info;
     let today = new Date();
     today.setMonth(today.getMonth()+6);
@@ -42,8 +42,8 @@ class AdminGestion extends Component {
 
 
     if(info_client){
-      if(blocked=='listen'){
-        if(sended!='sended'){
+      if(blocked==='listen'){
+        if(sended!=='sended'){
           info = (<div class="modal show" id="infoblock" style={{display: 'inline-block'}} role="dialog">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -210,5 +210,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(AdminGestion);
+)(AdminGestion);

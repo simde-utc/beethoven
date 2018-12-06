@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 
-import {connect} from 'react-redux'
 import './App.css';
 import Header from './header';
-import MenuBody from './containers/Menu/menu';
-import Loading from './Utils/loading'
 
 import MenusToServe from './containers/NextMenus/menusdisplayer'
 import WebTV from './containers/WebTV/webTV'
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
 

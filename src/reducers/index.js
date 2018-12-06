@@ -20,7 +20,6 @@ import {
   SET_STAFF_SUCCESS,
   SET_STAFF_REQUEST,
   ADD_ALERT,
-  DELETE_ERROR,
   DELETE_ALERT,
   BADGEUSE_IS_PRESENT,
   SET_USER_CONNECTED,
@@ -92,7 +91,6 @@ import {
   BLOCK_USER_ERROR,
   SET_BLOCKED_STATE,
   CHANGE_PANEL,
-  GINGER_REQUEST,
   GINGER_SUCCESS,
   GINGER_ERROR,
   GET_BLOCKED_USERS_SUCCESS,
@@ -120,8 +118,6 @@ function general(state = {}, action) {
 }
 
 function menus(state = {}, action) {
-  let alertList;
-
   switch (action.type) {
     case GET_MENUS_REQUEST:
       return state;
@@ -138,9 +134,7 @@ function menus(state = {}, action) {
       return state;
 
     case DELETE_MENU_SUCCESS:
-      console.log(action.idMenu);
       const newListMenu = action.MenuList.filter(i => i.article.id_payutc.toString() !== action.idMenu.toString());
-      console.log(newListMenu);
       state = Object.assign({}, state,
         {
           MenuList: newListMenu,
@@ -154,6 +148,8 @@ function menus(state = {}, action) {
           NavIndex: action.index,
           loading: true,
         });
+        return state
+
     case GET_LIST_REQUEST:
       return state;
 
@@ -606,7 +602,6 @@ function vente(state = {}, action) {
               ...state,
               selectedArticles: arr,
             };
-            break;
           }
         }
         if (!found) {
@@ -634,6 +629,8 @@ function vente(state = {}, action) {
           selectedArticles: newList,
         };
       }
+      return state
+
     case DELETE_ARTICLE:
       const arr = [...state.selectedArticles];
       const res = arr.filter(item => item.newID !== action.newID);
@@ -641,7 +638,6 @@ function vente(state = {}, action) {
         ...state,
         selectedArticles: res,
       };
-      break;
     case DELETE_ALL_ARTICLES:
       return {
         ...state,
@@ -675,7 +671,6 @@ function vente(state = {}, action) {
     default:
       return state;
   }
-  return state;
 }
 
 function webTV(state = {}, action) {
@@ -777,7 +772,7 @@ function achats(state = {}, action) {
     case CANCEL_ARTICLE_SUCCESS:
       const tab = state.info_client.last_purchases;
       const deletedActualized = tab.filter(function (t) {
-        return t.pur_id != action.deleted_id;
+        return t.pur_id !== action.deleted_id;
       });
       return {
         ...state,
@@ -788,10 +783,7 @@ function achats(state = {}, action) {
           last_purchases: deletedActualized
         }
       }
-      state = Object.assign({}, state,{
-        cancel : action.cancel
-      });
-      return state;
+
     case DELETE_ARTICLE_CANCELED:
       return state;
     default:
@@ -855,6 +847,7 @@ function admin(state = {}, action) {
       state = Object.assign({}, state, {
         urls: action.urls,
       });
+      return state
 
     case GET_GOODIES_REQUEST:
       return state;
@@ -863,6 +856,7 @@ function admin(state = {}, action) {
     state = Object.assign({}, state, {
       goodiesList: action.goodiesList
     })
+    return state
 
     case BLOCK_USER_REQUEST:
     return state;
@@ -873,6 +867,7 @@ function admin(state = {}, action) {
       blocked: 'effective'
     })
     return state;
+
     case SET_BLOCKED_STATE:
       state = Object.assign({}, state,{
         blocked : action.blocked
