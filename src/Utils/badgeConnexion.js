@@ -29,8 +29,6 @@ class BadgeConnexion extends Component {
 
   updatePin(pin, number) {
     const { getUserPin } = this.props;
-    console.log(pin)
-
     const newPin = pin !== null ? pin.toString() + number.toString() : number.toString();
     let Masked = null;
     for (let i = 0; i < newPin.length - 1; i++) {

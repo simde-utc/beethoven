@@ -37,9 +37,6 @@ class WebSocketConnexion extends Component {
         onOpen={() => {
           badgeuseIsPresent(true);
         }}
-        onClose={() => {
-          badgeuseIsPresent(false);
-        }}
       />
     );
   }
