@@ -11,7 +11,7 @@ class WebSocketConnexion extends Component {
     const { setTransaction, getInformation } = this.props;
     const { badgeuse, connected } = this.props;
     const {
-      selectedArticles, sessionId, clientUid, activePanel,
+      selectedArticles, sessionId, activePanel,
     } = this.props;
     return (
       <Websocket
@@ -37,9 +37,6 @@ class WebSocketConnexion extends Component {
         }}
         onOpen={() => {
           badgeuseIsPresent(true);
-        }}
-        onClose={() => {
-          badgeuseIsPresent(false);
         }}
       />
     );

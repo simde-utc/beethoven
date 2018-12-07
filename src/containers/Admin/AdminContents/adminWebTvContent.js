@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
 
-import {InputGroup, InputGroupAddon, InputGroupText, Input, Button,ButtonGroup, Label} from 'reactstrap'
+import {InputGroup, InputGroupAddon, Input, Button} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
 
 
@@ -22,7 +22,7 @@ class AdminWebTvContent extends Component {
   }
   componentWillMount()
   {
-    const {getTvLink,webTv1Url, webTv2Url, getDefaultUrl} = this.props;
+    const {getTvLink, getDefaultUrl} = this.props;
     getTvLink(1)
     getTvLink(2)
     getDefaultUrl()
@@ -288,5 +288,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(AdminWebTvContent);
+)(AdminWebTvContent);

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
 
-import {InputGroup, InputGroupAddon, InputGroupText, Input, Button, Label} from 'reactstrap'
+import {InputGroup, InputGroupAddon, Input, Button} from 'reactstrap'
 import { Container, Col, Row, Table } from 'reactstrap';
 
-import {MdMessage} from 'react-icons/md'
 import {FaTrash} from 'react-icons/fa'
 
 import {getMessagesList, addMessage, deleteMessage} from '../../../actions'
@@ -129,5 +128,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(AdminWebTvContent);
+)(AdminWebTvContent);

@@ -7,8 +7,8 @@ import {validateMenu, getMenus, getList, setStaff} from '../../actions'
 
 class MenuRow extends Component {
   render(){
-    const {listSales, NavIndex} = this.props;
-    const {validateMenu, getList, setStaff} = this.props
+    const {listSales} = this.props;
+    const {validateMenu, setStaff} = this.props
     return(
       <tr
         style = {this.props.served===true ?
@@ -71,5 +71,4 @@ let mapDispatchToProps = (dispatch)=>{
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)
-  (MenuRow)
+  mapDispatchToProps)(MenuRow)

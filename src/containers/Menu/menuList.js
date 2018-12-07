@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {REFRESH_TIMER} from '../../Utils/config'
 import '../../App.css';
-import {Nav, NavItem, NavLink} from 'reactstrap';
-import {Table, Button } from 'reactstrap';
+import {Table} from 'reactstrap';
 import MenuRow from './menuRow'
 import {getList} from "../../actions"
 import Loading from '../../Utils/loading'
@@ -38,8 +37,6 @@ componentWillUnMount(){
 }
 
 updateData = ()=>{
-  const {NavIndex} = this.props;
-
     this.interval = setInterval(
       ()=>{
           this.props.getList(this.props.NavIndex)
@@ -50,7 +47,6 @@ updateData = ()=>{
 
 render(){
   const {NavIndex, listSales, loading} = this.props;
-  const {getList} = this.props;
   let MenuList = []
 
 
@@ -115,5 +111,5 @@ let mapDispatchToProps = (dispatch)=>{
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)
-  (MenuList);
+  mapDispatchToProps
+)(MenuList);

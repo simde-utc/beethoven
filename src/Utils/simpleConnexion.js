@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Modal, ModalHeader, ModalBody, ModalFooter,
+  Modal, ModalBody,
 } from 'reactstrap';
-import { Button, ButtonGroup, ButtonToolbar } from 'reactstrap';
+import { Button} from 'reactstrap';
 import {
   Container, Col, Row, Input,
 } from 'reactstrap';
-import { CAS_LINK } from './config';
 import {
-  getUserPin, getUserUid, setUserConnected, loginBadge, redirectLogin, login, ginger,
+  getUserPin, getUserUid, loginBadge, redirectLogin, login, ginger,
 } from '../actions';
 
 class SimpleConnexion extends Component {
@@ -34,7 +33,7 @@ class SimpleConnexion extends Component {
 
   render() {
     const { userUid, userPin } = this.props;
-    const { loginBadge, redirectLogin } = this.props;
+    const { loginBadge} = this.props;
 
     if (userUid !== null && userPin !== null) {
       loginBadge(userUid, userPin);

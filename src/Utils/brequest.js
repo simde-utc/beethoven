@@ -33,6 +33,9 @@ const brequest = (server, method, service = null, request, data = null, sessioni
           },
         },
       );
+
+      default:
+        break;
   }
 };
 

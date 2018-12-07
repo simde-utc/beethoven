@@ -23,7 +23,7 @@ class Loading extends Component {
     if (this.state.ready) {
       if (this.state.started) {
         this.setState({ started: false });
-        const myVivus = new Vivus('my-svg',
+        new Vivus('my-svg',
           {
             type: 'delayed',
             duration: 150,
@@ -38,7 +38,7 @@ class Loading extends Component {
 
     return (
       <div className="AdminNav">
-        <object id="my-svg" type="image/svg+xml" data={svg} style={{ height: this.props.height }} />
+        <object id="my-svg" type="image/svg+xml" data={svg} style={{ height: this.props.height }} aria-label="Chargement"/>
 
       </div>
 

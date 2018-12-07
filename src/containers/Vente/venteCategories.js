@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 
 import { getListCateg, updateCategorie } from "../../actions"
 
 
-{/*Liste des catégories*/}
+/*Liste des catégories*/
 class Categorie extends Component {
   componentWillMount() {
-    const {listCateg, sessionId, loaded, event_id} = this.props
-    const { getListCateg, updateCategorie } = this.props;
+    const {sessionId, event_id} = this.props
+    const { getListCateg} = this.props;
     getListCateg(sessionId,event_id);
   }
   render() {
@@ -30,7 +29,7 @@ let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
     sessionId : state.cas.sessionId || null,
-    listCateg : state.vente.loaded || false,
+    loaded : state.vente.loaded || false,
     listCateg : state.vente.listCateg || [],
     event_id : state.vente.event_id || null
   };
@@ -43,7 +42,4 @@ let mapDispatchToProps = (dispatch)=>{
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)
-(Categorie);
+export default connect(mapStateToProps,mapDispatchToProps)(Categorie);

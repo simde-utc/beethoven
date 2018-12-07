@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 
 import '../../App.css';
-import {Modal, ModalHeader, ModalBody, ModalFooter, Button} from 'reactstrap'
+import {Modal, ModalHeader, ModalFooter, Button} from 'reactstrap'
 import {deleteMenus, getMenus} from '../../actions'
 
 
@@ -24,7 +24,7 @@ toggle() {
   }
 
 render(){
-  const {deleteMenus, getMenus, MenuList} = this.props;
+  const {deleteMenus, MenuList} = this.props;
 
   return(
     <Modal

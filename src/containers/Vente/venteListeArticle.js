@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 
-import { updateCategorie, getChosenArticle, getListArticles } from "../../actions"
+import {getChosenArticle, getListArticles } from "../../actions"
 
-{/*Affichage des articles dans la colonne de droites par catégorie*/}
+/*Affichage des articles dans la colonne de droites par catégorie*/
 class ListeArticle extends Component {
   componentWillMount() {
-    const { sessionId, listArticles } = this.props;
+    const { sessionId} = this.props;
     const { getListArticles } = this.props;
     getListArticles(sessionId);
   }
@@ -28,12 +27,6 @@ class ListeArticle extends Component {
                        pointerEvents: 'none',
                        outline: 'none'
                       }
-    var styleText = {color: 'black',
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      overflow: 'hidden'
-                    }
     var styleDiv = {
       background: 'white',
       minWidth: '90px',
@@ -55,13 +48,13 @@ class ListeArticle extends Component {
                     }
     var displayArticle = [];
     listArticles.forEach(function(element,i) {
-      if(element.categorie_id==id_Categ){
-        if(i==0){
+      if(element.categorie_id===id_Categ){
+        if(i===0){
           if(element.image_url){
             displayArticle.push(
               <div class="col-md-5ths col-xs-6 p-0" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
                 <button type="button" class="btn btn-lg btn-block p-0" style={styleButton}>
-                  <img class="card-img-top" src={element.image_url} alt="Card image cap" style={styleImg} width="80" height="80"></img>
+                  <img class="card-img-top" src={element.image_url} alt="Card" style={styleImg} width="80" height="80"></img>
                 </button>
               </div>
               )
@@ -80,7 +73,7 @@ class ListeArticle extends Component {
           displayArticle.push(
             <div class="col-md-5ths col-xs-6 p-0" onClick={() => getChosenArticle(element.id,element.name,element.price, selectedArticles)}>
               <button type="button" class="btn btn-lg btn-block p-1" style={styleButton}>
-                <img class="card-img-top" draggable="false" src={element.image_url} alt="Card image cap" style={styleImg} width="100" height="100"></img>
+                <img class="card-img-top" draggable="false" src={element.image_url} alt="Card" style={styleImg} width="100" height="100"></img>
               </button>
             </div>
             )
@@ -126,5 +119,4 @@ let mapDispatchToProps = (dispatch)=>{
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)
-(ListeArticle);
+  mapDispatchToProps)(ListeArticle);

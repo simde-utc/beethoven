@@ -12,7 +12,6 @@ import {FUND_ID} from './Utils/config'
 import {
   login,
   redirectLogin,
-  deleteError,
   restart,
   deleteAlert,
   getRights,
@@ -22,15 +21,12 @@ import {
   ginger
 } from './actions'
 import {printAlert} from './Utils/utils'
-import {CAS_LINK} from './Utils/config'
 import BadgeConnexion  from './Utils/badgeConnexion'
 import SimpleConnexion from './Utils/simpleConnexion'
 import WebSocketConnexion from './Utils/websocket'
 import TypeEvents from './Utils/typeEvents.js'
-import {checkRights, deleteCookies} from './Utils/utils'
+import {checkRights} from './Utils/utils'
 
-
-import {gingerApiRequest} from './Utils/apiCalls'
 class Header extends Component {
 
   constructor(props){
@@ -54,9 +50,9 @@ class Header extends Component {
 
   render() {
     const {alertList, badgeuse, redirected, rightsList} = this.props;
-    const {deleteError, redirectLogin, login, restart, getRights, addAlert} = this.props;
+    const {redirectLogin, login, restart, getRights, addAlert} = this.props;
     const{sessionId, connected, username} = this.props;
-    const {event_id, picked} = this.props
+    const {picked} = this.props
 
 
     //affichage de l'ensemble des erreurs du programme
@@ -74,7 +70,7 @@ class Header extends Component {
     let affichage=null;
     switch(this.props.activePanel){
       case 'Vente':
-        if(sessionId!==null && picked==true && rightsList!==null)
+        if(sessionId!==null && picked===true && rightsList!==null)
         {
 
           if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
@@ -132,6 +128,7 @@ class Header extends Component {
             this.setState({denieAccess:true})
         }
         }
+        break;
       default:
         break;
     }
@@ -177,8 +174,8 @@ class Header extends Component {
                     this.props.disconnect()
                     this.props.changePanel('Admin')
                   }}>Admin</Button>" "
-              <Button color="danger" onClick={()=>{
-                  this.props.ginger(this.props.username)
+              <Button color="danger" href='#' onClick={()=>{
+                  this.props.disconnect()
                 }}>Déconnexion</Button>
             </div>
           </nav>

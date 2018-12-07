@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
 import '../../App.css';
-import {Nav, NavItem, NavLink} from 'reactstrap';
-import {Table, Button } from 'reactstrap';
-import {FaTrash} from 'react-icons/fa';
+import {Nav} from 'reactstrap';
 import MenuNavButton from './menuNavButton'
 
 
-import {updateNavIndex, getMenus, getList} from "../../actions"
+import {updateNavIndex, getMenus} from "../../actions"
 
 class MenuNav extends Component{
 
@@ -19,8 +17,7 @@ class MenuNav extends Component{
   }
 
   render(){
-    const {MenuList, NavIndex} = this.props;
-    const {getMenus, updateNavIndex, getList} = this.props;
+    const {MenuList} = this.props;
     let List = []
     if(MenuList!== [] ){
       MenuList.forEach((item)=>{
@@ -78,5 +75,4 @@ let mapDispatchToProps = (dispatch)=>{
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)
-  (MenuNav);
+  mapDispatchToProps)(MenuNav);
