@@ -21,7 +21,6 @@ class ListeArticle extends Component {
     const { getChosenArticle } = this.props
     const { sessionId } = this.props;
     const { getListArticles } = this.props;
-    setTimeout(function(){getListArticles(sessionId)}, 60000)
     var styleButton = {background: 'none',
                        minWidth: '120px',
                        minHeight: '120px',
