@@ -98,7 +98,7 @@ class Vente extends Component {
                           </div>
                         </div>)
           }
-    }else{info = (<div></div>)}
+    }
     return (
       <div className="Header">
         <div class="row mr-4 ml-0">

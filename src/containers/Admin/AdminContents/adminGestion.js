@@ -148,7 +148,7 @@ class AdminGestion extends Component {
           )
         }
       }
-    }else{info = (<div></div>)}
+    }
 
 
 
