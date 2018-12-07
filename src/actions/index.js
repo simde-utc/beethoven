@@ -1138,7 +1138,6 @@ export function gingerRequest() {
 }
 
 export function gingerSuccess(userInfo) {
-  console.log(userInfo);
   return {
     type: GINGER_SUCCESS,
     userInfo,

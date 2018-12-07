@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert } from 'reactstrap';
 import { connect } from 'react-redux';
 import { DELETE_ERROR_TIMOUT } from './config';

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 import Achats from "./venteAchats.js"
 import ListeArticle from "./venteListeArticle.js"
@@ -23,21 +22,21 @@ class Vente extends Component {
                                   </div>)
 
     let stateTrans;
-    if(state_transaction=='loading'){
+    if(state_transaction==='loading'){
       stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
                     Transaction en cours.... !
                   </div>);
-    }else if(state_transaction=='success'){
+    }else if(state_transaction==='success'){
       stateTrans = (<div class="alert ml-2 w-100 bg-success" role="alert">
                     Transaction effectuée, ton nouveau solde Payutc est de {info_transaction.solde/100} € !
                   </div>);
       setTimeout(function(){setTransactionState('listen')}, 3000)
-    }else if(state_transaction=='listen'){
+    }else if(state_transaction==='listen'){
        stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
                         Prêt !
                       </div>)
             }
-      else if(state_transaction=='failed'){
+      else if(state_transaction==='failed'){
         stateTrans = (<div class="alert ml-2 w-100 bg-danger" role="alert">
                        {info_transaction.error.message}
                     </div>);
@@ -48,15 +47,15 @@ class Vente extends Component {
       let list_last_purchases = [];
       list_last_purchases.push(
         <tr>
-          <td> Quantité </td>
-          <td scope="row"> Nom </td>
-          <td> Prix </td>
+          <th> Quantité </th>
+          <th scope="row"> Nom </th>
+          <th> Prix </th>
             <td>
             </td>
         </tr>
       )
       info_client.last_purchases.forEach(function(el) {
-        let name = listArticles.filter((item) =>  item.id == el.obj_id);
+        let name = listArticles.filter((item) =>  item.id === el.obj_id);
         list_last_purchases.push(
           <tr>
             <td> {el.pur_qte} </td>
@@ -158,7 +157,4 @@ let mapDispatchToProps = (dispatch)=>{
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)
-(Vente);
+export default connect(mapStateToProps, mapDispatchToProps)(Vente);

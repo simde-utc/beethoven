@@ -67,12 +67,9 @@ const initialStore = {
   }
 }
 
-export const store = createStore
-(
+export const store = createStore(
   beethoven,
   initialStore,
   compose(
     applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-)
+    window.devToolsExtension ? window.devToolsExtension() : f => f))

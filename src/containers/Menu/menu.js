@@ -49,5 +49,4 @@ let mapStateToProps = (state)=>{
 
 export default connect(
   mapStateToProps
-)
-(MenuBody);
+)(MenuBody);

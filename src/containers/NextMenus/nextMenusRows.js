@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import '../../App.css';
-import {Button } from 'reactstrap';
-
 
 class NextMenuRow extends Component {
   render(){
@@ -38,5 +36,4 @@ let mapDispatchToProps = (dispatch)=>{
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)
-  (NextMenuRow)
+  mapDispatchToProps)(NextMenuRow)
