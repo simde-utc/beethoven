@@ -32,6 +32,11 @@ class Vente extends Component {
                     Transaction effectuée, ton nouveau solde Payutc est de {info_transaction.solde/100} € !
                   </div>);
       setTimeout(function(){setTransactionState('listen')}, 3000)
+    }else if(state_transaction=='recup'){
+      stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
+                    Récupération des informations...
+                  </div>);
+      setTimeout(function(){setTransactionState('listen')}, 1000)
     }else if(state_transaction=='listen'){
        stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
                         Prêt !

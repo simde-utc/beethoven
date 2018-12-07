@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Websocket from 'react-websocket';
 import { connect } from 'react-redux';
 import {
-  badgeuseIsPresent, setUserConnected, getUserUid, setTransaction, getClientUid, getInformation,
+  badgeuseIsPresent, setUserConnected, getUserUid, setTransaction, getClientUid, getInformation, setTransactionState
 } from '../actions';
 
 class WebSocketConnexion extends Component {
   render() {
-    const { badgeuseIsPresent, getUserUid, getClientUid } = this.props;
+    const { badgeuseIsPresent, getUserUid, getClientUid, setTransactionState } = this.props;
     const { setTransaction, getInformation } = this.props;
     const { badgeuse, connected } = this.props;
     const {
@@ -27,6 +27,7 @@ class WebSocketConnexion extends Component {
               } else {
                 getClientUid(data.substr(13, data.length));
                 getInformation(sessionId, data.substr(13, data.length));
+                setTransactionState('recup');
               }
             }else if (activePanel === "Admin") {
               getClientUid(data.substr(13, data.length));
@@ -62,6 +63,7 @@ const mapDispatchToProps = dispatch => ({
   getClientUid: uid => dispatch(getClientUid(uid)),
   setTransaction: (session, list, uid) => dispatch(setTransaction(session, list, uid)),
   getInformation: (session, uid) => dispatch(getInformation(session, uid)),
+  setTransactionState: (information) => dispatch(setTransactionState(information)),
 });
 export default connect(
   mapStateToProps,
