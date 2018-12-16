@@ -60,8 +60,11 @@ class AdminImagesContent extends Component {
   }
 
   uploadHandler = () => {
-    console.log(this.state.selectedFile);
-    axios.post('my-domain.com/file-upload', this.state.selectedFile)
+    // console.log(this.state.selectedFile);
+    // axios.post('http://37.139.25.111/upload/', this.state.selectedFile)
+    const formData = new FormData()
+    formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+    axios.post('http://37.139.25.111/upload/', formData)
     }
 
 
