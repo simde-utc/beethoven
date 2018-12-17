@@ -11,9 +11,15 @@ class ListeArticle extends Component {
     const { getListArticles } = this.props;
     getListArticles(sessionId);
   }
+
+  componentWillUnmount() {
+      clearInterval();
+  }
   render() {
     const { id_Categ, listArticles, selectedArticles } = this.props
     const { getChosenArticle } = this.props
+    const { sessionId } = this.props;
+    const { getListArticles } = this.props;
     var styleButton = {background: 'none',
                        minWidth: '120px',
                        minHeight: '120px',
