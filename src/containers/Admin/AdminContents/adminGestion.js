@@ -47,7 +47,7 @@ class AdminGestion extends Component {
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title text-info" >Cette carte n'est invalide</h5>
+                              <h5 class="modal-title text-info" >Cette carte est invalide</h5>
                             </div>
                             <div class="modal-body text-info">
                               L'utilisateur a soit été bloqué, soit il a changé de carte étudiante
