@@ -79,6 +79,7 @@ class Vente extends Component {
                 </td>
             </tr>
         )
+      });
         info_client.last_purchases.forEach(function(el) {
           let name = listArticles.filter((item) =>  item.id == el.obj_id);
           list_last_purchases.push(

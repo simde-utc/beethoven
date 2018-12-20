@@ -54,6 +54,11 @@ class AdminGestion extends Component {
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )        
       }else{
         if(blocked==='listen'){
           if(sended!=='sended'){
@@ -143,6 +148,7 @@ class AdminGestion extends Component {
                           </div>
           )
         }
+
       }
     }
 
