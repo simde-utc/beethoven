@@ -8,6 +8,7 @@ import AdminWebTvContent from './AdminContents/adminWebTvContent'
 import AdminMessagesContent from './AdminContents/adminMessagesContent'
 import AdminGestion from './AdminContents/adminGestion'
 import AdminGoodiesContent from './AdminContents/adminGoodiesContent'
+import AdminMultiInfo from './AdminContents/adminMultiInfo'
 
 class AdminPanel extends Component {
   render() {
@@ -32,9 +33,10 @@ class AdminPanel extends Component {
 
 
                 {adminIndex===1 && <AdminWebTvContent/>}
-                {adminIndex===2 && <AdminMessagesContent/>}
-                {adminIndex===4 && <AdminGestion/>}
-                {adminIndex===5 && <AdminGoodiesContent/>}
+                {adminIndex===2 && <AdminMultiInfo/>}
+                {adminIndex===3 && <AdminMessagesContent/>}
+                {adminIndex===5 && <AdminGestion/>}
+                {adminIndex===6 && <AdminGoodiesContent/>}
               </Col>
             </Row>
           </Container>

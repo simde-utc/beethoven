@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../App.css';
 import {connect} from 'react-redux'
 
-import {MdTv, MdMessage, MdPhoto, MdCardGiftcard} from 'react-icons/md'
+import {MdTv, MdMessage, MdPhoto, MdCardGiftcard, MdPhotoLibrary} from 'react-icons/md'
 import {FaMedal} from 'react-icons/fa'
 import { Container} from 'reactstrap';
 
@@ -12,6 +12,7 @@ class AdminNav extends Component {
   render() {
     let myRows = [
       {logo:"MdTv", nom : 'WebTVs'},
+      {logo:"MdPhotoLibrary", nom:'Multi-Info'},
       {logo:'MdMessage', nom : 'Messages'},
       {logo:'MdPhoto', nom : 'Images'},
       {logo: 'MdCardGiftcard', nom : 'Gestion Carte'},
@@ -25,6 +26,12 @@ class AdminNav extends Component {
         case "MdTv":
         dataToStore.push(
             <AdminNavRow index = {id+1} logo={<MdTv size="2em"></MdTv>} nom={elt.nom}></AdminNavRow>
+          )
+        break;
+
+        case "MdPhotoLibrary":
+        dataToStore.push(
+            <AdminNavRow index = {id+1} logo={<MdPhotoLibrary size="2em"></MdPhotoLibrary>} nom={elt.nom}></AdminNavRow>
           )
         break;
 

@@ -48,6 +48,13 @@ class App extends Component {
                   <MenusToServe></MenusToServe>
                 </div>
               )}/>
+
+            <Route exact={true} path="/MultiInformations" render= {() => (
+              <div className="App">
+                <div>patate</div>
+              </div>
+              )}/>
+
           </div>
         </Router>
       );
