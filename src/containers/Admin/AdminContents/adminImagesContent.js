@@ -60,25 +60,12 @@ class AdminImagesContent extends Component {
   }
 
   uploadHandler = () => {
-    // console.log(this.state.selectedFile);
-    // axios.post('http://37.139.25.111/upload/', this.state.selectedFile)
+
     const formData = new FormData()
     formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+    console.log(formData);
     axios.post('http://37.139.25.111/upload/', formData)
     }
-
-
-
-   // uploadHandler (){
-   //   let url = SERVICE_URL;
-   //   //console.log("césarbatard");
-   //   axios.post( url + '/src/images', this.state.file).then(function (response) {
-   //  console.log(response);
-   //  })
-   //    .catch(function (error) {
-   //      console.log(error);
-   //    });;
-   // }
 
 
   render() {
