@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { Container, Col, Row } from 'reactstrap';
 import MenuToServe from './nextmenus'
 
 

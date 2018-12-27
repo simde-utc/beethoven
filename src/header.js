@@ -7,68 +7,53 @@ import AdminPanel from './containers/Admin'
 import {connect} from 'react-redux'
 import { Button } from 'reactstrap';
 
-import {login, redirectLogin, deleteError, restart, deleteAlert, getRights, addAlert} from './actions'
+import {FUND_ID} from './Utils/config'
+
+import {
+  login,
+  redirectLogin,
+  restart,
+  deleteAlert,
+  getRights,
+  addAlert,
+  changePanel,
+  disconnect,
+  ginger
+} from './actions'
 import {printAlert} from './Utils/utils'
-import {CAS_LINK} from './Utils/config'
-import BadgeConnexion from './Utils/badgeConnexion'
+import BadgeConnexion  from './Utils/badgeConnexion'
+import SimpleConnexion from './Utils/simpleConnexion'
 import WebSocketConnexion from './Utils/websocket'
 import TypeEvents from './Utils/typeEvents.js'
 import {checkRights} from './Utils/utils'
-
-
 
 class Header extends Component {
 
   constructor(props){
     super(props)
     this.state = {
-      load : 'Vente',
       denieAccess : false
     }
-    this.setMenuPage = this.setMenuPage.bind(this)
-    this.setVentePage = this.setVentePage.bind(this)
-    this.setAdminPage = this.setAdminPage.bind(this)
   }
 
   componentDidMount() {
+
+
     setInterval( () => {
       this.setState({
         curTime : new Date().toLocaleString().split(" ")[2]
       })
     },1000)
-
-    const {sessionId, getRights} = this.props
-
-
-
-
-
   }
 
-  setMenuPage(){
-    this.setState({
-      load:'Menu'
-    })
-  }
-
-  setVentePage(){
-    this.setState({
-      load:'Vente'
-    })
-  }
-
-  setAdminPage(){
-    this.setState({
-      load:'Admin'
-    })
-  }
 
 
   render() {
     const {alertList, badgeuse, redirected, rightsList} = this.props;
-    const {deleteError, redirectLogin, login, restart, getRights, addAlert} = this.props;
+    const {redirectLogin, login, restart, getRights, addAlert} = this.props;
     const{sessionId, connected, username} = this.props;
-    const {event_id, picked} = this.props
+    const {picked} = this.props
+
 
     //affichage de l'ensemble des erreurs du programme
     let ListAlerts = []
@@ -82,14 +67,13 @@ class Header extends Component {
 
 
 
-
     let affichage=null;
-    switch(this.state.load){
+    switch(this.props.activePanel){
       case 'Vente':
-        if(sessionId!==null && picked==true)
+        if(sessionId!==null && picked===true && rightsList!==null)
         {
 
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
           || 
           rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
         )
@@ -106,9 +90,9 @@ class Header extends Component {
         }
         break;
       case 'Menu':
-        if(sessionId!==null)
+        if(sessionId!==null && rightsList!==null)
         {
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['POSS3'])
+          if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['POSS3'])
           || 
           rightsList[0]!== undefined && checkRights(rightsList[0], ['POSS3'])
         )
@@ -126,9 +110,9 @@ class Header extends Component {
         break;
 
       case 'Admin':
-        if(sessionId!==null)
+        if(sessionId!==null && rightsList!==null)
         {
-          if(rightsList[2]!== undefined && checkRights(rightsList[2], ['ADMINRIGHT'])
+          if(rightsList[FUND_ID]!== undefined && checkRights(rightsList[FUND_ID], ['ADMINRIGHT'])
           || 
           rightsList[0]!== undefined && checkRights(rightsList[0], ['ADMINRIGHT'])
         )
@@ -144,6 +128,7 @@ class Header extends Component {
             this.setState({denieAccess:true})
         }
         }
+        break;
       default:
         break;
     }
@@ -164,27 +149,34 @@ class Header extends Component {
       <div>
         <WebSocketConnexion></WebSocketConnexion>
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
+        {badgeuse===false && connected===false &&<SimpleConnexion></SimpleConnexion>}
 
-        {connected===true && picked===false && <TypeEvents></TypeEvents>}
+        {connected===true && picked===false && this.props.activePanel==='Vente' && <TypeEvents></TypeEvents>}
         <div className="Header">
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="" onClick={()=> restart()}>Beethoven</a>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <span className="navbar-brand" onClick={()=> restart()}>Beethoven</span>
               <span className="input-group-btn">
-                {username===null ?<a href={CAS_LINK}>Click to login</a> :
-
+                {username===null ?'' :
                   <span style={{color:'black'}}> {username}</span>}
               </span>" "
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               </ul>
               <span style={{color:'black', marginRight:'20px'}}> {this.state.curTime}</span>
-              <Button outline color="secondary" onClick={this.setMenuPage}>Menu</Button>" "
-              <Button outline color="secondary" onClick={this.setVentePage}>Vente</Button>" "
-              <Button outline color="primary" onClick={this.setAdminPage}>Admin</Button>" "
-              <Button color="danger" href="https://cas.utc.fr/cas/logout">Déconnexion</Button>
+              <Button outline color="secondary" onClick={()=>this.props.changePanel('Menu')}>Menu</Button>" "
+              <Button outline color="secondary" onClick={()=>this.props.changePanel('Vente')}>Vente</Button>" "
+              <Button outline color="primary" onClick={
+
+                  ()=>{
+                    this.props.disconnect()
+                    this.props.changePanel('Admin')
+                  }}>Admin</Button>" "
+              <Button color="danger" href='#' onClick={()=>{
+                  this.props.disconnect()
+                }}>Déconnexion</Button>
             </div>
           </nav>
         </div>
@@ -221,7 +213,9 @@ let mapStateToProps = (state)=>{
     username : state.cas.username || null,
     event_id : state.vente.event_id || null,
     picked : state.vente.picked || false,
-    rightsList : state.cas.rightsList || null
+    rightsList : state.cas.rightsList || null,
+    activePanel : state.general.activePanel || null,
+    userInfo : state.general.userInfo || []
   };
 }
 
@@ -232,7 +226,10 @@ let mapDispatchToProps = (dispatch)=>{
     deleteAlert : ()=> dispatch(deleteAlert()),
     restart : ()=> dispatch(restart()),
     getRights : (sessionid)=>dispatch(getRights(sessionid)),
-    addAlert : (status, information)=>dispatch(addAlert(status, information))
+    addAlert : (status, information)=>dispatch(addAlert(status, information)),
+    changePanel : (panel)=> dispatch(changePanel(panel)),
+    disconnect :()=>dispatch(disconnect()),
+    ginger : (login)=>dispatch(ginger(login))
   }
 }
 

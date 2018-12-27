@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import '../../App.css';
 import {connect} from 'react-redux'
 
-import {Nav} from 'reactstrap';
 import {MdTv, MdMessage, MdPhoto, MdCardGiftcard} from 'react-icons/md'
 import {FaMedal} from 'react-icons/fa'
-import { Container, Col, Row } from 'reactstrap';
+import { Container} from 'reactstrap';
 
 
 import AdminNavRow from './adminNavRow'
@@ -95,5 +94,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(AdminNav);
+)(AdminNav);

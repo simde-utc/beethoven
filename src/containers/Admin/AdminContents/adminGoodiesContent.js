@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import '../../../App.css';
 import {connect} from 'react-redux'
 
-import {InputGroup, InputGroupAddon, InputGroupText, Input, Button,ButtonGroup, Label} from 'reactstrap'
+import {InputGroup, InputGroupAddon, Input, Button,ButtonGroup} from 'reactstrap'
 import {Table} from 'reactstrap'
 import { Container, Col, Row } from 'reactstrap';
 
 
-import {getGoodies, addAlert} from '../../../actions'
+import {getGoodies} from '../../../actions'
 class AdminGoodiesContent extends Component {
   constructor(props)
   {
@@ -175,5 +175,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(AdminGoodiesContent);
+)(AdminGoodiesContent);

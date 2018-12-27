@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 import TemplateArticle from './venteTemplateAchats'
 
 import { getChosenArticle, setTransaction } from "../../actions"
 
-{/*Liste des achats qu'un user va payer*/}
+/*Liste des achats qu'un user va payer*/
 class Achats extends Component {
   render() {
     const { selectedArticles } = this.props
@@ -16,7 +15,6 @@ class Achats extends Component {
     var chosenArticles = [];
     if(selectedArticles!==[]){
       selectedArticles.forEach(function(element) {
-        const idArt = element.newID;
         const priceA = (element.newPRICE/100)*element.newQTE;
         const prixArt = priceA.toFixed(2);
         const Article = {
@@ -49,7 +47,4 @@ let mapDispatchToProps = (dispatch)=>{
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)
-(Achats);
+export default connect(mapStateToProps,mapDispatchToProps)(Achats);

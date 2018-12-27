@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import {connect} from 'react-redux'
-import { Container, Col, Row } from 'reactstrap';
 import Iframe from 'react-iframe';
 
 import {REFRESH_WEBTV} from '../../Utils/config'
 
-import {getTvLink, setTvLink, getMessagesList} from '../../actions'
+import {getTvLink, setTvLink,  getMessagesList} from '../../actions'
 
 class WebTV extends Component {
   componentWillMount()
@@ -40,8 +39,7 @@ class WebTV extends Component {
 
   render() {
     const {tvLink, enableMessages, messages} = this.props;
-    const {getTvLink} = this.props;
-
+    
     let marqueeList = []
 
 
@@ -114,7 +112,7 @@ let mapStateToProps = (state)=>{
 let mapDispatchToProps = (dispatch)=>{
   return{
     getTvLink : (idTv)=> dispatch(getTvLink(idTv)),
-    setTvLink : (idTv)=> dispatch(getTvLink(idTv)),
+    setTvLink : (idTv)=> dispatch(setTvLink(idTv)),
     getMessagesList : ()=> dispatch(getMessagesList())
 
   }
@@ -124,5 +122,4 @@ let mapDispatchToProps = (dispatch)=>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)
-(WebTV);
+)(WebTV);

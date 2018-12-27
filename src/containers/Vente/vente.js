@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { WEEZEVENT_APP_KEY } from '../../Utils/config';
 import {connect} from 'react-redux';
 import Achats from "./venteAchats.js"
 import ListeArticle from "./venteListeArticle.js"
@@ -23,68 +22,99 @@ class Vente extends Component {
                                   </div>)
 
     let stateTrans;
-    if(state_transaction=='success'){
+    if(state_transaction==='loading'){
+      stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
+                    Transaction en cours.... !
+                  </div>);
+    }else if(state_transaction==='success'){
       stateTrans = (<div class="alert ml-2 w-100 bg-success" role="alert">
                     Transaction effectuée, ton nouveau solde Payutc est de {info_transaction.solde/100} € !
                   </div>);
       setTimeout(function(){setTransactionState('listen')}, 3000)
-    }else if(state_transaction=='listen'){
+    }else if(state_transaction=='recup'){
+      stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
+                    Récupération des informations...
+                  </div>);
+      setTimeout(function(){setTransactionState('listen')}, 1000)
+    }else if(state_transaction==='listen'){
        stateTrans = (<div class="alert alert-dark ml-2 w-100" role="alert">
                         Prêt !
                       </div>)
             }
-      else if(state_transaction=='failed'){
+      else if(state_transaction==='failed'){
         stateTrans = (<div class="alert ml-2 w-100 bg-danger" role="alert">
                        {info_transaction.error.message}
                     </div>);
         setTimeout(function(){setTransactionState('listen')}, 3000)
+      }else if(state_transaction=='invalide'){
+        stateTrans = (<div class="alert ml-2 w-100 bg-danger" role="alert">
+                         Erreur : la carte n'est plus valable !
+                       </div>)
+        setClientState();
+        setTimeout(function(){setTransactionState('listen')}, 3000)
       }
     let info;
     if(info_client){
-      let list_last_purchases = [];
-      list_last_purchases.push(
-        <tr>
-          <td> Quantité </td>
-          <td scope="row"> Nom </td>
-          <td> Prix </td>
-            <td>
-            </td>
-        </tr>
-      )
-      info_client.last_purchases.forEach(function(el) {
-        let name = listArticles.filter((item) =>  item.id == el.obj_id);
+      if(info_client.error){
+        setTransactionState('invalide')
+      }else{
+        let list_last_purchases = [];
         list_last_purchases.push(
           <tr>
-            <td> {el.pur_qte} </td>
-            <th scope="row">{name[0].name}</th>
-            <td> {el.pur_price/100} € </td>
-              <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() =>
-                      cancelTransaction(sessionId,el.pur_id)
-                    }>
-                    Annuler
-                  </button>
+            <th> Quantité </th>
+            <th scope="row"> Nom </th>
+            <th> Prix </th>
+              <td>
               </td>
           </tr>
         )
+        info_client.last_purchases.forEach(function(el) {
+          let name = listArticles.filter((item) =>  item.id === el.obj_id);
+          list_last_purchases.push(
+            <tr>
+              <td> Quantité </td>
+              <td scope="row"> Nom </td>
+              <td> Prix </td>
+                <td>
+                </td>
+            </tr>
+        )
       });
-      info = (<div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}     |      Solde : {info_client.solde/100}€</h5>
-                            </div>
-                            <div class="modal-body text-info">
-                              <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
-                                {list_last_purchases}
-                              </table>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+        info_client.last_purchases.forEach(function(el) {
+          let name = listArticles.filter((item) =>  item.id == el.obj_id);
+          list_last_purchases.push(
+            <tr>
+              <td> {el.pur_qte} </td>
+              <th scope="row">{name[0].name}</th>
+              <td> {el.pur_price/100} € </td>
+                <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() =>
+                        cancelTransaction(sessionId,el.pur_id)
+                      }>
+                      Annuler
+                    </button>
+                </td>
+            </tr>
+          )
+        });
+        info = (<div class="modal show" id="infouser" style={{display: 'inline-block'}} role="dialog">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title text-info" >{info_client.firstname}   {info_client.lastname} - {info_client.username}     |      Solde : {info_client.solde/100}€</h5>
+                              </div>
+                              <div class="modal-body text-info">
+                                <table class="table table-striped rounded  mt-3 ml-2 w-100 bg-light text-dark text-center ">
+                                  {list_last_purchases}
+                                </table>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>)
-    }else{info = (<div></div>)}
+                        </div>)
+          }
+    }
     return (
       <div className="Header">
         <div class="row mr-4 ml-0">
@@ -154,7 +184,4 @@ let mapDispatchToProps = (dispatch)=>{
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps)
-(Vente);
+export default connect(mapStateToProps, mapDispatchToProps)(Vente);

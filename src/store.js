@@ -3,6 +3,9 @@ import beethoven from './reducers'
 import thunk from "redux-thunk";
 
 const initialStore = {
+  general:{
+    activePanel : 'Vente',
+  },
   menus:{
     NavIndex : null,
     MenuList : [],
@@ -21,7 +24,8 @@ const initialStore = {
     sessionId : null,
     username : null, //default : null
     redirected : false,
-    rightsList : null
+    rightsList : null,
+    userMail : null
   },
 
   vente: {
@@ -37,7 +41,9 @@ const initialStore = {
   achats: {
     clientUid : null,
     state_transaction : 'listen',
-    info_client : null
+    info_client : null,
+    deleted_id: null,
+    cancel: []
   },
 
   webTV: {
@@ -53,16 +59,17 @@ const initialStore = {
     webTv1Messages : false,
     webTv2Messages : false,
     urls : [],
-    goodiesList : []
+    goodiesList : [],
+    blocage: [],
+    blocked: 'listen',
+    list_blockedUsers: [],
+    sended: null
   }
 }
 
-export const store = createStore
-(
+export const store = createStore(
   beethoven,
   initialStore,
   compose(
     applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-)
+    window.devToolsExtension ? window.devToolsExtension() : f => f))
