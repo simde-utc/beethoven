@@ -28,9 +28,16 @@ class App extends Component {
         <div>
           <Route exact={true} path="/" render= {() => (
             <div className="App">
-              <Header></Header>
+              <Header current='Vente'></Header>
               </div>
             )}/>
+
+          <Route exact={true} path="/admin" render= {() => (
+              <div className="App">
+                <Header current='Admin'></Header>
+                </div>
+              )}/>
+
           <Route exact={true} path="/picBar" render= {() => (
               <div className="App">
                 <WebTV tv='2'></WebTV>
@@ -48,6 +55,13 @@ class App extends Component {
                   <MenusToServe></MenusToServe>
                 </div>
               )}/>
+
+            <Route exact={true} path="/MultiInformations" render= {() => (
+              <div className="App">
+                <div>patate</div>
+              </div>
+              )}/>
+
           </div>
         </Router>
       );

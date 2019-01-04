@@ -3,16 +3,16 @@ import '../../App.css';
 import {connect} from 'react-redux'
 import Iframe from 'react-iframe';
 
-import {REFRESH_WEBTV} from '../../Utils/config'
+import {REFRESH_WEBTV, CHANGE_LINK} from '../../Utils/config'
 
-import {getTvLink, setTvLink,  getMessagesList} from '../../actions'
+//import {getTvLink, setTvLink,  getMessagesList} from '../../actions'
 
-class WebTV extends Component {
+class MultiInfo extends Component {
   componentWillMount()
   {
-    const {getTvLink, getMessagesList} = this.props;
-    getTvLink(this.props.tv)
-    getMessagesList()
+  //  const {getTvLink, getMessagesList} = this.props;
+  //  getTvLink(this.props.tv)
+  //  getMessagesList()
   }
 
 
@@ -25,20 +25,20 @@ class WebTV extends Component {
   }
 
   updateData = ()=>{
-    const {getTvLink, getMessagesList} = this.props;
+    //const {getTvLink, getMessagesList} = this.props;
 
       this.interval = setInterval(
         ()=>{
 
-          getTvLink(this.props.tv)
-          getMessagesList()
+          //getTvLink(this.props.tv)
+          //getMessagesList()
         },
         REFRESH_WEBTV
       )
   }
 
   render() {
-    const {tvLink, enableMessages, messages} = this.props;
+    //const {tvLink, enableMessages, messages} = this.props;
 
     let marqueeList = []
 
@@ -53,38 +53,27 @@ class WebTV extends Component {
       )
     })
     return (
-      <div className="webTV"
+      <div
+        className="webTV"
         style= {{
           height : enableMessages===true ? '89vh' : '99vh',
+
         }}
         >
-        {tvLink !== null && tvLink.url !== null && tvLink.url !== "" &&
-          <Iframe url={tvLink.url}
-        width = '100%'
-        height =  '99%'
-        frameborder = "0"
-        border = "0"
-        display="initial"
-        position="relative"
-        allowFullScreen
-        style = {{
-          overflowY : 'hidden',
-          overflowX : 'hidden'}
-        }
-        />
-        }
+        <Iframe url={tvLink}
+      width = '100%'
+      height =  '99%'
+      frameborder = "0"
+      border = "0"
+      display="initial"
+      position="relative"
+      allowFullScreen
+      style = {{
+        overflowY : 'hidden',
+        overflowX : 'hidden'}
+      }
 
-        {/*si les images ne s'affichent pas bien sur les télés voir ici*/}
-        {tvLink !== null && tvLink.photo !== null && tvLink.photo !== "" &&
-          <img src={tvLink.photo} alt='Image not found'
-            style={{
-              'width':'auto',
-              'height':'99%',
-            }}
-            ></img>
-        }
-
-
+      />
     {enableMessages===true ?
       <marquee
         style={

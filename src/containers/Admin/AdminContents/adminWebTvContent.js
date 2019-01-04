@@ -16,6 +16,8 @@ class AdminWebTvContent extends Component {
       webTv2 : this.props.webTv1Url,
       messages1 : this.props.webTv1Messages,
       messages2 : this.props.webTv2Messages,
+      webTv1Image : null,
+      webTv2Image : null,
       init : false
     }
 
@@ -47,48 +49,90 @@ class AdminWebTvContent extends Component {
       })
     }
     let buttonswebTv1 = [], buttonswebTv2 = []
+    let imageswebTv1 =[], imageswebTv2 = []
 
     if(urls!==[])
     {
       urls.forEach(
         (elt)=>{
-          buttonswebTv1.push(
-            <Col xs={{size:4}}  lg='3'>
-              <Button
-                style = {{
-                  marginTop : '5px',
-                  width : '110px'
-                }}
-                color = {this.state.webTv1===elt.url ? 'success':'danger'}
-                onClick = {()=>{
-                  setTvLink(1, elt.url, this.state.messages1)
-                  this.setState({
-                    webTv1 : elt.url
-                  })
-                }}
-                >{elt.name}
-              </Button>
-            </Col>
-          )
+          if(elt.is_image===false)
+          {
+            buttonswebTv1.push(
+              <Col xs={{size:4}}  lg='3'>
+                <Button
+                  style = {{
+                    marginTop : '5px',
+                    width : '110px'
+                  }}
+                  color = {this.state.webTv1===elt.url ? 'success':'danger'}
+                  onClick = {()=>{
+                    setTvLink(1, elt.url, null, this.state.messages1,1)
+                    this.setState({
+                      webTv1 : elt.url
+                    })
+                  }}
+                  >{elt.name}
+                </Button>
+              </Col>
+            )
 
-          buttonswebTv2.push(
-            <Col xs='4' lg='3'>
-              <Button
-                style = {{
-                  marginTop : '5px',
-                  width : '110px'
-                }}
-                color = {this.state.webTv2===elt.url ? 'success':'danger'}
-                onClick = {()=>{
-                  setTvLink(2, elt.url, this.state.messages2)
-                  this.setState({
-                    webTv2 : elt.url
-                  })
-                }}
-                >{elt.name}
-              </Button>
-            </Col>
-          )
+            buttonswebTv2.push(
+              <Col xs='4' lg='3'>
+                <Button
+                  style = {{
+                    marginTop : '5px',
+                    width : '110px'
+                  }}
+                  color = {this.state.webTv1===elt.url ? 'success':'danger'}
+                  onClick = {()=>{
+                    setTvLink(2, elt.url, null, this.state.messages2,1)
+                    this.setState({
+                      webTv1 : elt.url
+                    })
+                  }}
+                  >{elt.name}
+                </Button>
+              </Col>
+            )
+          }
+          else {
+            imageswebTv1.push(
+              <Col xs={{size:4}}  lg='3'>
+                <img
+                  src = {elt.url}
+                  style = {
+                  {
+                    marginTop : '5px',
+                    height : 'auto',
+                    width : '110px',
+                  }
+
+                }
+                  onClick = {()=>{
+                    console.log('coucoucoucoucouc')
+                    setTvLink(1, null, elt.url, this.state.messages1,0)
+                  }}
+                  ></img>
+              </Col>
+            )
+
+            imageswebTv2.push(
+              <Col xs='4' lg='3'>
+                <img
+                  src = {elt.url}
+                  style = {{
+                    marginTop : '5px',
+                    height : 'auto',
+                    width : '110px'
+                  }}
+                  onClick = {()=>{
+                    setTvLink(2, null, elt.url, this.state.messages1, 0)
+                  }}
+                  ></img>
+              </Col>
+            )
+
+          }
 
         }
       )
@@ -138,6 +182,7 @@ class AdminWebTvContent extends Component {
                           onChange = {(e)=>this.setState({webTv1:e.target.value})}
                           />{' '}
                       </Col>
+
                       <Col xs={{size:12}} lg={{size:4}}>
                         <Button
                           style={{
@@ -145,7 +190,7 @@ class AdminWebTvContent extends Component {
                             marginTop : '5px'
                           }}
                           onClick = {()=>{
-                            setTvLink(1, this.state.webTv1, this.state.messages1)
+                            setTvLink(1, this.state.webTv1, null, this.state.messages1,1)
                           }}
                           >
                           Envoyer
@@ -166,7 +211,31 @@ class AdminWebTvContent extends Component {
                 </Row>
                 <br></br>
                 <Row>
+                  <Col xs={{size:8}} lg={{size:4, offset:3}}>
+                    <Input
+                      type='file'
+                      onChange = {(e)=>this.setState({webTv1Image:e.target.files[0]})}
+                      ></Input>
+                  </Col>
+                  <Col xs={{size:4}} lg={{size:4}}>
+                    <Button color='success'
+                      onClick = {()=>{
+                        setTvLink(1, null, this.state.webTv1Image, this.state.messages1,1)
+                      }}
+                      >Valider</Button>
+                  </Col>
+                </Row>
+                <br></br>
+
+                <Row>
                   {buttonswebTv1}
+                </Row>
+
+
+                <br></br>
+
+                <Row>
+                  {imageswebTv1}
                 </Row>
                 </Col>
 
@@ -210,7 +279,7 @@ class AdminWebTvContent extends Component {
                             }}
 
                             onClick = {()=>{
-                              setTvLink(2, this.state.webTv2, this.state.messages2)
+                              setTvLink(2, this.state.webTv2, null, this.state.messages2,1)
 
                             }}
                             >
@@ -236,8 +305,32 @@ class AdminWebTvContent extends Component {
                   </Row>
 
                   <br></br>
+
+                    <Row>
+                      <Col xs={{size:8}} lg={{size:4, offset:3}}>
+                        <Input
+                          type='file'
+                          onChange = {(e)=>this.setState({webTv2Image:e.target.files[0]})}
+                          ></Input>
+                      </Col>
+                      <Col xs={{size:4}} lg={{size:4}}>
+                        <Button color='success'
+                          onClick = {()=>{
+                            setTvLink(2, null, this.state.webTv2Image, this.state.messages2,1)
+                          }}
+                          >Valider</Button>
+                      </Col>
+                    </Row>
+                    <br></br>
+
                   <Row>
                     {buttonswebTv2}
+                  </Row>
+
+                  <br></br>
+
+                  <Row>
+                    {imageswebTv2}
                   </Row>
 
 
@@ -280,7 +373,7 @@ let mapDispatchToProps = (dispatch)=>{
   return{
     //myfunction : ()=> dispatch(myfunction())
     getTvLink : (idTv)=>dispatch(getTvLink(idTv)),
-    setTvLink : (idTv, url, messages)=>dispatch(setTvLink(idTv,url,messages)),
+    setTvLink : (idTv, url, photo, messages, is_new)=>dispatch(setTvLink(idTv,url, photo, messages, is_new)),
     getDefaultUrl : ()=>dispatch(getDefaultUrl())
   }
 }

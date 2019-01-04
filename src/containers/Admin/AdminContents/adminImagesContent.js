@@ -32,29 +32,6 @@ class AdminImagesContent extends Component {
 
   }
 
-   _handleImageChange(e) {
-     e.preventDefault();
-
-     let reader = new FileReader();
-     let file = e.target.files[0];
-
-     reader.onloadend = () => {
-       this.setState({
-         file: file,
-         imagePreviewUrl: reader.result
-       });
-     }
-
-     reader.readAsDataURL(file)
-   }
-
-
-   fileChangedHandler = (event) => {
-     const file = event.target.files[0]
-   }
-
-   state = {selectedFile: null}
-
    fileChangedHandler = (event) => {
     this.setState({selectedFile: event.target.files[0]})
   }
