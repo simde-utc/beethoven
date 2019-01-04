@@ -78,8 +78,8 @@ class WebTV extends Component {
         {tvLink !== null && tvLink.photo !== null && tvLink.photo !== "" &&
           <img src={tvLink.photo} alt={tvLink.id}
             style={{
-              'width':'100vw',
-              'height':'auto',
+              'width':'auto',
+              'height':'99%',
             }}
             ></img>
         }
