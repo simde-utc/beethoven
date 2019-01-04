@@ -36,6 +36,7 @@ npm start
 # L'Application
 L'application est composée en 3 parties distinctes répondant chacune à des besoins spécifiques.
 ### 1 - La partie Vente
+
 Il s'agit de la partie la plus utilisée de Beethoven et reprend globalement les fonctionnalités de l'application Mozart.<br>
 Elle permet principalement aux utilisateurs :
 - De sélectionner les articles disponibles à la vente au foyer en fonction des périodes de la journée.
@@ -48,10 +49,15 @@ Cette partie vente répond à plusieurs besoins. D'une part, elle doit être int
 
 
 ### 2 - La partie Menus
+
 Le but de la partie Menus est de lister les personnes qui ont acheté un menu au foyer et qui sont en attente d'être servis. Le besoin étant d'informer les clients  de leur place dans la liste d'attente, mais aussi de permettre aux permanenciers responsables de la préparation et du service des menus de les distribuer dans le bon ordre tout en ayant un suivi efficace de leur stock.<br>
-Il faut également noter qu'un des besoins initial de cette partie était de se défaire de l'utilisation de tickets en papier qui faisaient office de liste d'attente auparavant. la finalité était d'adopter une démarche plus éco responsable.  
+Il faut également noter qu'un des besoins initial de cette partie était de se défaire de l'utilisation de tickets en papier qui faisaient office de liste d'attente auparavant. la finalité était d'adopter une démarche plus éco-responsable.  
 
 ### 3 - La partie Admin
+
+L'application dispose également d'une page d'administration qui n'est accessible que par certains utilisateurs ayant les droits suffisants pour y accéder.
+
+
 #### L'administation des télés
 #### La gestion des messages en bas des télés
 #### L'upload d'images
