@@ -782,8 +782,8 @@ export function getTvLinkRequest() {
 export function getTvLinkSuccess(idTv, data) {
   return {
     type: GET_TVLINK_SUCCESS,
-    data,
-    idTv,
+    data: data,
+    idTv : idTv,
   };
 }
 

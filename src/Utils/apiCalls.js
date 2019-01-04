@@ -201,16 +201,22 @@ export const getUserInformation = (sessionId, badge, success, failure) => {
 
 // Gestion des WebTV
 export const getTvUrl = (idTv, success, failure) => {
-  brequest('picsousRequest', 'GET', null, 'webTv', idTv, null)
+  fetch(
+    `${PICSOUS_URL}webtvConfiguration/?tv=`+idTv,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     .then(res => res.json())
-    .then(
-      (result) => {
-        success(result);
-      },
-      (error) => {
-        failure(error);
-      },
-    ).catch((err) => { failure(err); });
+    .then((result) => {
+      if(result[0])
+      success(result[0]);
+    },
+    (err) => {
+      failure(err);
+    }).catch((err) => { failure(err); });
 };
 
 // cancel une transaction
@@ -230,13 +236,13 @@ export const cancelUserTransaction = (sessionId, pur_id, success, failure) => {
 
 export const setTvUrl = (idTv, url, messages, success, failure) => {
   fetch(
-    `${PICSOUS_URL}webTv/setConfig/`,
+    `${PICSOUS_URL}webtvConfiguration/`,
     {
       method: 'POST',
       body: JSON.stringify({
-        id: idTv,
+        tv: idTv,
         url,
-        messages,
+        enable_messages : messages,
       }),
       headers: {
         'Content-Type': 'application/json',

@@ -39,7 +39,7 @@ class WebTV extends Component {
 
   render() {
     const {tvLink, enableMessages, messages} = this.props;
-    
+
     let marqueeList = []
 
 
@@ -53,27 +53,38 @@ class WebTV extends Component {
       )
     })
     return (
-      <div
-        className="webTV"
+      <div className="webTV"
         style= {{
           height : enableMessages===true ? '89vh' : '99vh',
-
         }}
         >
-        <Iframe url={tvLink}
-      width = '100%'
-      height =  '99%'
-      frameborder = "0"
-      border = "0"
-      display="initial"
-      position="relative"
-      allowFullScreen
-      style = {{
-        overflowY : 'hidden',
-        overflowX : 'hidden'}
-      }
+        {tvLink !== null && tvLink.url !== null && tvLink.url !== "" &&
+          <Iframe url={tvLink.url}
+        width = '100%'
+        height =  '99%'
+        frameborder = "0"
+        border = "0"
+        display="initial"
+        position="relative"
+        allowFullScreen
+        style = {{
+          overflowY : 'hidden',
+          overflowX : 'hidden'}
+        }
+        />
+        }
 
-      />
+
+        {tvLink !== null && tvLink.photo !== null && tvLink.photo !== "" &&
+          <img src={tvLink.photo} alt={tvLink.id}
+            style={{
+              'width':'100vw',
+              'height':'auto',
+            }}
+            ></img>
+        }
+
+
     {enableMessages===true ?
       <marquee
         style={
