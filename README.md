@@ -55,14 +55,14 @@ Il faut également noter qu'un des besoins initial de cette partie était de se 
 
 ### 3 - La partie Admin
 
-L'application dispose également d'une page d'administration qui n'est accessible que par certains utilisateurs ayant les droits suffisants pour y accéder.
+L'application dispose également d'une page d'administration qui n'est accessible que par certains utilisateurs ayant les droits suffisants pour y accéder.<br>
+Cette page d’administration permet :
 
-
-#### L'administation des télés
-#### La gestion des messages en bas des télés
-#### L'upload d'images
-#### La gestion des cartes
-#### Le tirage au sort des Goodies.
+- #### L'administation des télés
+- #### La gestion des messages en bas des télés
+- #### L'upload d'images
+- #### La gestion des cartes
+- #### Le tirage au sort des Goodies
 
 
 

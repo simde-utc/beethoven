@@ -34,7 +34,7 @@ class AdminWebTvContent extends Component {
         <tr>
           <td>{elt.title}</td>
           <td>{elt.text}</td>
-          <td><FaTrash onClick={()=>deleteMessage(elt.id)}></FaTrash></td>
+          <td><FaTrash onMouseDown={()=>deleteMessage(elt.id)}></FaTrash></td>
       </tr>)
     })
     return(
@@ -68,7 +68,7 @@ class AdminWebTvContent extends Component {
                       />{' '}
                     <Button
                       style={{marginRight : '5px'}}
-                      onClick = {()=>{
+                      onMouseDown = {()=>{
 
                         addMessage(this.state.title, this.state.text)
 

@@ -75,7 +75,7 @@ class SimpleConnexion extends Component {
                 <br />
                 <Button
                   color="success"
-                  onClick={() => {
+                  onMouseDown={() => {
                     if (this.state.username !== null) this.props.ginger(this.state.username);
 
                     if (this.state.pin !== null) this.props.getUserPin(this.state.pin);

@@ -34,7 +34,7 @@ class MenuNavButton extends Component{
             {color:'black'}
           }
           active = {this.props.index === NavIndex}
-          onClick = {()=> {
+          onMouseDown = {()=> {
             updateNavIndex(this.props.index)
             getList(NavIndex)
           }}
@@ -45,7 +45,7 @@ class MenuNavButton extends Component{
         </td>
         <td><Button
           size="sm"
-          onClick = {()=>{
+          onMouseDown = {()=>{
             if(this.state.modal === true) this.setState({modal : !this.state.modal})
             this.setState({modal : !this.state.modal})
 

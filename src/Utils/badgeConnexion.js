@@ -64,7 +64,7 @@ class BadgeConnexion extends Component {
 
     {
 
-      buttons.map(button => <Button size="lg" onClick={() => {this.updatePin(this.state.ActualPin, button)}}>{ button }</Button>)
+      buttons.map(button => <Button size="lg" onMouseDown={() => {this.updatePin(this.state.ActualPin, button)}}>{ button }</Button>)
     }
 
   </ButtonGroup>))
@@ -110,7 +110,7 @@ class BadgeConnexion extends Component {
             ? (
               <Button
                 color="danger"
-                onClick={() => { this.setState({ ActualPin: null }); }}
+                onMouseDown={() => { this.setState({ ActualPin: null }); }}
               >
 Effacer Pin
               </Button>
@@ -123,7 +123,7 @@ Effacer Pin
     );
   }
 }
-// <Button color="danger" onClick={()=>this.redirectCas()}>Je n'ai pas de Badge</Button>
+// <Button color="danger" onMouseDown={()=>this.redirectCas()}>Je n'ai pas de Badge</Button>
 
 
 const mapStateToProps = state => ({

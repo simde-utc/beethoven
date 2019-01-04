@@ -60,7 +60,7 @@ class AdminWebTvContent extends Component {
                   width : '110px'
                 }}
                 color = {this.state.webTv1===elt.url ? 'success':'danger'}
-                onClick = {()=>{
+                onMouseDown = {()=>{
                   setTvLink(1, elt.url, this.state.messages1)
                   this.setState({
                     webTv1 : elt.url
@@ -79,7 +79,7 @@ class AdminWebTvContent extends Component {
                   width : '110px'
                 }}
                 color = {this.state.webTv2===elt.url ? 'success':'danger'}
-                onClick = {()=>{
+                onMouseDown = {()=>{
                   setTvLink(2, elt.url, this.state.messages2)
                   this.setState({
                     webTv2 : elt.url
@@ -144,7 +144,7 @@ class AdminWebTvContent extends Component {
                             marginRight : '5px',
                             marginTop : '5px'
                           }}
-                          onClick = {()=>{
+                          onMouseDown = {()=>{
                             setTvLink(1, this.state.webTv1, this.state.messages1)
                           }}
                           >
@@ -155,7 +155,7 @@ class AdminWebTvContent extends Component {
                             marginTop : '5px'
                           }}
                           color={this.state.messages1 === true ? 'success' : 'danger'}
-                          onClick = {()=>{this.setState({messages1:!this.state.messages1})}}
+                          onMouseDown = {()=>{this.setState({messages1:!this.state.messages1})}}
                           >
                           Messages
                         </Button>
@@ -209,7 +209,7 @@ class AdminWebTvContent extends Component {
 
                             }}
 
-                            onClick = {()=>{
+                            onMouseDown = {()=>{
                               setTvLink(2, this.state.webTv2, this.state.messages2)
 
                             }}
@@ -222,7 +222,7 @@ class AdminWebTvContent extends Component {
                               marginTop : '5px'
                             }}
                             color={this.state.messages2 === true ? 'success' : 'danger'}
-                            onClick = {()=>{
+                            onMouseDown = {()=>{
                               this.setState({messages2:!this.state.messages2})
                             }}
                             >

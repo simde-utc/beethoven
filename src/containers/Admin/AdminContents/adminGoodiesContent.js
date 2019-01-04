@@ -118,7 +118,7 @@ class AdminGoodiesContent extends Component {
                     <ButtonGroup>
                       <br></br>
                       <Button
-                        onClick = {()=>{
+                        onMouseDown = {()=>{
                           //function
                           this.props.getGoodies(this.state.dateDebut, this.state.dateFin, this.state.quantite)
 

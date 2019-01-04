@@ -47,7 +47,7 @@ class TypeEvents extends Component {
                   marginTop: '5px',
                 }
               }
-              onClick={() => getEventArticles('0')}
+              onMouseDown={() => getEventArticles('0')}
             >
               {element.name}
             </Button>,
@@ -62,7 +62,7 @@ class TypeEvents extends Component {
                   marginTop: '5px',
                 }
               }
-              onClick={() => getEventArticles(i)}
+              onMouseDown={() => getEventArticles(i)}
             >
               {element.name}
             </Button>,

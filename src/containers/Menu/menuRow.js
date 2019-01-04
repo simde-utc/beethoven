@@ -28,7 +28,7 @@ class MenuRow extends Component {
         <td>{this.props.quantity}</td>
         <td><Button
           color='success'
-          onClick = {() =>{
+          onMouseDown = {() =>{
             validateMenu(this.props.id_transaction, listSales)
           }
           }
@@ -38,7 +38,7 @@ class MenuRow extends Component {
           {' '}
           <Button
             color={this.props.served===true ? 'danger' : 'warning'}
-            onClick = {() => {
+            onMouseDown = {() => {
               this.props.served === true ?
               validateMenu(this.props.id_transaction, listSales) :
               setStaff(this.props.id_transaction)
