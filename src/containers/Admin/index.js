@@ -34,9 +34,8 @@ class AdminPanel extends Component {
                 {adminIndex===1 && <AdminWebTvContent/>}
                 {adminIndex===2 && <AdminMultiInfo/>}
                 {adminIndex===3 && <AdminMessagesContent/>}
-                {adminIndex===4 && <AdminImagesContent/>}
-                {adminIndex===5 && <AdminGestion/>}
-                {adminIndex===6 && <AdminGoodiesContent/>}
+                {adminIndex===4 && <AdminGestion/>}
+                {adminIndex===5 && <AdminGoodiesContent/>}
               </Col>
             </Row>
           </Container>

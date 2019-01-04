@@ -245,6 +245,7 @@ export const setTvUrl = (idTv, url, photo, messages, is_new, success, failure) =
           url : url,
           photo : null,
           enable_messages : messages,
+          is_image : false
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -268,8 +269,9 @@ export const setTvUrl = (idTv, url, photo, messages, is_new, success, failure) =
         method: 'POST',
         body: JSON.stringify({
           tv: idTv,
-          url : null,
-          photo : photo,
+          url : photo,
+          photo : null,
+          is_image : true,
           enable_messages : messages,
         }),
         headers: {
@@ -292,6 +294,7 @@ export const setTvUrl = (idTv, url, photo, messages, is_new, success, failure) =
     const data = new FormData()
     data.append('photo', photo, photo.name)
     data.append('tv', idTv)
+    data.append('is_image', true)
     data.append('enable_messages', messages)
     fetch(
 

@@ -58,7 +58,7 @@ class WebTV extends Component {
           height : enableMessages===true ? '89vh' : '99vh',
         }}
         >
-        {tvLink !== null && tvLink.url !== null && tvLink.url !== "" &&
+        {tvLink !== null && tvLink.is_image!== true  && tvLink.url !== null && tvLink.url !== "" &&
           <Iframe url={tvLink.url}
         width = '100%'
         height =  '99%'
@@ -74,8 +74,17 @@ class WebTV extends Component {
         />
         }
 
+        {tvLink !== null && tvLink.is_image===true  && tvLink.url !== null && tvLink.url !== "" &&
+          <img src={tvLink.url} alt='Image not found'
+            style={{
+              'width':'auto',
+              'height':'99%',
+            }}
+            ></img>
+        }
+
         {/*si les images ne s'affichent pas bien sur les télés voir ici*/}
-        {tvLink !== null && tvLink.photo !== null && tvLink.photo !== "" &&
+        {tvLink !== null && tvLink.is_image === true && tvLink.photo !== null && tvLink.photo !== "" &&
           <img src={tvLink.photo} alt='Image not found'
             style={{
               'width':'auto',
