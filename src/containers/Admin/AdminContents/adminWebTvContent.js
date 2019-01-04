@@ -109,7 +109,6 @@ class AdminWebTvContent extends Component {
 
                 }
                   onClick = {()=>{
-                    console.log('coucoucoucoucouc')
                     setTvLink(1, null, elt.url, this.state.messages1,0)
                   }}
                   ></img>
