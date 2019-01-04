@@ -74,9 +74,9 @@ class WebTV extends Component {
         />
         }
 
-
+        {/*si les images ne s'affichent pas bien sur les télés voir ici*/}
         {tvLink !== null && tvLink.photo !== null && tvLink.photo !== "" &&
-          <img src={tvLink.photo} alt={tvLink.id}
+          <img src={tvLink.photo} alt='Image not found'
             style={{
               'width':'auto',
               'height':'99%',
