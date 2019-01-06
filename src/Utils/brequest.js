@@ -29,7 +29,7 @@ const brequest = (server, method, service = null, request, data = null, sessioni
         {
           method,
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
         },
       );
