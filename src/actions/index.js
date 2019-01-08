@@ -782,8 +782,8 @@ export function getTvLinkRequest() {
 export function getTvLinkSuccess(idTv, data) {
   return {
     type: GET_TVLINK_SUCCESS,
-    data,
-    idTv,
+    data: data,
+    idTv : idTv,
   };
 }
 
@@ -830,10 +830,10 @@ export function setTvLinkError(error) {
   };
 }
 
-export function setTvLink(idTv, url, messages) {
+export function setTvLink(idTv, url, photo, messages,is_new) {
   return (dispatch) => {
     dispatch(setTvLinkRequest());
-    setTvUrl(idTv, url, messages,
+    setTvUrl(idTv, url, photo, messages, is_new,
       (data) => {
         dispatch(setTvLinkSuccess(idTv, url, 'Lien de Télé Changé'));
       },

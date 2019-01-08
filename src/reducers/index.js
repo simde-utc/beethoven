@@ -680,7 +680,7 @@ function webTV(state = {}, action) {
 
     case GET_TVLINK_SUCCESS:
       state = Object.assign({}, state, {
-        tvLink: action.data.url,
+        tvLink: action.data,
         enableMessages: action.data.enable_messages,
       });
       return state;

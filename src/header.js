@@ -37,7 +37,7 @@ class Header extends Component {
   }
 
   componentDidMount() {
-
+    this.props.changePanel(this.props.current)
 
     setInterval( () => {
       this.setState({
@@ -45,6 +45,7 @@ class Header extends Component {
       })
     },1000)
   }
+
 
 
 
@@ -151,7 +152,7 @@ class Header extends Component {
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
         {badgeuse===false && connected===false &&<SimpleConnexion></SimpleConnexion>}
 
-        {connected===true && picked===false && this.props.activePanel==='Vente' && <TypeEvents></TypeEvents>}
+        {connected===true && picked===false && this.props.activePanel===this.props.current && <TypeEvents></TypeEvents>}
         <div className="Header">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <span className="navbar-brand" onMouseDown={()=> restart()}>Beethoven</span>

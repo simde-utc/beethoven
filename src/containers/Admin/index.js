@@ -6,8 +6,11 @@ import { Container, Col, Row } from 'reactstrap';
 import AdminNav from './adminNav'
 import AdminWebTvContent from './AdminContents/adminWebTvContent'
 import AdminMessagesContent from './AdminContents/adminMessagesContent'
+import AdminImagesContent from './AdminContents/adminImagesContent'
+
 import AdminGestion from './AdminContents/adminGestion'
 import AdminGoodiesContent from './AdminContents/adminGoodiesContent'
+import AdminMultiInfo from './AdminContents/adminMultiInfo'
 
 class AdminPanel extends Component {
   render() {
@@ -28,11 +31,9 @@ class AdminPanel extends Component {
                 }}
                 ><AdminNav></AdminNav> </Col>
               <Col md="11">
-
-
-
                 {adminIndex===1 && <AdminWebTvContent/>}
-                {adminIndex===2 && <AdminMessagesContent/>}
+                {adminIndex===2 && <AdminMultiInfo/>}
+                {adminIndex===3 && <AdminMessagesContent/>}
                 {adminIndex===4 && <AdminGestion/>}
                 {adminIndex===5 && <AdminGoodiesContent/>}
               </Col>
