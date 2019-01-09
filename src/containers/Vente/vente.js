@@ -16,7 +16,7 @@ class Vente extends Component {
     const { deleteAllArticles, setTransactionState, setClientState, cancelTransaction } = this.props;
     const { selectedArticles, state_transaction, info_client, sessionId, info_transaction, listArticles} = this.props;
     const annuler =             (<div>
-                                    <button class="btn btn-primary ml-2 mb-2 btn-block" onClick={() => deleteAllArticles(selectedArticles)}>
+                                    <button class="btn btn-primary ml-2 mb-2 btn-block" onMouseDown={() => deleteAllArticles(selectedArticles)}>
                                       Annuler tout
                                     </button>
                                   </div>)
@@ -87,7 +87,7 @@ class Vente extends Component {
               <td> {el.pur_qte} </td>
               <th scope="row">{name[0].name}</th>
               <td> {el.pur_price/100} € </td>
-                <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() =>
+                <td><button type="button" class="btn btn-outline-danger btn-xs" onMouseDown={() =>
                         cancelTransaction(sessionId,el.pur_id)
                       }>
                       Annuler
@@ -108,7 +108,7 @@ class Vente extends Component {
                                 </table>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onMouseDown={() => setClientState()}>Fermer</button>
                               </div>
                             </div>
                           </div>

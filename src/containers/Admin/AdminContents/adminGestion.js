@@ -53,7 +53,7 @@ class AdminGestion extends Component {
                               L'utilisateur a soit été bloqué, soit il a changé de carte étudiante
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal" onMouseDown={() => setClientState()}>Fermer</button>
                             </div>
                           </div>
                         </div>
@@ -72,18 +72,18 @@ class AdminGestion extends Component {
                                   <Container fluid>
                                     <Row style = {{marginBottom : '5vh'}}>
                                       <Col sm = '12' md='12'>
-                                        <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
+                                        <button type="button" class="btn btn-danger" onMouseDown={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
                                       </Col>
                                     </Row>
                                     <Row style = {{marginTop : '2vh'}}>
                                       <Col sm = '12' md='12'>
-                                        <button type="button" class="btn btn-primary" onClick={()=> sendMail(info_client.username)}>Carte perdue : Envoyer un mail</button>
+                                        <button type="button" class="btn btn-primary" onMouseDown={()=> sendMail(info_client.username)}>Carte perdue : Envoyer un mail</button>
                                       </Col>
                                     </Row>
                                   </Container>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onMouseDown={() => setClientState()}>Fermer</button>
                                 </div>
                               </div>
                             </div>
@@ -99,7 +99,7 @@ class AdminGestion extends Component {
                                       <Container fluid>
                                         <Row style = {{marginBottom : '5vh'}}>
                                           <Col sm = '12' md='12'>
-                                            <button type="button" class="btn btn-danger" onClick={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
+                                            <button type="button" class="btn btn-danger" onMouseDown={()=>blockAUser(sessionId,clientUid,date_blocked)}>Bloquer l'utilisateur</button>
                                           </Col>
                                         </Row>
                                         <Row style = {{marginTop : '2vh'}}>
@@ -110,7 +110,7 @@ class AdminGestion extends Component {
                                       </Container>
                                     </div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal" onMouseDown={() => setClientState()}>Fermer</button>
                                     </div>
                                   </div>
                                 </div>
@@ -140,7 +140,7 @@ class AdminGestion extends Component {
                                   </Container>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => {setBloquageState('listen');
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onMouseDown={() => {setBloquageState('listen');
                                                                                                                       setClientState()}}>Fermer</button>
                                 </div>
                               </div>

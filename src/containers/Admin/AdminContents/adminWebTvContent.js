@@ -65,7 +65,7 @@ class AdminWebTvContent extends Component {
                     width : '110px'
                   }}
                   color = {this.state.webTv1===elt.url ? 'success':'danger'}
-                  onClick = {()=>{
+                  onMouseDown = {()=>{
                     setTvLink(1, elt.url, null, this.state.messages1,1)
                     this.setState({
                       webTv1 : elt.url
@@ -84,7 +84,7 @@ class AdminWebTvContent extends Component {
                     width : '110px'
                   }}
                   color = {this.state.webTv1===elt.url ? 'success':'danger'}
-                  onClick = {()=>{
+                  onMouseDown = {()=>{
                     setTvLink(2, elt.url, null, this.state.messages2,1)
                     this.setState({
                       webTv1 : elt.url
@@ -108,7 +108,7 @@ class AdminWebTvContent extends Component {
                   }
 
                 }
-                  onClick = {()=>{
+                  onMouseDown = {()=>{
                     setTvLink(1, null, elt.url, this.state.messages1,0)
                   }}
                   ></img>
@@ -124,7 +124,7 @@ class AdminWebTvContent extends Component {
                     height : 'auto',
                     width : '110px'
                   }}
-                  onClick = {()=>{
+                  onMouseDown = {()=>{
                     setTvLink(2, null, elt.url, this.state.messages1, 0)
                   }}
                   ></img>
@@ -188,7 +188,7 @@ class AdminWebTvContent extends Component {
                             marginRight : '5px',
                             marginTop : '5px'
                           }}
-                          onClick = {()=>{
+                          onMouseDown = {()=>{
                             setTvLink(1, this.state.webTv1, null, this.state.messages1,1)
                           }}
                           >
@@ -199,7 +199,7 @@ class AdminWebTvContent extends Component {
                             marginTop : '5px'
                           }}
                           color={this.state.messages1 === true ? 'success' : 'danger'}
-                          onClick = {()=>{this.setState({messages1:!this.state.messages1})}}
+                          onMouseDown = {()=>{this.setState({messages1:!this.state.messages1})}}
                           >
                           Messages
                         </Button>
@@ -218,7 +218,7 @@ class AdminWebTvContent extends Component {
                   </Col>
                   <Col xs={{size:4}} lg={{size:4}}>
                     <Button color='success'
-                      onClick = {()=>{
+                      onMouseDown = {()=>{
                         setTvLink(1, null, this.state.webTv1Image, this.state.messages1,1)
                       }}
                       >Valider</Button>
@@ -277,7 +277,7 @@ class AdminWebTvContent extends Component {
 
                             }}
 
-                            onClick = {()=>{
+                            onMouseDown = {()=>{
                               setTvLink(2, this.state.webTv2, null, this.state.messages2,1)
 
                             }}
@@ -290,7 +290,7 @@ class AdminWebTvContent extends Component {
                               marginTop : '5px'
                             }}
                             color={this.state.messages2 === true ? 'success' : 'danger'}
-                            onClick = {()=>{
+                            onMouseDown = {()=>{
                               this.setState({messages2:!this.state.messages2})
                             }}
                             >
@@ -314,7 +314,7 @@ class AdminWebTvContent extends Component {
                       </Col>
                       <Col xs={{size:4}} lg={{size:4}}>
                         <Button color='success'
-                          onClick = {()=>{
+                          onMouseDown = {()=>{
                             setTvLink(2, null, this.state.webTv2Image, this.state.messages2,1)
                           }}
                           >Valider</Button>
