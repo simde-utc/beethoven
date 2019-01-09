@@ -33,6 +33,23 @@ il faut ensuite lancer Beethoven :
 npm start
 ```
 
+## Déploiement de Beethoven
+
+Il faut d'abord vérifier qu'il n'y a pas eu de nouvelles dépendances :
+```
+npm install
+```
+
+Ensuite il faut build l'application :
+```
+npm run build
+```
+
+Pour finir on peut lancer le serveur de prod:
+```
+serve -s build
+```
+
 # L'Application
 L'application est composée en 3 parties distinctes répondant chacune à des besoins spécifiques.
 ### 1 - La partie Vente
@@ -73,3 +90,6 @@ Cette page d’administration permet :
 * **[TERTRAIS Erwan](https://github.com/SuperNach0)** - *Initial work*
 * **[RICHARD Quentin](https://github.com/qprichard)** - *Initial work*
 * **[OBLED Aymeric](https://github.com/obledaym)** - *Initial work*
+
+## LICENCE
+Cette application est soumise à la licence [Beerware](http://fr.wikipedia.org/wiki/Beerware).
