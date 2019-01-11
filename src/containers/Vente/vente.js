@@ -81,7 +81,7 @@ class Vente extends Component {
         )
       });
         info_client.last_purchases.forEach(function(el) {
-          let name = listArticles.filter((item) =>  item.id == el.obj_id);
+          let name = listArticles.filter((item) =>  item.id == el.obj_id)
           list_last_purchases.push(
             <tr>
               <td> {el.pur_qte} </td>
