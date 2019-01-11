@@ -85,7 +85,7 @@ class Vente extends Component {
           list_last_purchases.push(
             <tr>
               <td> {el.pur_qte} </td>
-              <th scope="row">{name[0].name}</th>
+              <th scope="row">{name[0]!==undefined && name[0].name}</th>
               <td> {el.pur_price/100} € </td>
                 <td><button type="button" class="btn btn-outline-danger btn-xs" onMouseDown={() =>
                         cancelTransaction(sessionId,el.pur_id)
