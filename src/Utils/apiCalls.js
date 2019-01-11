@@ -322,7 +322,7 @@ export const setTvUrl = (idTv, url, photo, messages, is_new, success, failure) =
 
 // reccupération de la liste de messages
 export const fetchMessagesList = (success, failure) => {
-  brequest('picsousRequest', 'GET', null, 'messages/', null, null)
+  brequest('picsousRequest', 'GET', null, 'messages', null, null)
     .then(res => res.json())
     .then(
       (result) => {
