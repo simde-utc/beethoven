@@ -765,6 +765,7 @@ export function setTransaction(sessionId, selectedArticles, badge_id) {
         dispatch(setTransactionError('Erreur : Transaction avortée'));
       },
     );
+    dispatch(deleteAllArticles(selectedArticles))
   };
 }
 
