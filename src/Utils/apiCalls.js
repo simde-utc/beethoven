@@ -3,7 +3,6 @@ import {
   SERVICE_URL, FUND_ID, EVENT_ID, PICSOUS_URL, PERSONNAL_URL, GINGER_KEY,
 } from './config';
 import { getTicketCas } from './utils';
-import brequest from './brequest';
 
 import {weezRequest, picsousRequest} from './requests'
 
@@ -157,7 +156,7 @@ export const getCategories = (sessionid, location, success, failure) => {
     .then(
       (dataLocation) => {
         const id_Categ = dataLocation[parseInt(location)].categories;
-        brequest('apiRequest', 'POST', 'POSS3', 'getCategories', { fun_id: FUND_ID }, sessionid)
+        weezRequest('POST', 'POSS3', 'getCategories', { fun_id: FUND_ID }, sessionid)
           .then(res => res.json())
           .then(
             (result) => {
@@ -408,7 +407,7 @@ export const blockUser = (sessionId,clientUid,date_fin,success,failure)=>{
   .then(res =>res.json())
   .then(
       (resultWallet) =>{
-        brequest('apiRequest', 'POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
+        weezRequest('POST', 'BLOCKED', 'block', {fun_id: FUND_ID, raison: "Comportement Innacceptable", usr_id: resultWallet[0].user_id, wallet: resultWallet[0].id, date_fin: date_fin},sessionId)
         .then(res => res.json())
         .then(
           (result) => {
