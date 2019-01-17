@@ -139,6 +139,7 @@ function menus(state = {}, action) {
         {
           MenuList: newListMenu,
           NavIndex: null,
+          listSales : []
         });
       return state;
 

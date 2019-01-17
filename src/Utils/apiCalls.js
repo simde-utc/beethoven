@@ -38,7 +38,7 @@ export const fetchMenus = (success, failure) => {
 
 //passer une commande en Servi
 export const fetchServed = (id, success, failure) => {
-  picsousRequest('POST', 'setMenuServed', id, 0)
+  picsousRequest('POST', 'setMenuServed', id+'/', 0)
     .then((result) => {
       if (result.ok) {
         success(result);
@@ -50,7 +50,7 @@ export const fetchServed = (id, success, failure) => {
 
 // remiser les commades des gens de la perm (qui se servent après)
 export const changeStaff = (id, success, failure) => {
-  picsousRequest('POST', 'setMenuIsStaff', id, 0)
+  picsousRequest('POST', 'setMenuIsStaff', id+'/', 0)
     .then((result) => {
       if (result.ok) {
         success(result);
