@@ -3,7 +3,7 @@ Nouveau système de caisse du Pic'Asso qui permet d'acheter au foyer étudiant d
 
 Cette application permet également de gérer la vente de menus, de modifier l'affichage des Télés et de gérer les cartes étudiantes au sein du foyer.
 
-Frameworks utilisés : Django Rest, Reactjs.
+Frameworks utilisés : Django Rest Framework, Reactjs.
 
 ## Installation
 Il faut d'abord installer la dernière version de npm :
@@ -45,7 +45,7 @@ Elle permet principalement aux utilisateurs :
 
 - D'acheter un ou plusieurs articles qui sont disponibles.
 
-- D'annuler un achat qu'ils on récemment effectué.
+- D'annuler un achat qu'ils ont récemment effectué.
 
 Cette partie vente répond à plusieurs besoins. D'une part, elle doit être intuitive d'utilisation afin d'optimiser le temps que chaque utilisateur va passer devant la caisse pour réaliser ses achats. Elle doit également être correctement organisée afin que toutes les informations nécessaires aux utilisateurs se trouve en une seule et unique page fixe (le format des caisses imposant cette contrainte).
 
