@@ -39,13 +39,17 @@ componentWillUnMount(){
 updateData = ()=>{
     this.interval = setInterval(
       ()=>{
-          this.props.getList(this.props.NavIndex)
+          if (this.props.activePanel === 'Menu' && this.props.NavIndex !== null)
+          {
+            this.props.getList(this.props.NavIndex)
+          }
       },
       REFRESH_TIMER
     )
 }
 
 render(){
+
   const {NavIndex, listSales, loading} = this.props;
   let MenuList = []
 
@@ -94,7 +98,7 @@ render(){
 let mapStateToProps = (state)=>{
   return{
     //mettre ce qu'on veut faire passer en props du composant
-
+    activePanel : state.general.activePanel || null,
     loading : state.menus.loading || null,
     listSales : state.menus.listSales || [],
     NavIndex : state.menus.NavIndex || null
