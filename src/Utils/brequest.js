@@ -21,16 +21,18 @@ const brequest = (server, method, service = null, request, data = null, sessioni
 
     case 'picsousRequest':
       url = data !== null
-        ? `${PICSOUS_URL + request}/${data}?random=${Math.random()}`
-        : `${PICSOUS_URL + request}?random=${Math.random()}`;
+        ? `${PICSOUS_URL + request}/${data}`
+        : `${PICSOUS_URL + request}`;
 
       return fetch(
         url,
         {
-          method,
+          method: method,
+          credentials:'include',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
+          
         },
       );
 
