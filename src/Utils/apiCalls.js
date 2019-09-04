@@ -87,6 +87,7 @@ export const loginBadge2 = (userUid, userPin, success, error) => {
         fetch(`${PICSOUS_URL}auth/badge`, {
           method: 'POST',
           // mode: 'cors',
+          credentials: 'include',
           body : JSON.stringify(data),
           headers: {
             'Content-Type': 'application/json' ,
