@@ -33,7 +33,7 @@ componentDidMount(){
   this.updateData()
 }
 
-componentWillUnMount(){
+componentWillUnmount(){
   clearInterval(this.interval)
 }
 
