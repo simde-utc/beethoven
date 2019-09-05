@@ -216,16 +216,22 @@ export const getUserInformation = (sessionId, badge, success, failure) => {
 
 // Gestion des WebTV
 export const getTvUrl = (idTv, success, failure) => {
-  brequest('picsousRequest', 'GET', null, 'webTv', idTv, null)
+  fetch(
+    `${PICSOUS_URL}webtvConfiguration/?tv=`+idTv,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     .then(res => res.json())
-    .then(
-      (result) => {
-        success(result);
-      },
-      (error) => {
-        failure(error);
-      },
-    ).catch((err) => { failure(err); });
+    .then((result) => {
+      if(result[0])
+      success(result[0]);
+    },
+    (err) => {
+      failure(err);
+    }).catch((err) => { failure(err); });
 };
 
 // cancel une transaction
@@ -243,35 +249,95 @@ export const cancelUserTransaction = (sessionId, pur_id, success, failure) => {
 };
 
 
-export const setTvUrl = (idTv, url, messages, success, failure) => {
-  fetch(
-    `${PICSOUS_URL}webTv/setConfig/`,
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        id: idTv,
-        url,
-        messages,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
+export const setTvUrl = (idTv, url, photo, messages, is_new, success, failure) => {
+  if(url !== null){
+    fetch(
+      `${PICSOUS_URL}webtvConfiguration/`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          tv: idTv,
+          url : url,
+          photo : null,
+          enable_messages : messages,
+          is_image : false
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    },
-  )
-    .then(res => res.json())
-    .then(
-      (result) => {
-        success(result);
+    )
+      .then(res => res.json())
+      .then(
+        (result) => {
+          success(result);
+        },
+        (error) => {
+          failure(error);
+        },
+      ).catch((err) => { failure(err); });
+  }
+  else if(photo!== null && is_new===0){
+    fetch(
+      `${PICSOUS_URL}webtvConfiguration/`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          tv: idTv,
+          url : photo,
+          photo : null,
+          is_image : true,
+          enable_messages : messages,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-      (error) => {
-        failure(error);
+    )
+      .then(res => res.json())
+      .then(
+        (result) => {
+          success(result);
+        },
+        (error) => {
+          failure(error);
+        },
+      ).catch((err) => { failure(err); });
+  }
+
+  else if(photo!== null && is_new===1){
+    const data = new FormData()
+    data.append('photo', photo, photo.name)
+    data.append('tv', idTv)
+    data.append('is_image', true)
+    data.append('enable_messages', messages)
+    fetch(
+
+      `${PICSOUS_URL}webtvConfiguration/`,
+      {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept':'application/json',
+        },
       },
-    ).catch((err) => { failure(err); });
+    )
+      .then(res => res.json())
+      .then(
+        (result) => {
+          success(result);
+        },
+        (error) => {
+          failure(error);
+        },
+      ).catch((err) => { failure(err); });
+  }
+
 };
 
 // reccupération de la liste de messages
 export const fetchMessagesList = (success, failure) => {
-  brequest('picsousRequest', 'GET', null, 'messages/', null, null)
+  brequest('picsousRequest', 'GET', null, 'messages', null, null)
     .then(res => res.json())
     .then(
       (result) => {

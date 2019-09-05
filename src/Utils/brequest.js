@@ -21,8 +21,13 @@ const brequest = (server, method, service = null, request, data = null, sessioni
 
     case 'picsousRequest':
       url = data !== null
+
+
+
+
         ? `${PICSOUS_URL + request}/${data}`
         : `${PICSOUS_URL + request}`;
+
 
       return fetch(
         url,

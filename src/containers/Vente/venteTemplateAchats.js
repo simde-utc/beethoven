@@ -17,7 +17,7 @@ class TemplateArticle extends React.Component {
           <th scope="row">{art.qte}</th>
           <td> {art.nom} </td>
           <td> {art.prix} € </td>
-            <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() => deleteArticle(art.idart,selectedArticles)}>
+            <td><button type="button" class="btn btn-outline-danger btn-xs" onMouseDown={() => deleteArticle(art.idart,selectedArticles)}>
                   <FaTrash></FaTrash>
                 </button>
             </td>

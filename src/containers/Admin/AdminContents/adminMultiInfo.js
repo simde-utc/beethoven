@@ -7,39 +7,40 @@ import { Container, Col, Row, Table } from 'reactstrap';
 
 import {FaTrash} from 'react-icons/fa'
 
-import {getMessagesList, addMessage, deleteMessage} from '../../../actions'
-class AdminWebTvContent extends Component {
+
+class AdminMultiInfo extends Component {
   constructor(props)
   {
     super(props);
     this.state = {
-      title : "",
-      text : ""
+      url : ""
     }
 
   }
   componentWillMount()
   {
-    const {getMessagesList} = this.props;
-    getMessagesList();
+    //const {getMessagesList} = this.props;
+    //getMessagesList();
 
   }
   render() {
-    const {sessionId, username, messages} = this.props
-    const {addMessage, deleteMessage} = this.props
-
-    let messagesTab = []
+    const {sessionId, username} = this.props
+    let messages = [
+      {url:'https://assos.utc.fr'},
+      {url:'https://assos.utc.fr/picasso'},
+      {url:'https://www.google.com'}
+    ]
+    let urlsTab = []
     messages.forEach((elt)=>{
-      messagesTab.push(
+      urlsTab.push(
         <tr>
-          <td>{elt.title}</td>
-          <td>{elt.text}</td>
-          <td><FaTrash onMouseDown={()=>deleteMessage(elt.id)}></FaTrash></td>
+          <td>{elt.url}</td>
+          <td><FaTrash></FaTrash></td>
       </tr>)
     })
     return(
       <div
-        className ="AdminPanel"
+        className ="AdminMultiInfo"
         >
         {sessionId!== null && username !== null ?
 
@@ -55,26 +56,20 @@ class AdminWebTvContent extends Component {
             <Row>
               <Col xs={{size:12}} lg={{size:6, offset:3}}>
                 <InputGroup>
-                  <InputGroupAddon addonType="prepend">Message</InputGroupAddon>
+                  <InputGroupAddon addonType="prepend">Nouvel URL</InputGroupAddon>
                   <Input
-                    placeholder="Titre"
+                    placeholder="url"
                     style={{marginRight : '5px'}}
-                    onChange = {(e)=>this.setState({title:e.target.value})}
+                    onChange = {(e)=>this.setState({url:e.target.value})}
                     />{' '}
-                    <Input
-                      placeholder="Texte"
-                      style={{marginRight : '5px'}}
-                      onChange = {(e)=>this.setState({text:e.target.value})}
-                      />{' '}
                     <Button
                       style={{marginRight : '5px'}}
-                      onMouseDown = {()=>{
-
-                        addMessage(this.state.title, this.state.text)
+                      onClick = {()=>{
+                        //functionToApi(url)
 
                       }}
                       >
-                      Envoyer
+                      Ajouter
                     </Button>
                 </InputGroup>
                 <br></br>
@@ -85,13 +80,12 @@ class AdminWebTvContent extends Component {
                 <Table>
                   <thead>
                     <tr>
-                      <th>Titre</th>
-                      <th>Message</th>
-                      <th>Actions</th>
+                      <th>URL</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {messagesTab}
+                    {urlsTab}
                   </tbody>
                 </Table>
               </Col>
@@ -111,7 +105,6 @@ let mapStateToProps = (state)=>{
     //MyVar : state.location.MyVar || defaultValue
     sessionId : state.cas.sessionId || null,
     username : state.cas.username || null,
-    messages : state.webTV.messages || null,
   };
 }
 
@@ -119,13 +112,10 @@ let mapStateToProps = (state)=>{
 let mapDispatchToProps = (dispatch)=>{
   return{
     //myfunction : ()=> dispatch(myfunction())
-    getMessagesList : ()=>dispatch(getMessagesList()),
-    addMessage : (title, text)=>dispatch(addMessage(title, text)),
-    deleteMessage : (idMessage)=>dispatch(deleteMessage(idMessage))
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminWebTvContent);
+)(AdminMultiInfo);

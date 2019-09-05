@@ -17,7 +17,7 @@ class Categorie extends Component {
     const { updateCategorie } = this.props;
     const listeCatego = listCateg.map(item => (
       <a class='list-group-item list-group-item-action' draggable="false" data-toggle="list" href={['#list-',item.id].join('')} ref={item.id} id={item.id}
-        onClick={() => updateCategorie(item.id)} role="tab" >{item.name}</a>
+        onMouseDown={() => updateCategorie(item.id)} role="tab" >{item.name}</a>
     ))
     return (
       <div class="list-group shadow-lg p-3 mb-5 rounded" id="list-tab" role="tablist">{listeCatego}</div>

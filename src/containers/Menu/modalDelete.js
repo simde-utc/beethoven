@@ -46,7 +46,7 @@ render(){
     <ModalFooter>
       <Button
         color="danger"
-        onClick={
+        onMouseDown={
           ()=> {
 
             deleteMenus(this.props.index, MenuList)
@@ -57,7 +57,7 @@ render(){
         >Supprimer</Button>
       <Button
         color="primary"
-        onClick = {()=>{
+        onMouseDown = {()=>{
           this.props.setFalse();
           this.toggle()
 

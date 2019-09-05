@@ -42,7 +42,7 @@ class AdminNavRow extends Component {
           }
 
           active = {this.props.index   === AdminNav}
-          onClick = {()=>{
+          onMouseDown = {()=>{
             updateAdminNav(this.props.index)
 //            setTvLink(1, "http://assos.utc.fr/", true)
 //            setTvLink(2, "http://beethoven.picasso-utc.fr/NextMenus", true)

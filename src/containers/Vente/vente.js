@@ -16,7 +16,7 @@ class Vente extends Component {
     const { deleteAllArticles, setTransactionState, setClientState, cancelTransaction } = this.props;
     const { selectedArticles, state_transaction, info_client, sessionId, info_transaction, listArticles} = this.props;
     const annuler =             (<div>
-                                    <button class="btn btn-primary ml-2 mb-2 btn-block" onClick={() => deleteAllArticles(selectedArticles)}>
+                                    <button class="btn btn-primary ml-2 mb-2 btn-block" onMouseDown={() => deleteAllArticles(selectedArticles)}>
                                       Annuler tout
                                     </button>
                                   </div>)
@@ -69,25 +69,13 @@ class Vente extends Component {
           </tr>
         )
         info_client.last_purchases.forEach(function(el) {
-          let name = listArticles.filter((item) =>  item.id === el.obj_id);
-          list_last_purchases.push(
-            <tr>
-              <td> Quantité </td>
-              <td scope="row"> Nom </td>
-              <td> Prix </td>
-                <td>
-                </td>
-            </tr>
-        )
-      });
-        info_client.last_purchases.forEach(function(el) {
-          let name = listArticles.filter((item) =>  item.id == el.obj_id);
+          let name = listArticles.filter((item) =>  item.id == el.obj_id)
           list_last_purchases.push(
             <tr>
               <td> {el.pur_qte} </td>
-              <th scope="row">{name[0].name}</th>
+              <th scope="row">{name[0]!==undefined && name[0].name}</th>
               <td> {el.pur_price/100} € </td>
-                <td><button type="button" class="btn btn-outline-danger btn-xs" onClick={() =>
+                <td><button type="button" class="btn btn-outline-danger btn-xs" onMouseDown={() =>
                         cancelTransaction(sessionId,el.pur_id)
                       }>
                       Annuler
@@ -108,7 +96,7 @@ class Vente extends Component {
                                 </table>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setClientState()}>Fermer</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onMouseDown={() => setClientState()}>Fermer</button>
                               </div>
                             </div>
                           </div>

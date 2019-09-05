@@ -37,7 +37,7 @@ class Header extends Component {
   }
 
   componentDidMount() {
-
+    this.props.changePanel(this.props.current)
 
     setInterval( () => {
       this.setState({
@@ -45,6 +45,7 @@ class Header extends Component {
       })
     },1000)
   }
+
 
 
 
@@ -151,10 +152,10 @@ class Header extends Component {
         {badgeuse===true && connected===false &&<BadgeConnexion></BadgeConnexion>}
         {badgeuse===false && connected===false &&<SimpleConnexion></SimpleConnexion>}
 
-        {connected===true && picked===false && this.props.activePanel==='Vente' && <TypeEvents></TypeEvents>}
+        {connected===true && picked===false && this.props.activePanel===this.props.current && <TypeEvents></TypeEvents>}
         <div className="Header">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <span className="navbar-brand" onClick={()=> restart()}>Beethoven</span>
+            <span className="navbar-brand" onMouseDown={()=> restart()}>Beethoven</span>
               <span className="input-group-btn">
                 {username===null ?'' :
                   <span style={{color:'black'}}> {username}</span>}
@@ -166,15 +167,15 @@ class Header extends Component {
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               </ul>
               <span style={{color:'black', marginRight:'20px'}}> {this.state.curTime}</span>
-              <Button outline color="secondary" onClick={()=>this.props.changePanel('Menu')}>Menu</Button>" "
-              <Button outline color="secondary" onClick={()=>this.props.changePanel('Vente')}>Vente</Button>" "
-              <Button outline color="primary" onClick={
+              <Button outline color="secondary" onMouseDown={()=>this.props.changePanel('Menu')}>Menu</Button>" "
+              <Button outline color="secondary" onMouseDown={()=>this.props.changePanel('Vente')}>Vente</Button>" "
+              <Button outline color="primary" onMouseDown={
 
                   ()=>{
                     this.props.disconnect()
                     this.props.changePanel('Admin')
                   }}>Admin</Button>" "
-              <Button color="danger" href='#' onClick={()=>{
+              <Button color="danger" href='#' onMouseDown={()=>{
                   this.props.disconnect()
                 }}>Déconnexion</Button>
             </div>
