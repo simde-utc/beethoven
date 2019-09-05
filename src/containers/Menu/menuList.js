@@ -32,7 +32,7 @@ componentDidMount(){
   this.updateData()
 }
 
-componentWillUnMount(){
+componentWillUnmount(){
   clearInterval(this.interval)
 }
 
@@ -75,14 +75,14 @@ render(){
       >
       <h2>
         {loading===true ? '':
-          NavIndex!==null && NavIndex.toString()===listSales.menu.id_payutc && listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+
+          NavIndex!==null && NavIndex===listSales.menu.id_payutc && listSales.menu !== undefined && listSales.menu.name+' - '+listSales.menu.total_quantity+ ' / '+
           listSales.menu.quantity+' - Commandes Servies : '+listSales.menu.served_quantity
         }
       </h2>
 
-      {NavIndex === null ? listSales.length ===0 ? '' :  <h3> Veuillez choisir un Menu de la liste</h3>
-      :   loading === true || NavIndex.toString()!==listSales.menu.id_payutc  ? <Loading height='200px'></Loading> :
-      NavIndex.toString()===listSales.menu.id_payutc && this.returnMenuList(MenuList)
+      {NavIndex === null ? listSales.length === 0 ? '' :  <h3> Veuillez choisir un Menu de la liste</h3>
+      :   loading === true || NavIndex!==listSales.menu.id_payutc  ? <Loading height='200px'></Loading> :
+      NavIndex===listSales.menu.id_payutc && this.returnMenuList(MenuList)
   }
 
     </div>

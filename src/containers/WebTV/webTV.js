@@ -20,7 +20,7 @@ class WebTV extends Component {
     this.updateData()
   }
 
-  componentWillUnMount(){
+  componentWillUnmount(){
     clearInterval(this.interval)
   }
 
