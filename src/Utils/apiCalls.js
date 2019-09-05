@@ -8,7 +8,7 @@ import brequest from './brequest';
 
 // supprimer un menu
 export const onTrashClick = (buttonId, success, failure) => {
-  brequest('picsousRequest', 'POST', null, 'perms/menu/closed', buttonId, null).then().then(
+  brequest('picsousRequest', 'POST', null, 'perms/menu/closed/', buttonId, null).then().then(
     (result) => {
       success(result);
     },
@@ -21,7 +21,7 @@ export const onTrashClick = (buttonId, success, failure) => {
 
 // reccupérer tous les menus dispos
 export const fetchMenus = (success, failure) => {
-  brequest('picsousRequest', 'GET', null, 'perm/menus', null, null).then(res => res.json()).then(
+  brequest('picsousRequest', 'GET', null, 'perm/menus/', null, null).then(res => res.json()).then(
     (result) => {
       success(result);
     },
@@ -46,7 +46,7 @@ export const fetchServed = (id, success, failure) => {
 
 // remiser les commades des gens de la perm (qui se servent après)
 export const changeStaff = (id, success, failure) => {
-  brequest('picsousRequest', 'POST', null, 'perms/menu/staff', id, null)
+  brequest('picsousRequest', 'POST', null, 'perms/menu/staff/', id, null)
     .then((result) => {
       if (result.ok) {
         success(result);
@@ -59,7 +59,7 @@ export const changeStaff = (id, success, failure) => {
 
 // reccupérer liste du menu selectionné
 export const fetchMenuList = (idMenu, success, failure) => {
-  brequest('picsousRequest', 'GET', null, 'perms/menu/orders', idMenu, null)
+  brequest('picsousRequest', 'GET', null, 'perms/menu/orders/', idMenu, null)
     .then(res => res.json())
     .then(
       (result) => {
