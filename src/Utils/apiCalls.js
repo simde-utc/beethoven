@@ -33,7 +33,7 @@ export const fetchMenus = (success, failure) => {
 
 // passer une commande en Servi
 export const fetchServed = (id, success, failure) => {
-  brequest('picsousRequest', 'POST', null, 'perms/menu/served', id, null)
+  brequest('picsousRequest', 'POST', null, 'perms/menu/served/', id, null)
     .then((result) => {
       if (result.ok) {
       // fetchMenuList(this.state.NavIndex)
