@@ -75,35 +75,20 @@ export const fetchMenuList = (idMenu, success, failure) => {
 
 // connexion via badge
 export const loginBadge2 = (userUid, userPin, success, error) => {
-  brequest('apiRequest', 'POST', 'POSS3', 'loginBadge2', { badge_id: userUid.toString(), pin: userPin.toString() }, null)
-    .then(res => res.json())
-    .then(
-      (result) => {
-        console.log(result)
-        const data = {
-          badge_id: userUid,
-          pin: userPin
-        }
-        fetch(`${PICSOUS_URL}auth/badge`, {
-          method: 'POST',
-          // mode: 'cors',
-          credentials: 'include',
-          body : JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json' ,
-          },
-        })
-        .then(success(result))
-      },
-      (err) => {
-        error(err);
-      },
-    )
-    .catch(
-      (err) => {
-        error(err);
-      },
-    );
+  fetch(`${PICSOUS_URL}auth/badge`, 
+    {
+      method: 'POST', 
+      credentials: 'include', 
+      body: JSON.stringify({ badge_id: userUid.toString(), pin: userPin.toString() }),
+      headers : {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(
+    (result) => {
+      success(result);
+    },
+    (error) => {
+      error(error);
+    },
+  ).catch((err) => { error(err); });
 };
 
 
