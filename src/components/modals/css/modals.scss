@@ -1,0 +1,80 @@
+@import "../../../css/colors.scss";
+
+.modal-header {
+  text-align: center;
+}
+
+.modal-container {
+  width: 100%;
+  padding: 10px;
+  color: $black;
+  text-align: center;
+
+  .modal-input {
+    width: 100%;
+    margin: 10px 0;
+
+    &.ui.input input {
+      border: 1px solid $light-grey;
+    }
+  }
+
+  .modal-pad {
+    .pad-row {
+      .pad-button {
+        margin: 5px;
+      }
+    }
+  }
+
+  .modal-sales-locations {
+    margin-top: 10px;
+
+    .location-button {
+      margin: auto 5px;
+    }
+  }
+
+  .modal-buyer-purchases {
+    display: table;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    overflow-wrap: break-word;
+    color: $dark-grey;
+    margin-bottom: 1em;
+
+    .buyer-row {
+      display: table-row;
+      .cell {
+        display: table-cell;
+        border-bottom: solid 0.1em $fade-grey;
+        padding: 0.5em;
+        text-align: center;
+
+        &.qte {
+          width: 10%;
+        }
+
+        &.name {
+          width: 70%;
+        }
+
+        &.price {
+          width: 10%;
+        }
+
+        &.trash {
+          width: 10%;
+
+          i.icon {
+            color: $pic-red;
+            &:hover {
+              color: $pic-red-hover;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@import "./colors.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: $pic-blue;
+  color: $white;
+  background-image: url("../images/pic_logo.png");
+  background-repeat:no-repeat;
+  background-position:50% 40%;
+  background-size: 40%;
+  background-attachment:fixed;
+}
+
+.application-container {
+  margin: 20px;
+}
+
+.ui.button {
+  font-weight: 600;
+  &.red {
+    background-color: $pic-red;
+    &:hover {
+      background-color: $pic-red-hover;
+    }
+
+    &:focus {
+      background-color: $pic-red;
+    }
+  }
+}
