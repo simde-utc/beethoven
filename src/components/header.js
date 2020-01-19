@@ -4,7 +4,10 @@ import "./css/header.scss";
 import { Button } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { logout, refreshUser } from "../api/connect";
-import { salesLocations as salesLocationsAPI } from "../api/state";
+import {
+  salesLocations as salesLocationsAPI,
+  blockedUsers as blockedUsersAPI
+} from "../api/state";
 import { User } from "../api/connect/models";
 import { Link, useLocation } from "react-router-dom";
 
@@ -17,6 +20,7 @@ const Header = ({ user, isLogged }) => {
     dispatch(refreshUser());
     dispatch(salesLocationsAPI.resetCurrent());
     dispatch(salesLocationsAPI.list());
+    dispatch(blockedUsersAPI.setCurrent(null, { update: true }))
   }, [dispatch]);
 
   const { pathname } = useLocation();
