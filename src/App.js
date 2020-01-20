@@ -41,10 +41,9 @@ const App = () => {
         <Header user={ user } isLogged={logged}/>
         <div className="application-container">
           <Switch>
-            <Route path="/sales" component={ Sales }/>
+            <Route exact path="/sales" component={ Sales }/>
             <Route path="/menus" component={ Menus }/>
-            <Route path="/" component={null}/>
-            <Redirect to="/"/>
+            <Redirect to="/sales"/>
           </Switch>
         </div>
     </div>
