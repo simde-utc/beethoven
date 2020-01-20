@@ -56,7 +56,7 @@ const BuyerInformationsModal = () => {
             purchases.map(purchase => {
               if(purchase.getArticle()) {
                 return (
-                  <div className="buyer-row">
+                  <div className="buyer-row" key={ purchase.getKey() }>
                     <span className="cell qte">{purchase.getQte()}</span>
                     <span className="cell name">{purchase.getArticle().getName()}</span>
                     <span className="cell price">{ purchase.getPrice().toFixed(2) }€</span>

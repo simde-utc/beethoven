@@ -37,7 +37,6 @@ export function errorLogin(error) {
     connect: {
       pending: false,
       logged: false,
-      error: error.message,
     }
   }
 }
@@ -58,7 +57,7 @@ export function badgeAuth(data) {
         dispatch(successLogin(response))
     }).catch( async (err) => {
       await window.localStorage.removeItem('@auth_info')
-      errorLogin(err)
+      dispatch(errorLogin(err))
     })
   }
 }
@@ -73,7 +72,7 @@ export function usernameAuth(data) {
       }
     ).catch(async (err) => {
       await window.localStorage.removeItem('@auth_info')
-      errorLogin(err)
+      dispatch(errorLogin(err))
     })
   }
 }
@@ -96,7 +95,7 @@ export function refreshUser() {
       }
     ).catch( async (err) => {
       await window.localStorage.removeItem('@auth_info')
-      dispatch(errorLogin)
+      dispatch(errorLogin(err))
     });
   }
 }
@@ -117,14 +116,6 @@ export function getUser(state) {
   if(connect  && connect.user) {
     const user = new User(connect.user);
     return user;
-  }
-  return null;
-}
-
-export function getError(state) {
-  const { connect } = state;
-  if(connect && connect.error) {
-    return connect.error;
   }
   return null;
 }
