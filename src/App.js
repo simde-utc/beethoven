@@ -10,6 +10,7 @@ import Header from "./components/header";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Sales from "./pages/sales/container";
 import Menus from "./pages/menus/container";
+import WebSocketManager from "./utils/websocket";
 
 const App = () => {
   const [isLoading, setLoading] = React.useState(true);
@@ -37,6 +38,7 @@ const App = () => {
 
   return (
     <div>
+      <WebSocketManager/>
       <ConnexionModal open={!logged}/>
         <Header user={ user } isLogged={logged}/>
         <div className="application-container">

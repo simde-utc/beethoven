@@ -96,7 +96,7 @@ const handlePurchases = (user, articles) => {
     return [];
   }
 
-  return user.getLastPurchases().filter(pur => pur.getQte() >= 0).map(purchase => {
+  return user.getLastPurchases().filter(pur => pur.getQte() >= 0 && !pur.getRemoved()).map(purchase => {
     purchase.setArticle(articles.find(article => String(article.getKey()) === String(purchase.getObj())))
     return purchase;
   })

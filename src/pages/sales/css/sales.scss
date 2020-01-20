@@ -36,7 +36,7 @@
     color: $dark-grey;
     font-weight: 600;
     text-align: center;
-    margin: 0 1.2em 1.2em 1.2em;
+    margin: 0 1.1em 1.1em 1.1em;
     vertical-align: middle;
     overflow-wrap: break-word;
 
@@ -123,6 +123,18 @@
 }
 
 .payment-footer {
+  .button-cancel {
+    &.ui.button {
+      background-color: $pic-blue;
+      color: $white;
+      &:hover {
+        background-color: $pic-blue-hover;
+      }
+      &:focus {
+        background-color: $pic-blue;
+      }
+    }
+  }
   .payment-information {
     text-align: center;
     margin-top: 15px;

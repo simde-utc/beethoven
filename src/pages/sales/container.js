@@ -1,10 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   salesLocations as salesLocationsAPI,
   categories as categoriesAPI,
   articles as articlesAPI,
 } from "../../api/state";
+import { insertData, getData } from "../../api/internal";
 import { Grid } from "semantic-ui-react";
 import CategoriesManager from "./categories";
 import ArticlesManager from "./articles";
@@ -19,18 +20,22 @@ const SalesContainer = () => {
     currentSalesLocation ,
     allCategories,
     allArticles,
-    currentCategoryID
+    currentCategoryID,
+    selectedArticles,
   } = useSelector(state => ({
     salesLocations: salesLocationsAPI.getValuesFromState(state),
     currentSalesLocation: salesLocationsAPI.getCurrentFromState(state),
     allCategories: categoriesAPI.getValuesFromState(state),
     currentCategoryID: categoriesAPI.getCurrentIDFromState(state),
     allArticles: articlesAPI.getValuesFromState(state),
+    selectedArticles: getData(state, 'selectedArticles') || {},
   }));
 
   const [articles, setArticles] = React.useState({});
   const [categories, setCategories] = React.useState([]);
-  const [selectedArticles, setSelectedArticles] = React.useState({});
+
+  const dispatch = useDispatch();
+  const setSelectedArticles = React.useCallback((newArticles) => dispatch(insertData('selectedArticles', newArticles)), [dispatch]);
 
   /* This effect willl update the categories and articles list to display*/
   React.useEffect(() => {
@@ -69,14 +74,14 @@ const SalesContainer = () => {
         <Grid.Column width={3}>
           <CategoriesManager categories={categories}/>
         </Grid.Column>
-        <Grid.Column width={9}>
+        <Grid.Column width={8}>
           <ArticlesManager
             articles={ currentCategoryID ? articles[currentCategoryID]:  []}
             onClick={ (article) => handleSelection(article) }
             />
         </Grid.Column>
-        <Grid.Column width={4}>
-          <PaymentPanel selectedArticles={selectedArticles} setSelectedArticles={setSelectedArticles}/>
+        <Grid.Column width={5}>
+          <PaymentPanel/>
         </Grid.Column>
       </Grid>
 

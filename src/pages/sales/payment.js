@@ -2,57 +2,36 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
 import { Article } from "../../models";
-import WebSocket from "react-websocket";
-import { WEBSOCKET_URL } from "../../config";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   transaction as transactionAPI,
-  buyerInformations as buyerInformationsAPI,
-  blockedUsers as blockedUsersAPI,
 } from "../../api/state";
+import { getData, insertData } from "../../api/internal";
 import { BuyerInformationsModal } from "../../components/modals";
 
-const PaymentPanel = ({ selectedArticles, setSelectedArticles }) => {
-  const [reader, setReader] = React.useState(false);
+const PaymentPanel = () => {
+
+   const { selectedArticles } = useSelector(state => ({
+     selectedArticles: getData(state, 'selectedArticles') || {}
+   }));
 
   const dispatch = useDispatch();
 
-  const { blockedUsers } = useSelector(state => ({ blockedUsers: blockedUsersAPI.getCurrentFromState(state) }));
-
-  const handlePayment = React.useCallback((badgeID) => {
-    const blockedUID = blockedUsers ? blockedUsers.getUsers().map(user => user.getBadgeUID() ) : [];
-
-    if(blockedUID.includes(badgeID)) {
-      return dispatch(transactionAPI.error({ error: { message: "Utilisateur bloqué" }}));
-    }
-    const items = Object.entries(selectedArticles).map(([, {article, qte}]) => [article.getKey(), qte]);
-    dispatch(transactionAPI.create({ badge_id: badgeID, obj_ids: items }));
+  const removeItem = React.useCallback((id) => {
+    const newData = Object.keys(selectedArticles).filter(
+      key => String(key) !== String(id)).reduce(
+      (list, key) => { list[key] = selectedArticles[key]; return list;}, {});
+    return dispatch(insertData('selectedArticles', newData));
   }, [dispatch, selectedArticles]);
 
-
-  const getBuyerInfo = React.useCallback((badgeID) => dispatch(buyerInformationsAPI.create({ badge_id: badgeID })),[dispatch]);
-
-
-  const removeItem = (id) => setSelectedArticles(Object.keys(selectedArticles).filter(
-    key => String(key) !== String(id)).reduce(
-    (list, key) => { list[key] = selectedArticles[key] ; return list; }, {})
-  );
+  const deleteAllSelection = React.useCallback(() => dispatch(insertData('selectedArticles', {})), [dispatch]);
 
   const totalPrice = Object.entries(selectedArticles).reduce((total, [,current]) => total + current.qte*current.article.getPrice(), 0);
 
+
   return (
     <React.Fragment>
-      <WebSocket
-        url={WEBSOCKET_URL}
-        onMessage={(data) => {
-          Object.keys(selectedArticles).length ?
-          handlePayment(data.substr(13, data.length))
-          : getBuyerInfo(data.substr(13, data.length))
-        }}
-        onOpen={() => setReader(true)}
-        onClose={() => setReader(false)}
-        />
       <div className="payment-container">
         <div className="title">Votre Panier</div>
 
@@ -76,28 +55,19 @@ const PaymentPanel = ({ selectedArticles, setSelectedArticles }) => {
         </div>
         <div className="payment-footer">
           <Button
-            color="red"
             fluid
             disabled = {!Object.keys(selectedArticles).length}
-            onClick={() => setSelectedArticles({})}
+            onClick={ deleteAllSelection }
+            className="button-cancel"
             >
             Annuler tout
           </Button>
-          <PaymentResponse reader={reader} totalPrice={totalPrice} setSelectedArticles={setSelectedArticles}/>
+          <PaymentResponse totalPrice={totalPrice} deleteAllSelection={deleteAllSelection}/>
         </div>
       </div>
       <BuyerInformationsModal/>
     </React.Fragment>
   )
-}
-
-PaymentPanel.propTypes = {
-  selectedArticles: PropTypes.object,
-  setSelectedArticles: PropTypes.func.isRequired
-}
-
-PaymentPanel.defaultProps = {
-  selectedArticles: {}
 }
 
 export default PaymentPanel;
@@ -120,31 +90,33 @@ Item.propTypes = {
   qte: PropTypes.number.isRequired
 }
 
-const PaymentResponse = ({ reader, totalPrice, setSelectedArticles }) => {
+const PaymentResponse = ({ totalPrice, deleteAllSelection }) => {
   const {
     error,
     success,
-    creating
+    creating,
+    reader
   } = useSelector(state => ({
     error: transactionAPI.getErrorFromState(state),
     success: transactionAPI.getCurrentFromState(state),
     creating: transactionAPI.getCreatingFromState(state),
+    reader: getData(state, 'reader')
   }));
 
   const dispatch = useDispatch();
   const resetCurrent = React.useCallback(() =>{
     dispatch(transactionAPI.resetCurrent())
-    setSelectedArticles({})
-  }, [dispatch, setSelectedArticles])
+  }, [dispatch])
 
   React.useEffect(() => {
     let timer;
     if(error || success) {
+      deleteAllSelection();
       timer = setTimeout(resetCurrent, 2000);
     }
 
     return () => clearTimeout(timer);
-  }, [error, success, resetCurrent]);
+  }, [error, success, resetCurrent, deleteAllSelection]);
 
   if(!reader) {
     return(
@@ -185,3 +157,10 @@ const PaymentResponse = ({ reader, totalPrice, setSelectedArticles }) => {
     </div>
   )
 }
+
+// <WebSocket
+//   url={WEBSOCKET_URL}
+//   onMessage={(data) => handleReader(data)}
+//   onOpen={() => setReader(true)}
+//   onClose={() => setReader(false)}
+//   />

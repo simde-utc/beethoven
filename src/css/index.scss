@@ -21,7 +21,7 @@ body {
 }
 
 .application-container {
-  margin: 20px;
+  padding: 20px;
 }
 
 .ui.button {
@@ -35,5 +35,14 @@ body {
     &:focus {
       background-color: $pic-red;
     }
+  }
+}
+
+.ui.grid.equal {
+
+  margin: 0;
+  
+  .column.wide {
+    padding: 0;
   }
 }
