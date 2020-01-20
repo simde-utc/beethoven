@@ -4,14 +4,13 @@ import { Modal, Input, Button, Loader } from "semantic-ui-react"
 import WebSocket from "react-websocket";
 import { WEBSOCKET_URL } from "../../config";
 import "./css/modals.scss";
-import { isPending, badgeAuth, usernameAuth } from "../../api/connect";
+import { isPending, badgeAuth, usernameAuth, isLogged } from "../../api/connect";
 import { useSelector, useDispatch } from "react-redux";
 
 const ConnexionManager = ({ open }) => {
   const [reader, setReader] = React.useState(false);
   const [webData, setWebData] = React.useState(null);
 
-  const { pending } = useSelector(state => ({ pending: isPending(state) }));
   return (
     <React.Fragment>
       <WebSocket
@@ -20,7 +19,7 @@ const ConnexionManager = ({ open }) => {
         onOpen = {() => setReader(true)}
         onClose={() => setReader(false)}
         />
-      { renderModal(reader, open, pending, webData, setWebData) }
+      { renderModal(reader, open, webData, setWebData) }
     </React.Fragment>
 
   )
@@ -39,7 +38,7 @@ export default ConnexionManager;
  * @param {boolean} open - boolean to check if we open the modal
  * @returns {function} the component
 **/
-const renderModal = (reader, open, pending, webData, setWebData) => {
+const renderModal = (reader, open, webData, setWebData) => {
   const Content = reader ? BadgeConnexionModal : SimpleConnexionModal;
   return (
     <Modal
@@ -51,12 +50,7 @@ const renderModal = (reader, open, pending, webData, setWebData) => {
         - Connexion -
       </Modal.Header>
       <Modal.Content>
-        {
-          pending ?
-          <div className="modal-container"><Loader/></div>
-          :
           <Content webData={webData} setWebData={setWebData}/>
-        }
       </Modal.Content>
     </Modal>
   );
@@ -64,11 +58,11 @@ const renderModal = (reader, open, pending, webData, setWebData) => {
 
 const SimpleConnexionModal = () => {
   const [data, setData] = React.useState({});
-
+  
   const dispatch = useDispatch();
   const login = React.useCallback((data) => {
     dispatch(usernameAuth(data));
-    setData({});
+    setData({})
   }, [dispatch]);
 
   return (

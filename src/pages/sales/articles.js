@@ -33,11 +33,19 @@ ArticlesManager.defaultProps = {
 
 const Article = ({ article, onClick }) => {
   return (
-    <div className="article-item" onClick = { () => onClick(article) }>
+    <div
+      className="article-item"
+      onMouseDown = { () => onClick(article) }
+      draggable={false}
+      >
       {
         article.getImageURL() ?
-        <img src={ article.getImageURL() } alt={ article.getName() }/>
-        : <div className="no-image">{ article.getName() }</div>
+        <img
+          src={ article.getImageURL() }
+          draggable={false}
+          alt={ article.getName() }
+          />
+        : <div className="no-image" draggable={false}>{ article.getName() }</div>
       }
     </div>
   );

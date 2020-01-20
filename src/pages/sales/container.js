@@ -66,10 +66,10 @@ const SalesContainer = () => {
   return (
     <div className="sales-container">
       <Grid columns="equal">
-        <Grid.Column width={4}>
+        <Grid.Column width={3}>
           <CategoriesManager categories={categories}/>
         </Grid.Column>
-        <Grid.Column width={8}>
+        <Grid.Column width={9}>
           <ArticlesManager
             articles={ currentCategoryID ? articles[currentCategoryID]:  []}
             onClick={ (article) => handleSelection(article) }
