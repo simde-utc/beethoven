@@ -11,7 +11,7 @@ export function requestLogin() {
     type: REQUEST_LOGIN,
     connect: {
       pending: true,
-      isLogged: false,
+      logged: null,
     }
   }
 }
@@ -24,7 +24,7 @@ export function successLogin({ sessionid, username }) {
         sessionid,
         username,
       },
-      isLogged: true,
+      logged: true,
       pending: false
     }
   }
@@ -36,7 +36,7 @@ export function errorLogin(error) {
     error,
     connect: {
       pending: false,
-      isLogged: false,
+      logged: false,
     }
   }
 }
@@ -44,6 +44,8 @@ export function errorLogin(error) {
 export function clear() {
   return {
     type: CLEAR,
+    logged: null,
+    pending: false,
     connect: {}
   }
 }
@@ -102,12 +104,12 @@ export function refreshUser() {
 
 export function isLogged(state) {
   const { connect } = state;
-  return Boolean(connect && connect.isLogged);
+  return Boolean(connect && connect.logged);
 }
 
 export function isPending(state) {
   const { connect } = state;
-  return Boolean(connect && connect.isPending)
+  return Boolean(connect && connect.pending)
 }
 
 export function getUser(state) {

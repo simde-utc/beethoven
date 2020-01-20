@@ -117,7 +117,7 @@ const reduceFunctions = {
     if(!success) {
       return {
         ...nextState,
-        error: response.getData(),
+        error: response ? response.getData() : null,
       }
     }
 
@@ -150,7 +150,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
-        error: response.getData()
+        error: response ? response.getData() : null,
       }
     }
     let instance = null;
@@ -179,7 +179,7 @@ const reduceFunctions = {
       return {
         ...state,
         updating: false,
-        error: response.getData()
+        error: response ? response.getData() : null,
       }
     }
 
@@ -199,13 +199,12 @@ const reduceFunctions = {
     }
 
     if(!success) {
-      const err = new payload.Model(response.getData());
       return {
         ...state,
         creating: false,
         currentID: null,
         current: null,
-        error: err
+        error: response ? new payload.Model(response.getData()) : null,
       }
     }
     const instance = new payload.Model(data);
@@ -230,7 +229,7 @@ const reduceFunctions = {
       return {
         ...state,
         deleting: false,
-        error: response.getData()
+        error: response ? response.getData() : null,
       }
     }
 
