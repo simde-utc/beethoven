@@ -33,10 +33,11 @@ export function successLogin({ sessionid, username }) {
 export function errorLogin(error) {
   return {
     type: ERROR_LOGIN,
-    error,
+
     connect: {
       pending: false,
       logged: false,
+      error: error.message,
     }
   }
 }
@@ -44,8 +45,6 @@ export function errorLogin(error) {
 export function clear() {
   return {
     type: CLEAR,
-    logged: null,
-    pending: false,
     connect: {}
   }
 }
@@ -82,7 +81,7 @@ export function usernameAuth(data) {
 export function logout() {
   return async (dispatch, state) => {
     await window.localStorage.removeItem('@auth_info')
-    fetchAPI('/auth/logout').then(
+    fetchAPI('/auth/logout', { method: 'GET' }).then(
       () => dispatch(clear())
     ).catch((err) => dispatch(clear()))
   }
@@ -118,6 +117,14 @@ export function getUser(state) {
   if(connect  && connect.user) {
     const user = new User(connect.user);
     return user;
+  }
+  return null;
+}
+
+export function getError(state) {
+  const { connect } = state;
+  if(connect && connect.error) {
+    return connect.error;
   }
   return null;
 }

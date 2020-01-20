@@ -5,16 +5,12 @@ import {
   REQUEST_CREATE,
   REQUEST_RETRIEVE,
   REQUEST_LIST,
-  REQUEST_UPDATE,
   REQUEST_UPDATE_ONE,
-  REQUEST_DELETE_ONE,
   SET_CURRENT,
   SET_CURRENT_ID,
-  RESET,
   RESET_CURRENT,
   REQUEST_ERROR
 } from "./types";
-import invariant from "invariant";
 
 
 /**

@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import { apiReducer, APIMiddleware, APIEndpoint2 } from "./index";
 import { WEEZEVENT_APP_KEY, WEEZEVENT_SYSTEM_ID, WEEZEVENT_URL, FUND_ID, EVENT_ID, API_URL } from "../config";
 import { connectReducer } from "./connect";
+import { internalReducer } from "./internal";
 import { SalesLocation, Category, Article, Transaction, BuyerInformations, BlockedUser } from "../models";
 
 const middleware = APIMiddleware();
@@ -20,6 +21,7 @@ if(process.env.NODE_ENV === "dev") {
 const reducers = [
   apiReducer,
   connectReducer,
+  internalReducer
 ]
 
 const reducerFn = (state, action) => {
