@@ -157,10 +157,3 @@ const PaymentResponse = ({ totalPrice, deleteAllSelection }) => {
     </div>
   )
 }
-
-// <WebSocket
-//   url={WEBSOCKET_URL}
-//   onMessage={(data) => handleReader(data)}
-//   onOpen={() => setReader(true)}
-//   onClose={() => setReader(false)}
-//   />
