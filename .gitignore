@@ -2,5 +2,6 @@ node_modules
 .idea/
 package-lock.json
 src/Utils/config.js
+src/config.js
 .eslintrc.js
 

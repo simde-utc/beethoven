@@ -1,71 +1,56 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { ConnexionModal } from "./components/modals";
+import { getUser, isLogged, refreshUser } from "./api/connect";
+import {
+  salesLocations as salesLocationsAPI,
+  blockedUsers as blockedUsersAPI
+} from "./api/state";
+import { useSelector, useDispatch } from "react-redux";
+import Header from "./components/header";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Sales from "./pages/sales/container";
+import Menus from "./pages/menus/container";
+import WebSocketManager from "./utils/websocket";
 
-import './App.css';
-import Header from './header';
+const App = () => {
+  const [isLoading, setLoading] = React.useState(true);
 
-import MenusToServe from './containers/NextMenus/menusdisplayer'
-import WebTV from './containers/WebTV/webTV'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+  const { user, logged } = useSelector(state => ({ user: getUser(state), logged: isLogged(state)}));
+  const dispatch = useDispatch();
 
-class App extends Component {
+  const relog = React.useCallback(() => dispatch(refreshUser()), [dispatch]);
+  const fetchSalesLocations = React.useCallback(() => dispatch(salesLocationsAPI.list()), [dispatch]);
+  const fetchBlockedUsers = React.useCallback(() => dispatch(blockedUsersAPI.setCurrent(null, { update: true })), [dispatch])
 
-    constructor(props){
-      super(props)
-      this.state = {
-        loading : true
-      }
+  React.useEffect(() => {
+    setLoading(false);
+    relog();
+
+    if(logged) {
+      fetchSalesLocations();
+      fetchBlockedUsers();
     }
+  }, [relog, logged, fetchSalesLocations, fetchBlockedUsers]);
 
-    componentDidMount(){
-      this.setState({loading:false})
-    }
+  if(isLoading) {
+    return null;
+  }
 
-
-    render() {
-      return (
-
-      <Router>
-        <div>
-          <Route exact={true} path="/" render= {() => (
-            <div className="App">
-              <Header current='Vente'></Header>
-              </div>
-            )}/>
-
-          <Route exact={true} path="/admin" render= {() => (
-              <div className="App">
-                <Header current='Admin'></Header>
-                </div>
-              )}/>
-
-          <Route exact={true} path="/picBar" render= {() => (
-              <div className="App">
-                <WebTV tv='2'></WebTV>
-
-              </div>
-            )}/>
-          <Route exact={true} path="/picSalle" render= {() => (
-              <div className="App">
-                <WebTV tv='1'></WebTV>
-
-              </div>
-            )}/>
-          <Route exact={true} path="/NextMenus" render= {() => (
-                <div className="App">
-                  <MenusToServe></MenusToServe>
-                </div>
-              )}/>
-
-            <Route exact={true} path="/MultiInformations" render= {() => (
-              <div className="App">
-                <div>patate</div>
-              </div>
-              )}/>
-
-          </div>
-        </Router>
-      );
-    }
+  return (
+    <div>
+      <WebSocketManager/>
+      <ConnexionModal open={!logged}/>
+        <Header user={ user } isLogged={logged}/>
+        <div className="application-container">
+          <Switch>
+            <Route exact path="/sales" component={ Sales }/>
+            <Route path="/menus" component={ Menus }/>
+            <Redirect to="/sales"/>
+          </Switch>
+        </div>
+    </div>
+  )
 }
+
 
 export default App;
