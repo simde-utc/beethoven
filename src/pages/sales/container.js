@@ -30,9 +30,13 @@ const SalesContainer = () => {
     allArticles: articlesAPI.getValuesFromState(state),
     selectedArticles: getData(state, 'selectedArticles') || {},
   }));
-  console.log('tout get')
+  console.log(allArticles.length)
   allArticles = allArticles.filter(element => element.removed_in_event == null)
-  console.log('filtre fini')
+  console.log(allArticles.length)
+  if (allArticles.length != 0){
+    console.log(allArticles)
+    console.log(allArticles[0].removed_in_event)
+  }
 
   const [articles, setArticles] = React.useState({});
   const [categories, setCategories] = React.useState([]);
