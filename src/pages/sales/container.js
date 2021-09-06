@@ -27,7 +27,7 @@ const SalesContainer = () => {
     currentSalesLocation: salesLocationsAPI.getCurrentFromState(state),
     allCategories: categoriesAPI.getValuesFromState(state),
     currentCategoryID: categoriesAPI.getCurrentIDFromState(state),
-    allArticles: articlesAPI.getValuesFromState(state),
+    allArticles: articlesAPI.getValuesFromState(state).filter(element => element.removed_in_event == null),
     selectedArticles: getData(state, 'selectedArticles') || {},
   }));
 
