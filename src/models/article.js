@@ -7,7 +7,8 @@ class Article {
     categorie_id,
     fundation_id,
     image_url,
-    price
+    price,
+    removed_in_event
   }) {
     this.id = id;
     this.name = name;
@@ -15,6 +16,7 @@ class Article {
     this.fundation_id = fundation_id;
     this.image_url = image_url;
     this.price = price || 0;
+    this.removed_in_event = removed_in_event;
   }
 
   getKey() {
@@ -39,6 +41,10 @@ class Article {
 
   getPrice() {
     return this.price/100;
+  }
+
+  getRemovedInEvent(){
+    return this.removed_in_event;
   }
 }
 
