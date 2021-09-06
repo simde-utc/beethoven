@@ -30,9 +30,6 @@ const SalesContainer = () => {
     allArticles: articlesAPI.getValuesFromState(state),
     selectedArticles: getData(state, 'selectedArticles') || {},
   }));
-  console.log('tout get')
-  allArticles = allArticles.filter(element => element.removed_in_event == null)
-  console.log('filtre fini')
 
   const [articles, setArticles] = React.useState({});
   const [categories, setCategories] = React.useState([]);
@@ -61,7 +58,7 @@ const SalesContainer = () => {
 
       setArticles(indexArticles);
     }
-  }, [allCategories, allArticles, currentSalesLocation ]);
+  }, [allCategories, currentSalesLocation ]);
 
   const handleSelection = React.useCallback((article) => setSelectedArticles({
     ...selectedArticles,
