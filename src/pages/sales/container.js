@@ -15,6 +15,9 @@ import "./css/sales.scss";
 
 const SalesContainer = () => {
 
+  const articlesFetch = articlesAPI.getValuesFromState(state);
+  const articlesFiltering =  articlesFetch.filter(element => element.removed_in_event == null)
+
   const {
     salesLocations,
     currentSalesLocation ,
@@ -27,7 +30,7 @@ const SalesContainer = () => {
     currentSalesLocation: salesLocationsAPI.getCurrentFromState(state),
     allCategories: categoriesAPI.getValuesFromState(state),
     currentCategoryID: categoriesAPI.getCurrentIDFromState(state),
-    allArticles: articlesAPI.getValuesFromState(state).filter(element => element.removed_in_event == null),
+    allArticles: articlesFiltering,
     selectedArticles: getData(state, 'selectedArticles') || {},
   }));
 
@@ -67,6 +70,8 @@ const SalesContainer = () => {
       qte: selectedArticles[article.getKey()] ? selectedArticles[article.getKey()].qte + 1 : 1
     }
   }), [selectedArticles, setSelectedArticles]);
+
+  console.log('render')
 
   return (
     <div className="sales-container">
