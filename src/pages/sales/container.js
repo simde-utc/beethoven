@@ -11,7 +11,7 @@ import CategoriesManager from "./categories";
 import ArticlesManager from "./articles";
 import PaymentPanel from "./payment";
 import { SalesLocationsModal } from "../../components/modals";
-import "./css/sales.scss";
+import "./css/sales-pixel.scss";
 
 const SalesContainer = () => {
 

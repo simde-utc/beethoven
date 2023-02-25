@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Modal, Input, Button } from "semantic-ui-react";
-import "./css/modals.scss";
+import "./css/modals-pixel.scss";
 import { badgeAuth, usernameAuth, isPending } from "../../api/connect";
 import { getData, deleteData } from "../../api/internal";
 import { useDispatch, useSelector } from "react-redux";
