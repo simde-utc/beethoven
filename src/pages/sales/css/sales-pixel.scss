@@ -160,8 +160,8 @@
     color: $dark-grey;
 
     &.error {
-      background-color: $pic-red;
-      color: $white;
+      background-color: $pic-red-error;
+      color: $dark-grey;
     }
 
     &.success {
