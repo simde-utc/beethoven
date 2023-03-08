@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { getData, insertData } from "../api/internal";
 import {
   buyerInformations as buyerInformationsAPI,
   blockedUsers as blockedUsersAPI,
   transaction as transactionAPI,
+  exoneration as exonerationAPI
 } from "../api/state";
 import { isLogged } from "../api/connect";
 import { useDispatch, useSelector } from "react-redux";
-import { WEBSOCKET_URL } from "../config";
+import { WEBSOCKET_URL, EXONERATION_UIDS } from "../config";
 import WebSocket from "react-websocket";
 
 const WebSocketManager = () => {
@@ -16,7 +17,7 @@ const WebSocketManager = () => {
     reader,
     logged,
     selectedArticles,
-    blockedUsers
+    blockedUsers,
   } = useSelector(state => ({
     reader: getData(state, 'reader'),
     logged: isLogged(state),
@@ -27,6 +28,7 @@ const WebSocketManager = () => {
   const dispatch = useDispatch();
   const setReader = React.useCallback((value) => dispatch(insertData('reader', value)),[dispatch]);
   const setConnexionBadge = React.useCallback((value) => dispatch(insertData('connexionBadge', value)), [dispatch]);
+  const deleteAllSelection = React.useCallback(() => dispatch(insertData('selectedArticles', {})), [dispatch]);
 
   const getBuyerInfo = React.useCallback((badgeID) => dispatch(buyerInformationsAPI.create({ badge_id: badgeID })), [dispatch]);
 
@@ -41,6 +43,12 @@ const WebSocketManager = () => {
     dispatch(transactionAPI.create({ badge_id: badgeID, obj_ids: items }));
   }, [dispatch, blockedUsers, selectedArticles]);
 
+  const handleExoneration = React.useCallback((badgeID) =>{
+    const items = Object.entries(selectedArticles).map(([, {article, qte}]) => [article.getKey(), qte]);
+    dispatch(exonerationAPI.create({ badge_id: badgeID, obj_ids: items }));
+    deleteAllSelection();
+  }, [dispatch, selectedArticles]);
+
 
   const onMessage = React.useCallback((badgeID) => {
     if(!reader) {
@@ -52,6 +60,11 @@ const WebSocketManager = () => {
     }
 
     if(Object.keys(selectedArticles).length) {
+      // Exoneration
+      if(EXONERATION_UIDS?.includes(badgeID)) {
+        return handleExoneration(badgeID);
+      }
+      // Classique
       return handlePayment(badgeID);
     }
 

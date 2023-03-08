@@ -6,6 +6,7 @@ import { WEEZEVENT_APP_KEY, WEEZEVENT_SYSTEM_ID, WEEZEVENT_URL, FUND_ID, EVENT_I
 import { connectReducer } from "./connect";
 import { internalReducer } from "./internal";
 import { SalesLocation, Category, Article, Transaction, BuyerInformations, BlockedUser } from "../models";
+import Exoneration from "../models/exoneration";
 
 const middleware = APIMiddleware();
 
@@ -73,3 +74,7 @@ export const buyerInformations = new APIEndpoint2(
 export const blockedUsers = new APIEndpoint2(
   `${API_URL}/blocked/users`, BlockedUser, {credentials: 'include'}
 );
+
+export const exoneration = new APIEndpoint2(
+  `${API_URL}/exoneration/`, Exoneration, {credentials: 'include'}
+)
