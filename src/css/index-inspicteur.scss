@@ -1,0 +1,65 @@
+@import "./colors-pixel.scss";
+
+@font-face {
+  font-family: 'Pixel NES';
+  src: url('../fonts/Pixel_NES.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family:'Typewriter';
+  src: url('../fonts/Albertsthal_Typewriter.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Typewriter';
+  background-color: $pic-blue;
+  color: $white;
+  background-image: url("../images/logo_pic-inspicteur.png");
+  background-repeat:no-repeat;
+  background-position:50% 40%;
+  background-size: 40%;
+  background-attachment:fixed;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently*/
+}
+body::before{
+
+}
+
+.application-container {
+  padding: 20px;
+}
+
+.ui.button {
+  font-weight: 600;
+  &.red {
+    background-color: $pic-red;
+    &:hover {
+      background-color: $pic-red-hover;
+    }
+
+    &:focus {
+      background-color: $pic-red;
+    }
+  }
+}
+
+.ui.grid.equal {
+
+  margin: 0;
+
+  .column.wide {
+    padding: 0;
+  }
+}

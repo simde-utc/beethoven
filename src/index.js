@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './css/index-pixel.scss';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./css/index-inspicteur.scss";
 import { createStore } from "./api/state";
-import {Provider} from 'react-redux';
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const store = createStore({});
@@ -13,6 +13,6 @@ ReactDOM.render(
     <Router>
       <App />
     </Router>
-  </Provider>
-  , document.getElementById('root')
+  </Provider>,
+  document.getElementById("root"),
 );
