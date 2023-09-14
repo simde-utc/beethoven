@@ -1,0 +1,41 @@
+@import "../../css/colors-inspicteur.scss";
+
+.header {
+  background-color: $white;
+  color: $dark-grey;
+  padding: 10px 20px;
+  display: flex;
+  font-size: 20px;
+
+  // Shadow effect (Pixel)
+  box-shadow: 0px 0px 20px $neon-pink-shadow;
+  border: 2px solid $neon-pink-border;
+
+  .header-left  {
+    flex: 1 auto;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  .ui.button {
+
+    font-weight: 800;
+    border: solid 0.5px $light-grey;
+
+    &.button-disconnect {
+      border-color: transparent;
+    }
+
+    &.button-nav {
+      margin: auto 5px;
+
+      &.basic {
+        &.active {
+          background-color: $pic-blue !important;
+          border-color: $pic-blue;
+          color: $white !important;
+        }
+      }
+    }
+  }
+}
